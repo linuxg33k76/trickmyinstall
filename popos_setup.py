@@ -10,8 +10,7 @@ Description:  This program configures Pop! OS Linus based on configuration param
 '''
 
 import os
-import sys
-import httplib2
+import re
 from classes import ArgsClass as AC
 
 '''
@@ -28,6 +27,9 @@ ToDo:
 '''
 
 def validate_dir(dir_path):
+    '''
+    Check for 3rd Party Downloads
+    '''
     if os.path.isdir(dir_path):
         return True
     else:
@@ -36,16 +38,43 @@ def validate_dir(dir_path):
     
 
 def test_for_file(file):
+    '''
+    Test for file and if doesn't exist, create it
+    '''
+    if not os.path.isfile(file):
+        os.system('touch ' + file)
     if os.path.isfile(file):
-        print(f'{file} exists!')
+        print(f'This file exists: {file}')
+        # Make a backup file
+        os.system(f'cp {file} {file}.bkup')
         return True
     else:
+        print(f'Could not create: {file}')
         return False
+   
 
+def write_config_file(file, lines):
+    '''
+    Write data to config file
+    '''
+    with open(file, 'a') as of:
+        of.write(lines)
+        print(f'Wrote to file: {file}')
+    return
+
+
+def read_config_file(file):
+    '''
+    Read data from config file
+    '''
+    with open(file, 'r') as rf:
+        return rf.readlines()
 
 
 def main():
-    '''Main Program function'''
+    '''
+    Main Program function
+    '''
 
     # Declare Constants and Variables
 
@@ -54,7 +83,7 @@ def main():
     ALIAS_FILE = HOME_DIR + '/.bash_aliases'
     BASHRC_FILE = HOME_DIR + '/.bashrc'
     VIMRC_FILE = HOME_DIR + '/.vimrc'
-    FAKE_FILE = HOME_DIR + '/.fake_file'
+    ETC_SYSFS_CONF_FILE = '/etc/sysfs.conf'
 
     if args.directory == 'default':
         download_dir = os.getenv('HOME') + '/Downloads/'
@@ -69,7 +98,7 @@ def main():
 
     update_command = 'sudo apt update && sudo apt upgrade'
     full_upgrade_command = 'sudo apt update && sudo apt full-upgrade'
-    favorite_packages = 'sudo apt install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird zenmap sysfsutils'
+    favorite_packages = 'sudo apt install -y snapd code vim neofetch gnome-tweaks gnome-boxes libavcodec-extra steam deja-dup thunderbird zenmap sysfsutils'
     codec_packages = 'sudo apt install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav'
     sshfs_support = 'sudo apt install -y exfat-fuse exfat-utils sshfs'
     python3_extras = 'sudo apt install -y python3-pip python3-venv'
@@ -80,32 +109,12 @@ def main():
 
     # Configuration Scripts
 
-    update_dot_bash_profile = 'echo \nneofetch\necho'
-    create_dot_vimrc = 'syntax on \nset numbers \ncolorscheme ron \n'
-    bash_aliases = "alias update='sudo apt update && sudo apt upgrade' \nalias upgrade='sudo apt update && sudo apt full-upgrade' \nalias cleanup='sudo apt update && sudo apt autoremove' \n"
-    bluetooth_ERTM_disable = 'module/bluetooth/parameters/disable_ertm=1'
-    
-    
+    syntax_dot_bash_rc = '\nneofetch\n'
+    syntax_dot_vimrc = '\nsyntax on\nset number\ncolorscheme ron\n'
+    syntax_bash_aliases = "alias update='sudo apt update && sudo apt upgrade'\nalias upgrade='sudo apt update && sudo apt full-upgrade'\nalias cleanup='sudo apt update && sudo apt autoremove'\n"
+    syntax_bluetooth_ERTM_disable = 'module/bluetooth/parameters/disable_ertm=1\n'
+        
     # Turn off Bluetooth ERTM - append to the end of /etc/sysfs.conf
-    '''
-	echo 
-	echo "Enabling Bluetooth Xbox One Controller Support."
-	echo
-	grep "disable_ertm=1" /etc/sysfs.conf
-	if [ $? -ne 0 ]; then
-		echo "/etc/sysfs.conf edits not found.  Editing now..."
-		echo
-		sudo chmod o+w /etc/sysfs.conf # enable writing to /etc/sysfs.conf
-		sudo echo "module/bluetooth/parameters/disable_ertm=1" >> /etc/sysfs.conf
-		sudo chmod o-w /etc/sysfs.conf # dsiable writing to /etc/sysfs.conf
-		echo
-		echo "Be sure to reboot to complete disabling of Bluetooth ERTM (Enhanced Re-Transmission Mode)."
-	else
-		echo "Bluetooth ERTM already disabled."
-		echo
-	fi
-	echo
-    '''
 
     shell = os.getenv('SHELL')
     kernel = os.system('uname -svr')
@@ -117,28 +126,46 @@ def main():
         os.system(command)
     
 
-    bashrc_result = test_for_file(BASHRC_FILE)
-    bash_aliases_result = test_for_file(ALIAS_FILE)
-    vimrc_result = test_for_file(VIMRC_FILE)
-    fake_file_result = test_for_file(FAKE_FILE)
+    config_files = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE, ETC_SYSFS_CONF_FILE]
+    config_data = {BASHRC_FILE: syntax_dot_bash_rc, ALIAS_FILE: syntax_bash_aliases, VIMRC_FILE: syntax_dot_vimrc, ETC_SYSFS_CONF_FILE: syntax_bluetooth_ERTM_disable}
 
-    print(bashrc_result, bash_aliases_result, vimrc_result, fake_file_result)
+    for config_file in config_files:
+        tf = test_for_file(config_file)
+        if tf is True:
+            entry_exists = False
+            if config_file == BASHRC_FILE:
+                lines = read_config_file(config_file)
+                for line in lines:
+                    if re.search('neofetch', line):
+                        entry_exists = True
+                if entry_exists is False:
+                    write_config_file(config_file, config_data[config_file])
+            elif config_file == ALIAS_FILE:
+                lines = read_config_file(config_file)
+                for line in lines:
+                    if re.search('alias update=', line):
+                        entry_exists = True
+                if entry_exists is False:
+                    write_config_file(config_file, config_data[config_file])
+            elif config_file == VIMRC_FILE:
+                lines = read_config_file(config_file)
+                for line in lines:
+                    if re.search('colorscheme', line):
+                        entry_exists = True
+                if entry_exists is False:
+                    write_config_file(config_file, config_data[config_file])
+            elif config_file == ETC_SYSFS_CONF_FILE:
+                lines = read_config_file(config_file)
+                for line in lines:
+                    if re.search('module/bluetooth/parameters/disable_ertm=1', line):
+                        entry_exists = True
+                if entry_exists is False:
+                    os.system(f'sudo chmod o+w {config_file}')
+                    write_config_file(config_file, config_data[config_file])
+                    os.system(f'sudo chmod o-w {config_file}')
+            else:
+                pass
 
-    '''
-    To Do:
-
-        Read files
-        Check for entries
-        Write lines
-        Save files
-
-    '''
-
-    print(update_dot_bash_profile)
-    print(create_dot_vimrc)
-    print(bash_aliases)
-    print(bluetooth_ERTM_disable)
-    
 
 if __name__ == '__main__':
 
