@@ -35,18 +35,39 @@ def validate_dir(dir_path):
     else:
         print(f'Skipping 3rd Party package install.  {dir_path} does not exist.')
         return False
+
+
+def create_backup_dir(backup_dir):
+    '''
+    Create a backup directory under user's HOME
+    '''
     
+    if os.path.isdir(backup_dir) is True:
+        print(f'Backup directory: {backup_dir} exists!')
+        return True
+    elif os.path.isdir(backup_dir) is False:
+        print(f'Createing backup directory: {backup_dir}')
+        os.system(f'mkdir {backup_dir}')
+        return True
+    else:
+        return False
+
 
 def test_for_file(file):
     '''
     Test for file and if doesn't exist, create it
     '''
+
+    # get just the filename for copy purposes by splitting, reversing [::-1], and grabbing first element [0]
+    filename = file.split("/")[::-1][0]
+
     if not os.path.isfile(file):
         os.system('touch ' + file)
-    if os.path.isfile(file):
+    elif os.path.isfile(file):
         print(f'This file exists: {file}')
+
         # Make a backup file
-        os.system(f'cp {file} {file}.bkup')
+        os.system(f'cp {file} ~/backup/{filename}.bkup')
         return True
     else:
         print(f'Could not create: {file}')
@@ -79,6 +100,7 @@ def main():
     # Declare Constants and Variables
 
     HOME_DIR = os.getenv("HOME")
+    backup_directory = HOME_DIR + '/backup/'
 
     ALIAS_FILE = HOME_DIR + '/.bash_aliases'
     BASHRC_FILE = HOME_DIR + '/.bashrc'
@@ -94,6 +116,11 @@ def main():
 
     if dir_exists is False:
         args.skip = '3rdParty'
+
+    if not create_backup_dir(backup_directory):
+        print('Backup Directory creation failed.  Exiting script.')
+        quit()
+
     
 
     update_command = 'sudo apt update && sudo apt upgrade'
@@ -165,7 +192,8 @@ def main():
                     os.system(f'sudo chmod o-w {config_file}')
             else:
                 pass
-
+    
+    print('\n' + '*'*80 + '\nPlease reboot to complete installation\n' + '*'*80)
 
 if __name__ == '__main__':
 
