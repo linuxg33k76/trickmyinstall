@@ -64,7 +64,7 @@ def test_for_file(file):
     if not os.path.isfile(file):
         os.system('touch ' + file)
     elif os.path.isfile(file):
-        print(f'This file exists: {file}')
+        print(f'Backing up: {file}')
 
         # Make a backup file
         os.system(f'cp {file} ~/backup/{filename}.bkup')
@@ -117,6 +117,8 @@ def main():
     if dir_exists is False:
         args.skip = '3rdParty'
 
+    print('\n' + '*'*100 + '\n\tCreating Backup Directory for config files...\n' + '*'*100 + '\n')
+
     if not create_backup_dir(backup_directory):
         print('Backup Directory creation failed.  Exiting script.')
         quit()
@@ -132,7 +134,7 @@ def main():
     cleanup_packages = 'sudo apt update && sudo apt autoremove'
     set_default_editor = 'sudo update-alternatives --config editor'
 
-    commands = [update_command, full_upgrade_command,favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages, set_default_editor]
+    update_commands = [update_command, full_upgrade_command,favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages]
 
     # Configuration Scripts
 
@@ -143,15 +145,26 @@ def main():
         
     # Turn off Bluetooth ERTM - append to the end of /etc/sysfs.conf
 
+    print('\n' + '*'*100 + '\n\tGetting Kernel and other System information...\n' + '*'*100 + '\n')
+
     shell = os.getenv('SHELL')
     kernel = os.system('uname -svr')
     
 
     # Run install and setup commands
 
-    for command in commands:
+    print('\n' + '*'*100 + '\n\tUpdating System and Installing Extra Packages to make the system Good...\n' + '*'*100 + '\n')
+
+    for command in update_commands:
         os.system(command)
+
+    print('\n' + '*'*100 + '\n\tSetting the default editor (I like VIM)...\n' + '*'*100 + '\n')
+
+    os.system(set_default_editor)
     
+    # Add lines to configuration files
+
+    print('\n' + '*'*100 + '\n\tConfiguring the Config files...\n' + '*'*100 + '\n')
 
     config_files = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE, ETC_SYSFS_CONF_FILE]
     config_data = {BASHRC_FILE: syntax_dot_bash_rc, ALIAS_FILE: syntax_bash_aliases, VIMRC_FILE: syntax_dot_vimrc, ETC_SYSFS_CONF_FILE: syntax_bluetooth_ERTM_disable}
@@ -165,6 +178,7 @@ def main():
                 for line in lines:
                     if re.search('neofetch', line):
                         entry_exists = True
+                        print(f'Config file entry exists in: {config_file}. No edit required.')
                 if entry_exists is False:
                     write_config_file(config_file, config_data[config_file])
             elif config_file == ALIAS_FILE:
@@ -172,6 +186,7 @@ def main():
                 for line in lines:
                     if re.search('alias update=', line):
                         entry_exists = True
+                        print(f'Config file entry exists in: {config_file}. No edit required.')
                 if entry_exists is False:
                     write_config_file(config_file, config_data[config_file])
             elif config_file == VIMRC_FILE:
@@ -179,6 +194,7 @@ def main():
                 for line in lines:
                     if re.search('colorscheme', line):
                         entry_exists = True
+                        print(f'Config file entry exists in: {config_file}. No edit required.')
                 if entry_exists is False:
                     write_config_file(config_file, config_data[config_file])
             elif config_file == ETC_SYSFS_CONF_FILE:
@@ -186,6 +202,7 @@ def main():
                 for line in lines:
                     if re.search('module/bluetooth/parameters/disable_ertm=1', line):
                         entry_exists = True
+                        print(f'Config file entry exists in: {config_file}. No edit required.')
                 if entry_exists is False:
                     os.system(f'sudo chmod o+w {config_file}')
                     write_config_file(config_file, config_data[config_file])
@@ -193,7 +210,7 @@ def main():
             else:
                 pass
     
-    print('\n' + '*'*80 + '\nPlease reboot to complete installation\n' + '*'*80)
+    print('\n' + '*'*100 + '\n\tPlease reboot to complete installation\n' + '*'*100 + '\n')
 
 if __name__ == '__main__':
 
