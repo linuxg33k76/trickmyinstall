@@ -5,7 +5,7 @@ Pop! OS Python Setup Script
 Author:  Ben C. Calvert
 Date:  18 September 2021
 
-Description:  This program configures Pop! OS Linus based on configuration parameters found in the ../Data directory JSON files.
+Description:  This program configures Pop! OS Linux per user requirements.
 
 '''
 
@@ -13,52 +13,47 @@ import os
 import re
 from classes import ArgsClass as AC
 
-'''
-ToDo:
-
-1.  Collect arguments
-2.  Read JSON files (or recipe files)
-3.  Perform upgrade of the system
-4.  Install Pop! OS Packages
-5.  Install 3rd Party Packages based on URL and wget commands
-    - unreliable as finding the correct URL is difficult.  Will check Download Directory.
-6.  Configure System setting files - .vimrc, .bash_aliases, default editor, etc.
-
-'''
+# Declare Program Functions
 
 def validate_dir(dir_path):
+
     '''
     Check for 3rd Party Downloads
     '''
+
     if os.path.isdir(dir_path):
         return True
     else:
-        print(f'Skipping 3rd Party package install.  {dir_path} does not exist.')
+        print(f'{dir_path} does not exist.')
         return False
 
 
 def create_backup_dir(backup_dir):
+
     '''
     Create a backup directory under user's HOME
     '''
-    
+
     if os.path.isdir(backup_dir) is True:
         print(f'Backup directory: {backup_dir} exists!')
         return True
-    elif os.path.isdir(backup_dir) is False:
+    else:
         print(f'Createing backup directory: {backup_dir}')
         os.system(f'mkdir {backup_dir}')
-        return True
-    else:
-        return False
+        if os.path.isdir(backup_dir) is True:
+            return True
+        else:
+            return False
 
 
 def test_for_file(file):
+
     '''
     Test for file and if doesn't exist, create it
     '''
 
     # get just the filename for copy purposes by splitting, reversing [::-1], and grabbing first element [0]
+    
     filename = file.split("/")[::-1][0]
 
     if not os.path.isfile(file):
@@ -67,6 +62,7 @@ def test_for_file(file):
         print(f'Backing up: {file}')
 
         # Make a backup file
+    
         os.system(f'cp {file} ~/backup/{filename}.bkup')
         return True
     else:
@@ -75,9 +71,11 @@ def test_for_file(file):
    
 
 def write_config_file(file, lines):
+
     '''
     Write data to config file
     '''
+
     with open(file, 'a') as of:
         of.write(lines)
         print(f'Wrote to file: {file}')
@@ -85,14 +83,17 @@ def write_config_file(file, lines):
 
 
 def read_config_file(file):
+
     '''
     Read data from config file
     '''
+
     with open(file, 'r') as rf:
         return rf.readlines()
 
 
 def main():
+
     '''
     Main Program function
     '''
@@ -100,8 +101,6 @@ def main():
     # Declare Constants and Variables
 
     HOME_DIR = os.getenv("HOME")
-    backup_directory = HOME_DIR + '/backup/'
-
     ALIAS_FILE = HOME_DIR + '/.bash_aliases'
     BASHRC_FILE = HOME_DIR + '/.bashrc'
     VIMRC_FILE = HOME_DIR + '/.vimrc'
@@ -110,20 +109,35 @@ def main():
     if args.directory == 'default':
         download_dir = os.getenv('HOME') + '/Downloads/'
     else:
-        # Validate format
         download_dir = args.directory
+
+    # Validate Download Directory
+
     dir_exists = validate_dir(download_dir)
 
     if dir_exists is False:
         args.skip = '3rdParty'
 
+    # Create Backup Directory
+
     print('\n' + '*'*100 + '\n\tCreating Backup Directory for config files...\n' + '*'*100 + '\n')
 
-    if not create_backup_dir(backup_directory):
+    if args.backup_directory == 'default':
+        backup_directory = HOME_DIR + '/backup/'
+    else:
+        backup_directory = args.backup_directory
+
+    # Validate Backup Directory
+
+    backup_dir_exists = create_backup_dir(backup_directory)
+
+    # Fail if the backup directory creation fails
+
+    if not backup_dir_exists:
         print('Backup Directory creation failed.  Exiting script.')
         quit()
 
-    
+    # Command Variables - Can be user defined.  New variable can be added to update_command array.
 
     update_command = 'sudo apt update && sudo apt upgrade'
     full_upgrade_command = 'sudo apt update && sudo apt full-upgrade'
@@ -132,11 +146,14 @@ def main():
     sshfs_support = 'sudo apt install -y exfat-fuse exfat-utils sshfs'
     python3_extras = 'sudo apt install -y python3-pip python3-venv'
     cleanup_packages = 'sudo apt update && sudo apt autoremove'
+    flatpak_packages = 'flatpak install org.raspberrypi.rpi-imager'
     set_default_editor = 'sudo update-alternatives --config editor'
 
-    update_commands = [update_command, full_upgrade_command,favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages]
+    # Create Array of commands to parse through
 
-    # Configuration Scripts
+    update_commands = [update_command, full_upgrade_command,favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages, flatpak_packages]
+
+    # Configuration Script Data
 
     syntax_dot_bash_rc = '\nneofetch\n'
     syntax_dot_vimrc = '\nsyntax on\nset number\ncolorscheme ron\n'
@@ -166,8 +183,12 @@ def main():
 
     print('\n' + '*'*100 + '\n\tConfiguring the Config files...\n' + '*'*100 + '\n')
 
+    # Create Config File Array to parse through.  Create Dictionary of config files : config script data.
+
     config_files = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE, ETC_SYSFS_CONF_FILE]
     config_data = {BASHRC_FILE: syntax_dot_bash_rc, ALIAS_FILE: syntax_bash_aliases, VIMRC_FILE: syntax_dot_vimrc, ETC_SYSFS_CONF_FILE: syntax_bluetooth_ERTM_disable}
+
+    # Write Config Files
 
     for config_file in config_files:
         tf = test_for_file(config_file)
@@ -215,9 +236,9 @@ def main():
 if __name__ == '__main__':
 
     # Call CLI Parser and get command line arguments
-    args = AC.CLIParser().get_args()
-    print(args)
- 
 
+    args = AC.CLIParser().get_args()
+    # print(args)
+ 
     # Start program
     main()
