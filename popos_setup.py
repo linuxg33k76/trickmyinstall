@@ -151,16 +151,18 @@ def main():
 
     # Create Array of commands to parse through
 
-    update_commands = [update_command, full_upgrade_command,favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages, flatpak_packages]
+    update_commands_array = [update_command, full_upgrade_command,favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages, flatpak_packages]
 
     # Configuration Script Data
 
     syntax_dot_bash_rc = '\nneofetch\n'
-    syntax_dot_vimrc = '\nsyntax on\nset number\ncolorscheme ron\n'
     syntax_bash_aliases = "alias update='sudo apt update && sudo apt upgrade && flatpak update -y'\nalias upgrade='sudo apt update && sudo apt full-upgrade'\nalias cleanup='sudo apt update && sudo apt autoremove'\n"
+    syntax_dot_vimrc = '\nsyntax on\nset number\ncolorscheme ron\n'
     syntax_bluetooth_ERTM_disable = 'module/bluetooth/parameters/disable_ertm=1\n'
-        
-    # Turn off Bluetooth ERTM - append to the end of /etc/sysfs.conf
+    
+    # Create Array of script variables to parse through
+
+    script_syntax_array = [syntax_dot_bash_rc, syntax_bash_aliases, syntax_dot_vimrc, syntax_bluetooth_ERTM_disable]
 
     print('\n' + '*'*100 + '\n\tGetting Kernel and other System information...\n' + '*'*100 + '\n')
 
@@ -172,7 +174,7 @@ def main():
 
     print('\n' + '*'*100 + '\n\tUpdating System and Installing Extra Packages to make the system Good...\n' + '*'*100 + '\n')
 
-    for command in update_commands:
+    for command in update_commands_array:
         os.system(command)
 
     print('\n' + '*'*100 + '\n\tSetting the default editor (I like VIM)...\n' + '*'*100 + '\n')
@@ -185,12 +187,19 @@ def main():
 
     # Create Config File Array to parse through.  Create Dictionary of config files : config script data.
 
-    config_files = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE, ETC_SYSFS_CONF_FILE]
-    config_data = {BASHRC_FILE: syntax_dot_bash_rc, ALIAS_FILE: syntax_bash_aliases, VIMRC_FILE: syntax_dot_vimrc, ETC_SYSFS_CONF_FILE: syntax_bluetooth_ERTM_disable}
+    config_files_array = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE, ETC_SYSFS_CONF_FILE]
+    # config_data = {BASHRC_FILE: syntax_dot_bash_rc, ALIAS_FILE: syntax_bash_aliases, VIMRC_FILE: syntax_dot_vimrc, ETC_SYSFS_CONF_FILE: syntax_bluetooth_ERTM_disable}
+
+    # Check for length of arrays to be equal - program check!
+
+    if len(config_files_array) != len(script_syntax_array):
+        print('Please check script files.  Length mismatch!')
+        quit()
+
 
     # Write Config Files
 
-    for config_file in config_files:
+    for config_file, script_syntax in zip(config_files_array, script_syntax_array):
         tf = test_for_file(config_file)
         if tf is True:
             entry_exists = False
@@ -201,7 +210,7 @@ def main():
                         entry_exists = True
                         print(f'Config file entry exists in: {config_file}. No edit required.')
                 if entry_exists is False:
-                    write_config_file(config_file, config_data[config_file])
+                    write_config_file(config_file, script_syntax)
             elif config_file == ALIAS_FILE:
                 lines = read_config_file(config_file)
                 for line in lines:
@@ -209,7 +218,7 @@ def main():
                         entry_exists = True
                         print(f'Config file entry exists in: {config_file}. No edit required.')
                 if entry_exists is False:
-                    write_config_file(config_file, config_data[config_file])
+                    write_config_file(config_file, script_syntax)
             elif config_file == VIMRC_FILE:
                 lines = read_config_file(config_file)
                 for line in lines:
@@ -217,7 +226,7 @@ def main():
                         entry_exists = True
                         print(f'Config file entry exists in: {config_file}. No edit required.')
                 if entry_exists is False:
-                    write_config_file(config_file, config_data[config_file])
+                    write_config_file(config_file, script_syntax)
             elif config_file == ETC_SYSFS_CONF_FILE:
                 lines = read_config_file(config_file)
                 for line in lines:
@@ -226,7 +235,7 @@ def main():
                         print(f'Config file entry exists in: {config_file}. No edit required.')
                 if entry_exists is False:
                     os.system(f'sudo chmod o+w {config_file}')
-                    write_config_file(config_file, config_data[config_file])
+                    write_config_file(config_file, script_syntax)
                     os.system(f'sudo chmod o-w {config_file}')
             else:
                 pass
