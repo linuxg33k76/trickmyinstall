@@ -162,6 +162,7 @@ def main():
     python3_extras = 'sudo apt install -y python3-pip python3-venv'
     cleanup_packages = 'sudo apt update && sudo apt autoremove'
     flatpak_packages = 'flatpak install org.raspberrypi.rpi-imager'
+    snap_packages = 'sudo snap install brave'
     set_default_editor = 'sudo update-alternatives --config editor'
 
     # Create Array of upgrade commands to parse through
@@ -170,7 +171,7 @@ def main():
 
     # Create Array of install commands to parse through
 
-    install_commamds_array = [favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages, flatpak_packages]
+    install_commamds_array = [favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages, flatpak_packages, snap_packages]
 
     # Configuration Script Data
 
