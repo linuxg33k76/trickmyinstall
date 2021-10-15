@@ -46,10 +46,17 @@ def create_backup_dir(backup_dir):
             return False
 
 
-def test_for_file(file):
+def test_for_file_exists(file):
+    if os.path.isfile(file):
+        return True
+    else:
+        return False
+
+
+def backup_file(file):
 
     '''
-    Test for file and if doesn't exist, create it
+    Test for file and if doesn't exist, create it then preform backup
     '''
 
     # get just the filename for copy purposes by splitting, reversing [::-1], and grabbing first element [0]
@@ -90,6 +97,14 @@ def read_config_file(file):
 
     with open(file, 'r') as rf:
         return rf.readlines()
+
+def process_commands(commands_array):
+    '''
+    Process commands in array
+    '''
+
+    for command in commands_array:
+            os.system(command)    
 
 
 def main():
@@ -149,9 +164,13 @@ def main():
     flatpak_packages = 'flatpak install org.raspberrypi.rpi-imager'
     set_default_editor = 'sudo update-alternatives --config editor'
 
-    # Create Array of commands to parse through
+    # Create Array of upgrade commands to parse through
 
-    update_commands_array = [update_command, full_upgrade_command,favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages, flatpak_packages]
+    update_commands_array = [update_command, full_upgrade_command]
+
+    # Create Array of install commands to parse through
+
+    install_commamds_array = [favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages, flatpak_packages]
 
     # Configuration Script Data
 
@@ -172,10 +191,19 @@ def main():
 
     # Run install and setup commands
 
-    print('\n' + '*'*100 + '\n\tUpdating System and Installing Extra Packages to make the system Good...\n' + '*'*100 + '\n')
+    if "update" in args.skip:
+        print('\n' + '*'*100 + '\n\tSkipping Update Process\n' + '*'*100 + '\n')
+    else:
+        print('\n' + '*'*100 + '\n\tUpdating System...\n' + '*'*100 + '\n')
 
-    for command in update_commands_array:
-        os.system(command)
+        process_commands(update_commands_array)
+
+    if "install" in args.skip:
+        print('\n' + '*'*100 + '\n\tSkipping Package Install Process\n' + '*'*100 + '\n')
+    else:
+        print('\n' + '*'*100 + '\n\tInstalling Additional Packages...\n' + '*'*100 + '\n')
+
+        process_commands(install_commamds_array)
 
     print('\n' + '*'*100 + '\n\tSetting the default editor (I like VIM)...\n' + '*'*100 + '\n')
 
@@ -200,8 +228,8 @@ def main():
     # Write Config Files
 
     for config_file, script_syntax in zip(config_files_array, script_syntax_array):
-        tf = test_for_file(config_file)
-        if tf is True:
+        bf = backup_file(config_file)
+        if bf is True:
             entry_exists = False
             if config_file == BASHRC_FILE:
                 lines = read_config_file(config_file)
@@ -240,14 +268,17 @@ def main():
             else:
                 pass
     
-    print('\n' + '*'*100 + '\n\tPlease reboot to complete installation\n' + '*'*100 + '\n')
+    if test_for_file_exists('/var/run/reboot-required'):
+        print('\n' + '*'*100 + '\n\tPlease reboot to complete installation\n' + '*'*100 + '\n')
+    
+    else:
+        print('\n' + '*'*100 + '\n\tInstallation Complete!\n' + '*'*100 + '\n')
 
 if __name__ == '__main__':
 
     # Call CLI Parser and get command line arguments
 
     args = AC.CLIParser().get_args()
-    # print(args)
  
     # Start program
     main()
