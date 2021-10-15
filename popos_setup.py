@@ -176,7 +176,7 @@ def main():
     # Configuration Script Data
 
     syntax_dot_bash_rc = '\nneofetch\n'
-    syntax_bash_aliases = "alias update='sudo apt update && sudo apt upgrade && flatpak update -y'\nalias upgrade='sudo apt update && sudo apt full-upgrade'\nalias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'\n"
+    syntax_bash_aliases = "alias update='sudo apt update && sudo apt upgrade && flatpak update -y && sudo snap refresh --list'\nalias upgrade='sudo apt update && sudo apt full-upgrade'\nalias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'\n"
     syntax_dot_vimrc = '\nsyntax on\nset number\ncolorscheme ron\n'
     syntax_bluetooth_ERTM_disable = 'module/bluetooth/parameters/disable_ertm=1\n'
     
