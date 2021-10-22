@@ -11,6 +11,7 @@ Description:  This program configures Pop! OS Linux per user requirements.
 
 import os
 import re
+import json
 from classes import ArgsClass as AC
 
 # Declare Program Functions
@@ -47,10 +48,29 @@ def create_backup_dir(backup_dir):
 
 
 def test_for_file_exists(file):
+    
+    '''
+    Test for file existance.
+    '''
+    
     if os.path.isfile(file):
         return True
     else:
         return False
+
+
+def create_file(file):
+    
+    '''
+    Create a file - incase config file is missing.
+    '''
+
+    os.system('touch ' + file)
+
+    if not os.path.isfile(file):
+        print(f'File: {file} could not be created.')
+    else:
+        print(f'Created: {file} successfully!!')
 
 
 def backup_file(file):
@@ -65,6 +85,9 @@ def backup_file(file):
 
     if not os.path.isfile(file):
         os.system('touch ' + file)
+        os.system(f"echo '# Create by Pop_OS Py Script' >> {file}")
+        return True
+
     elif os.path.isfile(file):
         print(f'Backing up: {file}')
 
@@ -98,6 +121,7 @@ def read_config_file(file):
     with open(file, 'r') as rf:
         return rf.readlines()
 
+
 def process_commands(commands_array):
     '''
     Process commands in array
@@ -105,6 +129,15 @@ def process_commands(commands_array):
 
     for command in commands_array:
             os.system(command)    
+
+
+def read_json_file(file):
+    '''
+    Process commands in config file and return json object
+    '''
+    with open(file, 'rb') as json_file:
+        json_data = json_file.read()
+    return json.loads(json_data)
 
 
 def main():
@@ -154,16 +187,20 @@ def main():
 
     # Command Variables - Can be user defined.  New variable can be added to update_command array.
 
-    update_command = 'sudo apt update && sudo apt upgrade'
-    full_upgrade_command = 'sudo apt update && sudo apt full-upgrade'
-    favorite_packages = 'sudo apt install -y snapd code vim neofetch gnome-tweaks gnome-boxes libavcodec-extra steam deja-dup thunderbird zenmap sysfsutils timeshift'
-    codec_packages = 'sudo apt install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav'
-    sshfs_support = 'sudo apt install -y exfat-fuse exfat-utils sshfs'
-    python3_extras = 'sudo apt install -y python3-pip python3-venv'
-    cleanup_packages = 'sudo apt update && sudo apt autoremove'
-    flatpak_packages = 'flatpak install org.raspberrypi.rpi-imager'
-    snap_packages = 'sudo snap install brave'
-    set_default_editor = 'sudo update-alternatives --config editor'
+    pkg_commands = read_json_file('data/pkgcommands.json')
+
+    update_command = pkg_commands.get('update_command')
+    full_upgrade_command = pkg_commands.get('full_upgrade_command')
+    favorite_packages = pkg_commands.get('favorite_packages')
+    codec_packages = pkg_commands.get('codec_packages')
+    sshfs_support = pkg_commands.get('sshfs_support')
+    python3_extras = pkg_commands.get('python3_extras')
+    programming_extras = pkg_commands.get('programming_extras')
+    cleanup_packages = pkg_commands.get('cleanup_packages')
+    flatpak_packages = pkg_commands.get('flatpak_packages')
+    snap_packages = pkg_commands.get('snap_packages')
+    set_default_editor = pkg_commands.get('set_default_editor')
+
 
     # Create Array of upgrade commands to parse through
 
@@ -171,18 +208,32 @@ def main():
 
     # Create Array of install commands to parse through
 
-    install_commamds_array = [favorite_packages, codec_packages, sshfs_support, python3_extras, cleanup_packages, flatpak_packages, snap_packages]
+    install_commamds_array = [  favorite_packages, 
+                                codec_packages, 
+                                sshfs_support, 
+                                python3_extras, 
+                                programming_extras, 
+                                cleanup_packages, 
+                                flatpak_packages, 
+                                snap_packages
+                            ]
 
     # Configuration Script Data
 
-    syntax_dot_bash_rc = '\nneofetch\n'
-    syntax_bash_aliases = "alias update='sudo apt update && sudo apt upgrade && flatpak update -y && sudo snap refresh --list'\nalias upgrade='sudo apt update && sudo apt full-upgrade'\nalias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'\n"
-    syntax_dot_vimrc = '\nsyntax on\nset number\ncolorscheme ron\n'
-    syntax_bluetooth_ERTM_disable = 'module/bluetooth/parameters/disable_ertm=1\n'
+    syntax_commands = read_json_file('data/syntaxcommands.json')
+
+    syntax_dot_bash_rc = syntax_commands.get('syntax_dot_bash_rc')
+    syntax_bash_aliases = syntax_commands.get('syntax_bash_aliases')
+    syntax_dot_vimrc = syntax_commands.get('syntax_dot_vimrc')
+    syntax_bluetooth_ERTM_disable = syntax_commands.get('syntax_bluetooth_ERTM_disable')
     
     # Create Array of script variables to parse through
 
-    script_syntax_array = [syntax_dot_bash_rc, syntax_bash_aliases, syntax_dot_vimrc, syntax_bluetooth_ERTM_disable]
+    script_syntax_array = [ syntax_dot_bash_rc, 
+                            syntax_bash_aliases, 
+                            syntax_dot_vimrc, 
+                            syntax_bluetooth_ERTM_disable
+                          ]
 
     print('\n' + '*'*100 + '\n\tGetting Kernel and other System information...\n' + '*'*100 + '\n')
 
@@ -217,8 +268,7 @@ def main():
     # Create Config File Array to parse through.  Create Dictionary of config files : config script data.
 
     config_files_array = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE, ETC_SYSFS_CONF_FILE]
-    # config_data = {BASHRC_FILE: syntax_dot_bash_rc, ALIAS_FILE: syntax_bash_aliases, VIMRC_FILE: syntax_dot_vimrc, ETC_SYSFS_CONF_FILE: syntax_bluetooth_ERTM_disable}
-
+    
     # Check for length of arrays to be equal - program check!
 
     if len(config_files_array) != len(script_syntax_array):
