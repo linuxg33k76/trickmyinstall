@@ -1,2 +1,2 @@
 # popospy
-Python Script for setting up my customer Pop! OS configuration
+Python Script for setting up my custom Pop! OS configuration
