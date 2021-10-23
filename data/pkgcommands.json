@@ -1,11 +1,11 @@
 {
     "update_command" : "sudo apt update && sudo apt upgrade",
     "full_upgrade_command" : "sudo apt update && sudo apt full-upgrade",
-    "favorite_packages" : "sudo apt install -y snapd code vim neofetch gnome-tweaks gnome-boxes libavcodec-extra steam deja-dup thunderbird zenmap sysfsutils timeshift",
+    "favorite_packages" : "sudo apt install -y snapd code neofetch gnome-tweaks gnome-boxes libavcodec-extra steam deja-dup thunderbird zenmap sysfsutils timeshift",
     "codec_packages" : "sudo apt install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav",
     "sshfs_support" : "sudo apt install -y exfat-fuse exfat-utils sshfs",
     "python3_extras" : "sudo apt install -y python3-pip python3-venv",
-    "programming_extras" : "sudo apt install -y rustc",
+    "programming_extras" : "sudo apt install -y rustc vim",
     "cleanup_packages" : "sudo apt update && sudo apt autoremove",
     "flatpak_packages" : "flatpak install org.raspberrypi.rpi-imager",
     "snap_packages" : "sudo snap install brave",
