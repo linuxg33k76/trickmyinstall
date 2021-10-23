@@ -85,7 +85,7 @@ def backup_file(file):
 
     if not os.path.isfile(file):
         os.system('touch ' + file)
-        os.system(f"echo '# Create by Pop_OS Py Script' >> {file}")
+        os.system(f"echo '#! Create by Pop_OS Py Script' >> {file}")
         return True
 
     elif os.path.isfile(file):
