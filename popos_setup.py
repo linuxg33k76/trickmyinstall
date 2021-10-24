@@ -20,6 +20,10 @@ def validate_dir(dir_path):
 
     '''
     Check for 3rd Party Downloads
+
+    dir_path: string 
+
+    return: bool
     '''
 
     if os.path.isdir(dir_path):
@@ -33,6 +37,10 @@ def create_backup_dir(backup_dir):
 
     '''
     Create a backup directory under user's HOME
+
+    backup_dir: string
+
+    return: bool
     '''
 
     if os.path.isdir(backup_dir) is True:
@@ -51,6 +59,10 @@ def test_for_file_exists(file):
     
     '''
     Test for file existance.
+
+    file: string (complete path to file)
+
+    return: bool
     '''
     
     if os.path.isfile(file):
@@ -63,6 +75,10 @@ def create_file(file):
     
     '''
     Create a file - incase config file is missing.
+
+    file: string (complete path to file)
+
+    return: none
     '''
 
     os.system('touch ' + file)
@@ -77,6 +93,10 @@ def backup_file(file):
 
     '''
     Test for file and if doesn't exist, create it then preform backup
+
+    file: string (complete path to file)
+
+    return: bool
     '''
 
     # get just the filename for copy purposes by splitting, reversing [::-1], and grabbing first element [0]
@@ -104,6 +124,11 @@ def write_config_file(file, lines):
 
     '''
     Write data to config file based on values in lines
+
+    file: string (complete path to file)
+    lines: array of strings
+
+    return: none
     '''
 
     with open(file, 'a') as of:
@@ -115,16 +140,40 @@ def read_config_file(file):
 
     '''
     Read data from config file
+
+    file: string (complete path to file)
+
+    return: array of strings
     '''
 
     with open(file, 'r') as rf:
         return rf.readlines()
 
 
+def read_json_file(file):
+    '''
+    Process commands in config file and return json object
+
+    file: string (complete path to file)
+
+    return: Python Object
+    '''
+
+    with open(file, 'rb') as json_file:
+        json_data = json_file.read()
+    return json.loads(json_data)
+
+
 def process_config_file(config_file, search_term, script_syntax):
     '''
     Process config file script entries based on search term and 
     make a decision to write script_syntax or not to write the syntax.
+
+    config_file: string (complete path to file)
+    search_term: string
+    script_syntax: string
+
+    return: none
     '''
 
     entry_exists = False
@@ -161,24 +210,24 @@ def process_config_file(config_file, search_term, script_syntax):
 def process_commands(commands_array):
     '''
     Process commands in array
+
+    commands_array: array of strings
+
+    return: none
     '''
 
     for command in commands_array:
             os.system(command)    
 
 
-def read_json_file(file):
-    '''
-    Process commands in config file and return json object
-    '''
-    with open(file, 'rb') as json_file:
-        json_data = json_file.read()
-    return json.loads(json_data)
-
-
 def output_config_file_msg(config_file, msg):
     '''
     Method to print a config file message based on msg value - code simplification
+
+    config_file: string (complete path to file)
+    msg: integer (values 1 or 2 accepted)
+
+    return: none
     '''
 
     if msg == 1:
@@ -189,7 +238,7 @@ def output_config_file_msg(config_file, msg):
         print(f'Invalid message type:  {msg}.\n')
     return
 
-
+# Main Program
 
 def main():
 
@@ -244,6 +293,7 @@ def main():
 
     pkg_commands = read_json_file('data/pkgcommands.json')
 
+    # Read Python Object attributes and store in variables
     update_command = pkg_commands.get('update_command')
     full_upgrade_command = pkg_commands.get('full_upgrade_command')
     favorite_packages = pkg_commands.get('favorite_packages')
@@ -277,6 +327,7 @@ def main():
 
     syntax_commands = read_json_file('data/syntaxcommands.json')
 
+    # Read Python Object attributes and store in variables
     syntax_dot_bash_rc = syntax_commands.get('syntax_dot_bash_rc')
     syntax_bash_aliases = syntax_commands.get('syntax_bash_aliases')
     syntax_dot_vimrc = syntax_commands.get('syntax_dot_vimrc')
@@ -329,11 +380,10 @@ def main():
         for app in third_party_apps:
             os.system(f'sudo apt install {download_dir}{app}')
 
-
         # Check for new versions
         print('\nUpdating system after 3rdParty App updates...\n')
         os.system('sudo apt update && sudo apt upgrade')
-    
+   
     # Set Default CLI editor...I like Vim!
     
     print('\n' + '*'*100 + '\n\tSetting the default editor (I like VIM)...\n' + '*'*100 + '\n')
