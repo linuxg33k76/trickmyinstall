@@ -18,14 +18,13 @@ class CLIParser(argparse.ArgumentParser):
 
     def __init__(self):
         self.parser = argparse.ArgumentParser()
-        self.parser.add_argument('-s', '--skip', type=str, help='Skip specific task: update, scripts', default='')
-        self.parser.add_argument('-e', '--exclude', type=str, help='Exclude Specified Packages from package file', default='', nargs="+")
-        self.parser.add_argument('-f', '--file', type=str, help='Specify Package File (*.json)', default='')
+        self.parser.add_argument('-s', '--skip', type=str, help='Skip specific task: install,update,3rdParty', default='', nargs='+')
+        # self.parser.add_argument('-e', '--exclude', type=str, help='Exclude Specified Packages from package file', default='', nargs='+')
+        # self.parser.add_argument('-f', '--file', type=str, help='Specify Package File (*.json)', default='')
         self.parser.add_argument('-d', '--directory', type=str, help='User Specified Download Directory.', default='default')
         self.parser.add_argument('-b', '--backup_directory', type=str, help='User Specified Backup Directory.', default='default')
         self.parser.add_argument('-v', '--verbose', help='Display log file output', action='store_true')
         self.parser.add_argument('--test', help='Turn on test output', action='store_true')
-        self.parser.add_argument('-l', '--list', type=str, help='Display systems: dev, production, all', default='')
         self.args = self.parser.parse_args()
 
     def get_args(self):
