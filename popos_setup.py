@@ -349,14 +349,16 @@ def main():
 
     # Run install and setup commands
 
-    if "update" or "Update" in args.skip:
+    skip_items = ' '.join(args.skip)
+
+    if "update" in skip_items.lower():
         print('\n' + '*'*100 + '\n\tSkipping Update Process\n' + '*'*100 + '\n')
     else:
         print('\n' + '*'*100 + '\n\tUpdating System...\n' + '*'*100 + '\n')
 
         process_commands(update_commands_array)
 
-    if "install" or "Install" in args.skip:
+    if "install" in skip_items.lower():
         print('\n' + '*'*100 + '\n\tSkipping Package Install Process\n' + '*'*100 + '\n')
     else:
         print('\n' + '*'*100 + '\n\tInstalling Additional Packages...\n' + '*'*100 + '\n')
@@ -365,7 +367,7 @@ def main():
 
     # Install 3rd Party Packages
 
-    if "3rdparty" or "3rdParty" in args.skip:
+    if "3rdparty" in skip_items.lower():
         print('\n' + '*'*100 + '\n\tSkipping 3rd Party Package Install Process\n' + '*'*100 + '\n')
     else:
         print('\n' + '*'*100 + '\n\tInstalling Additional 3rd Party Packages...\n' + '*'*100 + '\n')
