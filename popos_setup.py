@@ -289,27 +289,42 @@ def main():
         print('Backup Directory creation failed.  Exiting script.')
         quit()
 
+    # Identify System Type - unpack os.uname() tuple
+
+    # Read /etc/os-release and decide what OS the system is
+
+    os_info = os.popen('cat /etc/os-release | grep ID', 'r').read()
+
+    if "ubuntu" in os_info:
+        prefix_command = 'sudo apt '
+    elif 'fedora' in os_info:
+        prefix_command = 'sudo dnf '
+    else:
+        print('OS type not found!')
+        quit()
+
     # Command Variables - Can be user defined.  New variable can be added to update_command array.
 
     pkg_commands = read_json_file('data/pkgcommands.json')
 
     # Read Python Object attributes and store in variables
-    update_command = pkg_commands.get('update_command')
-    full_upgrade_command = pkg_commands.get('full_upgrade_command')
-    favorite_packages = pkg_commands.get('favorite_packages')
-    codec_packages = pkg_commands.get('codec_packages')
-    sshfs_support = pkg_commands.get('sshfs_support')
-    python3_extras = pkg_commands.get('python3_extras')
-    programming_extras = pkg_commands.get('programming_extras')
-    cleanup_packages = pkg_commands.get('cleanup_packages')
-    flatpak_packages = pkg_commands.get('flatpak_packages')
-    snap_packages = pkg_commands.get('snap_packages')
-    set_default_editor = pkg_commands.get('set_default_editor')
+    update_command = prefix_command + str(pkg_commands.get('update_command'))
+    upgrade_command = prefix_command + str(pkg_commands.get('upgrade command'))
+    full_upgrade_command = prefix_command + str(pkg_commands.get('full_upgrade_command'))
+    favorite_packages = prefix_command + str(pkg_commands.get('favorite_packages'))
+    codec_packages = prefix_command + str(pkg_commands.get('codec_packages'))
+    sshfs_support = prefix_command + str(pkg_commands.get('sshfs_support'))
+    python3_extras = prefix_command + str(pkg_commands.get('python3_extras'))
+    programming_extras = prefix_command + str(pkg_commands.get('programming_extras'))
+    cleanup_packages = prefix_command + str(pkg_commands.get('cleanup_packages'))
+    flatpak_packages = str(pkg_commands.get('flatpak_packages'))
+    snap_packages = str(pkg_commands.get('snap_packages'))
+    set_default_editor = str(pkg_commands.get('set_default_editor'))
 
 
     # Create Array of upgrade commands to parse through
 
-    update_commands_array = [update_command, full_upgrade_command]
+    update_commands_array = [update_command, upgrade_command, full_upgrade_command]
 
     # Create Array of install commands to parse through
 
@@ -328,10 +343,10 @@ def main():
     syntax_commands = read_json_file('data/syntaxcommands.json')
 
     # Read Python Object attributes and store in variables
-    syntax_dot_bash_rc = syntax_commands.get('syntax_dot_bash_rc')
-    syntax_bash_aliases = syntax_commands.get('syntax_bash_aliases')
-    syntax_dot_vimrc = syntax_commands.get('syntax_dot_vimrc')
-    syntax_bluetooth_ERTM_disable = syntax_commands.get('syntax_bluetooth_ERTM_disable')
+    syntax_dot_bash_rc = str(syntax_commands.get('syntax_dot_bash_rc'))
+    syntax_bash_aliases = str(syntax_commands.get('syntax_bash_aliases'))
+    syntax_dot_vimrc = str(syntax_commands.get('syntax_dot_vimrc'))
+    syntax_bluetooth_ERTM_disable = str(syntax_commands.get('syntax_bluetooth_ERTM_disable'))
     
     # Create Array of script variables to parse through
 
