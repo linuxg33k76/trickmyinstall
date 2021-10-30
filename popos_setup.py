@@ -254,6 +254,17 @@ def main():
     VIMRC_FILE = HOME_DIR + '/.vimrc'
     ETC_SYSFS_CONF_FILE = '/etc/sysfs.conf'
 
+    # Identify Terminal Size
+
+    c = os.popen('stty size', 'r').read().split()[1]
+
+    if int(c) > 120:
+        columns = 120
+    else:
+        columns = int(c)
+
+    # Process CLI arguments
+
     if args.test is True:
         print(args)
         quit()
@@ -272,7 +283,7 @@ def main():
 
     # Create Backup Directory
 
-    print('\n' + '*'*100 + '\n\tCreating Backup Directory for config files...\n' + '*'*100 + '\n')
+    print('\n' + '*'*columns + '\n\tCreating Backup Directory for config files...\n' + '*'*columns + '\n')
 
     if args.backup_directory == 'default':
         backup_directory = HOME_DIR + '/backup/'
@@ -356,7 +367,7 @@ def main():
                             syntax_bluetooth_ERTM_disable
                           ]
 
-    print('\n' + '*'*100 + '\n\tGetting Kernel and other System information...\n' + '*'*100 + '\n')
+    print('\n' + '*'*columns + '\n\tGetting Kernel and other System information...\n' + '*'*columns + '\n')
 
     shell = os.getenv('SHELL')
     kernel = os.system('uname -svr')
@@ -367,25 +378,25 @@ def main():
     skip_items = ' '.join(args.skip)
 
     if "update" in skip_items.lower():
-        print('\n' + '*'*100 + '\n\tSkipping Update Process\n' + '*'*100 + '\n')
+        print('\n' + '*'*columns + '\n\tSkipping Update Process\n' + '*'*columns + '\n')
     else:
-        print('\n' + '*'*100 + '\n\tUpdating System...\n' + '*'*100 + '\n')
+        print('\n' + '*'*columns + '\n\tUpdating System...\n' + '*'*columns + '\n')
 
         process_commands(update_commands_array)
 
     if "install" in skip_items.lower():
-        print('\n' + '*'*100 + '\n\tSkipping Package Install Process\n' + '*'*100 + '\n')
+        print('\n' + '*'*columns + '\n\tSkipping Package Install Process\n' + '*'*columns + '\n')
     else:
-        print('\n' + '*'*100 + '\n\tInstalling Additional Packages...\n' + '*'*100 + '\n')
+        print('\n' + '*'*columns + '\n\tInstalling Additional Packages...\n' + '*'*columns + '\n')
 
         process_commands(install_commamds_array)
 
     # Install 3rd Party Packages
 
     if "3rdparty" in skip_items.lower():
-        print('\n' + '*'*100 + '\n\tSkipping 3rd Party Package Install Process\n' + '*'*100 + '\n')
+        print('\n' + '*'*columns + '\n\tSkipping 3rd Party Package Install Process\n' + '*'*columns + '\n')
     else:
-        print('\n' + '*'*100 + '\n\tInstalling Additional 3rd Party Packages...\n' + '*'*100 + '\n')
+        print('\n' + '*'*columns + '\n\tInstalling Additional 3rd Party Packages...\n' + '*'*columns + '\n')
 
         # Python Foo:  get diretory list and filter for *.deb using Regular Expressions!
         third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.deb', val)]
@@ -403,13 +414,13 @@ def main():
    
     # Set Default CLI editor...I like Vim!
     
-    print('\n' + '*'*100 + '\n\tSetting the default editor (I like VIM)...\n' + '*'*100 + '\n')
+    print('\n' + '*'*columns + '\n\tSetting the default editor (I like VIM)...\n' + '*'*columns + '\n')
 
     os.system(set_default_editor)
     
     # Add lines to configuration files
 
-    print('\n' + '*'*100 + '\n\tConfiguring the Config files...\n' + '*'*100 + '\n')
+    print('\n' + '*'*columns + '\n\tConfiguring the Config files...\n' + '*'*columns + '\n')
 
     # Create Config File Array to parse through.  Create Dictionary of config files : config script data.
 
@@ -444,7 +455,7 @@ def main():
                 pass
     
     # Post Installation Work
-    print('\n' + '*'*100 + '\n\tPost Installation Cleanup...\n' + '*'*100 + '\n')
+    print('\n' + '*'*columns + '\n\tPost Installation Cleanup...\n' + '*'*columns + '\n')
 
     # System Package Cleanup
 
@@ -459,9 +470,9 @@ def main():
     # Test to see if reboot is needed
 
     if test_for_file_exists('/var/run/reboot-required'):
-        print('\n' + '*'*100 + '\n\tPlease reboot to complete installation\n' + '*'*100 + '\n')
+        print('\n' + '*'*columns + '\n\tPlease reboot to complete installation\n' + '*'*columns + '\n')
     else:
-        print('\n' + '*'*100 + '\n\tInstallation Complete!\n' + '*'*100 + '\n')
+        print('\n' + '*'*columns + '\n\tInstallation Complete!\n' + '*'*columns + '\n')
 
 if __name__ == '__main__':
 
