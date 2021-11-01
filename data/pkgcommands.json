@@ -8,7 +8,7 @@
     "python3_extras" : "install -y python3-pip python3-venv",
     "programming_extras" : "install -y rustc vim code",
     "cleanup_packages" : "autoremove",
-    "flatpak_packages" : "flatpak install org.raspberrypi.rpi-imager",
+    "flatpak_packages" : "flatpak install org.raspberrypi.rpi-imagerflatpak && flatpak flathub com.realm667.Wolfenstein_Blade_of_Agony",
     "snap_packages" : "sudo snap install brave",
     "set_default_editor" : "sudo update-alternatives --config editor"
 }
