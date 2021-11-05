@@ -304,12 +304,14 @@ def main():
 
     # Read /etc/os-release and decide what OS the system is
 
-    os_info = os.popen('cat /etc/os-release | grep ID', 'r').read()
+    os_info = os.popen('cat /etc/*-release | grep ID', 'r').read()
 
     if "ubuntu" in os_info:
         prefix_command = 'sudo apt '
+        prefix_install_command = 'sudo apt install -y '
     elif 'fedora' in os_info:
         prefix_command = 'sudo dnf '
+        prefix_install_command = 'sudo dnf install '
     else:
         print('OS type not found!')
         quit()
@@ -322,13 +324,14 @@ def main():
     update_command = prefix_command + str(pkg_commands.get('update_command'))
     upgrade_command = prefix_command + str(pkg_commands.get('upgrade command'))
     full_upgrade_command = prefix_command + str(pkg_commands.get('full_upgrade_command'))
-    favorite_packages = prefix_command + str(pkg_commands.get('favorite_packages'))
-    codec_packages = prefix_command + str(pkg_commands.get('codec_packages'))
-    sshfs_support = prefix_command + str(pkg_commands.get('sshfs_support'))
-    python3_extras = prefix_command + str(pkg_commands.get('python3_extras'))
-    programming_extras = prefix_command + str(pkg_commands.get('programming_extras'))
+    favorite_packages = prefix_install_command + str(pkg_commands.get('favorite_packages'))
+    codec_packages = prefix_install_command + str(pkg_commands.get('codec_packages'))
+    sshfs_support = prefix_install_command + str(pkg_commands.get('sshfs_support'))
+    python3_extras = prefix_install_command + str(pkg_commands.get('python3_extras'))
+    programming_extras = prefix_install_command + str(pkg_commands.get('programming_extras'))
     cleanup_packages = prefix_command + str(pkg_commands.get('cleanup_packages'))
     flatpak_packages = str(pkg_commands.get('flatpak_packages'))
+    # To Do - update these for Fedora
     snap_packages = str(pkg_commands.get('snap_packages'))
     set_default_editor = str(pkg_commands.get('set_default_editor'))
 
@@ -460,8 +463,14 @@ def main():
     # System Package Cleanup
 
     print('\nRemoving Unused Packages...\n')
-    os.system('sudo apt autoremove')
-    
+
+    if "ubuntu" in os_info:
+        os.system('sudo apt autoremove')
+    elif 'fedora' in os_info:
+        os.system('sudo dnf clean')
+    else:
+        print('OS type not found!  Not cleaning system.')
+
     # Store a list of installed packages in HOME/backup (overwrite if file exists ">"; NOT append ">>")
 
     print(f'\n Creating a list of installed packages in {backup_directory}...')
