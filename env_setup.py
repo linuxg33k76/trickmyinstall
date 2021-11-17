@@ -7,7 +7,7 @@ Date:  18 September 2021
 
 Description:  This program configures Linux environment per user requirements found in data/.
 
-Distros Supported:  Ubuntu, Fedora
+Distros Supported:  Ubuntu, Fedora, 
 
 '''
 
