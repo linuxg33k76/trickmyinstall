@@ -5,7 +5,9 @@ Pop! OS Python Setup Script
 Author:  Ben C. Calvert
 Date:  18 September 2021
 
-Description:  This program configures Pop! OS Linux per user requirements found in data/.
+Description:  This program configures Linux environment per user requirements found in data/.
+
+Distros Supported:  Ubuntu, Fedora
 
 '''
 
