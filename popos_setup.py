@@ -309,48 +309,49 @@ def main():
     if "ubuntu" in os_info:
         prefix_command = 'sudo apt '
         prefix_install_command = 'sudo apt install -y '
+    
+
+        # Command Variables - Can be user defined.  New variable can be added to update_command array.
+
+        pkg_commands = read_json_file('data/pkgcommands.json')
+
+        # Read Python Object attributes and store in variables
+        update_command = prefix_command + str(pkg_commands.get('update_command'))
+        upgrade_command = prefix_command + str(pkg_commands.get('upgrade command'))
+        full_upgrade_command = prefix_command + str(pkg_commands.get('full_upgrade_command'))
+        favorite_packages = prefix_install_command + str(pkg_commands.get('favorite_packages'))
+        codec_packages = prefix_install_command + str(pkg_commands.get('codec_packages'))
+        sshfs_support = prefix_install_command + str(pkg_commands.get('sshfs_support'))
+        python3_extras = prefix_install_command + str(pkg_commands.get('python3_extras'))
+        programming_extras = prefix_install_command + str(pkg_commands.get('programming_extras'))
+        cleanup_packages = prefix_command + str(pkg_commands.get('cleanup_packages'))
+        flatpak_packages = str(pkg_commands.get('flatpak_packages'))
+        snap_packages = str(pkg_commands.get('snap_packages'))
+        set_default_editor = str(pkg_commands.get('set_default_editor'))
+
+
+        # Create Array of upgrade commands to parse through
+
+        update_commands_array = [update_command, upgrade_command, full_upgrade_command]
+
+        # Create Array of install commands to parse through
+
+        install_commamds_array = [  favorite_packages, 
+                                    codec_packages, 
+                                    sshfs_support, 
+                                    python3_extras, 
+                                    programming_extras, 
+                                    cleanup_packages, 
+                                    flatpak_packages, 
+                                    snap_packages
+                                ]
+
     elif 'fedora' in os_info:
-        prefix_command = 'sudo dnf '
-        prefix_install_command = 'sudo dnf install '
+        update_commands_array = ['sudo dnf update', 'sudo dnf upgrade']
+        install_commamds_array = ['sudo yum -y install $(cat data/fedora_packages.dat)']
     else:
         print('OS type not found!')
         quit()
-
-    # Command Variables - Can be user defined.  New variable can be added to update_command array.
-
-    pkg_commands = read_json_file('data/pkgcommands.json')
-
-    # Read Python Object attributes and store in variables
-    update_command = prefix_command + str(pkg_commands.get('update_command'))
-    upgrade_command = prefix_command + str(pkg_commands.get('upgrade command'))
-    full_upgrade_command = prefix_command + str(pkg_commands.get('full_upgrade_command'))
-    favorite_packages = prefix_install_command + str(pkg_commands.get('favorite_packages'))
-    codec_packages = prefix_install_command + str(pkg_commands.get('codec_packages'))
-    sshfs_support = prefix_install_command + str(pkg_commands.get('sshfs_support'))
-    python3_extras = prefix_install_command + str(pkg_commands.get('python3_extras'))
-    programming_extras = prefix_install_command + str(pkg_commands.get('programming_extras'))
-    cleanup_packages = prefix_command + str(pkg_commands.get('cleanup_packages'))
-    flatpak_packages = str(pkg_commands.get('flatpak_packages'))
-    # To Do - update these for Fedora
-    snap_packages = str(pkg_commands.get('snap_packages'))
-    set_default_editor = str(pkg_commands.get('set_default_editor'))
-
-
-    # Create Array of upgrade commands to parse through
-
-    update_commands_array = [update_command, upgrade_command, full_upgrade_command]
-
-    # Create Array of install commands to parse through
-
-    install_commamds_array = [  favorite_packages, 
-                                codec_packages, 
-                                sshfs_support, 
-                                python3_extras, 
-                                programming_extras, 
-                                cleanup_packages, 
-                                flatpak_packages, 
-                                snap_packages
-                            ]
 
     # Configuration Script Data
 
@@ -360,22 +361,23 @@ def main():
     syntax_dot_bash_rc = str(syntax_commands.get('syntax_dot_bash_rc'))
     syntax_bash_aliases = str(syntax_commands.get('syntax_bash_aliases'))
     syntax_dot_vimrc = str(syntax_commands.get('syntax_dot_vimrc'))
-    syntax_bluetooth_ERTM_disable = str(syntax_commands.get('syntax_bluetooth_ERTM_disable'))
-    
+
     # Create Array of script variables to parse through
 
     script_syntax_array = [ syntax_dot_bash_rc, 
                             syntax_bash_aliases, 
-                            syntax_dot_vimrc, 
-                            syntax_bluetooth_ERTM_disable
+                            syntax_dot_vimrc
                           ]
+
+    if "ubuntu" in os_info:
+        syntax_bluetooth_ERTM_disable = str(syntax_commands.get('syntax_bluetooth_ERTM_disable'))
+        script_syntax_array.append(syntax_bluetooth_ERTM_disable)
 
     print('\n' + '*'*columns + '\n\tGetting Kernel and other System information...\n' + '*'*columns + '\n')
 
     shell = os.getenv('SHELL')
     kernel = os.system('uname -svr')
     
-
     # Run install and setup commands
 
     skip_items = ' '.join(args.skip)
@@ -402,32 +404,59 @@ def main():
         print('\n' + '*'*columns + '\n\tInstalling Additional 3rd Party Packages...\n' + '*'*columns + '\n')
 
         # Python Foo:  get diretory list and filter for *.deb using Regular Expressions!
-        third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.deb', val)]
+        if "ubuntu" in os_info:
+            third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.deb', val)]
+        elif "fedora" in os_info:
+            third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.rpm', val)]
+        else:
+            pass
 
         # Print 3rdParty Apps to install
         print(f'The following 3rdParty Apps will be installed:\n\t{", ".join(third_party_apps)}')
 
-        # Install the app
-        for app in third_party_apps:
-            os.system(f'sudo apt install {download_dir}{app}')
+        # Install the app(s)
+        if "ubuntu" in os_info:
+            for app in third_party_apps:
+                os.system(f'sudo apt install {download_dir}{app}')
+        elif "fedora" in os_info:
+            for app in third_party_apps:
+                os.system(f'sudo dnf install {download_dir}{app}')
+        else:
+            pass
 
         # Check for new versions
         print('\nUpdating system after 3rdParty App updates...\n')
-        os.system('sudo apt update && sudo apt upgrade')
+
+        if "ubuntu" in os_info:
+            os.system('sudo apt update && sudo apt upgrade')
+        elif "fedora" in os_info:
+            os.system('sudo dnf update && sudo dnf upgrade')
+        else:
+            pass
    
     # Set Default CLI editor...I like Vim!
-    
     print('\n' + '*'*columns + '\n\tSetting the default editor (I like VIM)...\n' + '*'*columns + '\n')
-
-    os.system(set_default_editor)
     
+    if "ubuntu" in os_info:    
+        os.system(set_default_editor)
+    elif "fedora" in os_info:
+        os.system('sudo dnf remove nano-default-editor')
+        os.system('sudo dnf install vim-default-editor')
+    else:
+        pass
+
     # Add lines to configuration files
 
     print('\n' + '*'*columns + '\n\tConfiguring the Config files...\n' + '*'*columns + '\n')
 
     # Create Config File Array to parse through.  Create Dictionary of config files : config script data.
 
-    config_files_array = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE, ETC_SYSFS_CONF_FILE]
+    if "ubuntu" in os_info:
+        config_files_array = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE, ETC_SYSFS_CONF_FILE]
+    elif "fedora" in os_info:
+        config_files_array = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE]
+    else:
+        pass
     
     # Check for length of arrays to be equal - program check!
 
@@ -462,19 +491,20 @@ def main():
 
     # System Package Cleanup
 
-    print('\nRemoving Unused Packages...\n')
-
     if "ubuntu" in os_info:
+        print('\nRemoving Unused Packages...\n')
         os.system('sudo apt autoremove')
-    elif 'fedora' in os_info:
-        os.system('sudo dnf clean')
-    else:
-        print('OS type not found!  Not cleaning system.')
 
     # Store a list of installed packages in HOME/backup (overwrite if file exists ">"; NOT append ">>")
 
     print(f'\n Creating a list of installed packages in {backup_directory}...')
-    os.system(f'dpkg --get-selections > {backup_directory}Installed_Packages_$(date +%m_%d_%Y).log')
+
+    if "ubuntu" in os_info:
+        os.system(f'dpkg --get-selections > {backup_directory}Installed_Ubuntu_Packages_$(date +%m_%d_%Y).log')
+    elif "fedora" in os_info:
+        os.system(f'sudo rpm -qa > {backup_directory}Installed_Fedora_Packages_$(date  +%m_%d_%Y).log')
+    else:
+        pass
 
     # Test to see if reboot is needed
 
