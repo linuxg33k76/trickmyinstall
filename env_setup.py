@@ -312,6 +312,9 @@ def main():
         prefix_command = 'sudo apt '
         prefix_install_command = 'sudo apt install -y '
     
+        # # To Do:  Ubuntu Restore from packages
+        # update_commands_array = ['sudo apt update', 'sudo apt upgrade']
+        # install_commamds_array = ['sudo dpkg --set-selections < data/ubuntu_packages.dat && sudo apt-get dselect-upgrade']
 
         # Command Variables - Can be user defined.  New variable can be added to update_command array.
 
