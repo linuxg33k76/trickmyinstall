@@ -312,34 +312,26 @@ def main():
         prefix_command = 'sudo apt '
         prefix_install_command = 'sudo apt install -y '
     
-        # # To Do:  Ubuntu Restore from packages
-        # update_commands_array = ['sudo apt update', 'sudo apt upgrade']
-        # install_commamds_array = ['sudo dpkg --set-selections < data/ubuntu_packages.dat && sudo apt-get dselect-upgrade']
-
-        # Command Variables - Can be user defined.  New variable can be added to update_command array.
+        # Ubuntu Install from ubuntu_packages.dat
+        update_commands_array = ['sudo apt update', 'sudo apt upgrade', 'sudo apt full-upgrade']
+        
+        # # Command Variables - Can be user defined.  New variable can be added to update_command array.
 
         pkg_commands = read_json_file('data/pkgcommands.json')
+        set_default_editor = str(pkg_commands.get('set_default_editor'))
+        flatpak_packages = str(pkg_commands.get('flatpak_packages'))
+        snap_packages = str(pkg_commands.get('snap_packages'))
 
         # Read Python Object attributes and store in variables
-        update_command = prefix_command + str(pkg_commands.get('update_command'))
-        upgrade_command = prefix_command + str(pkg_commands.get('upgrade command'))
-        full_upgrade_command = prefix_command + str(pkg_commands.get('full_upgrade_command'))
+        
         favorite_packages = prefix_install_command + str(pkg_commands.get('favorite_packages'))
         codec_packages = prefix_install_command + str(pkg_commands.get('codec_packages'))
         sshfs_support = prefix_install_command + str(pkg_commands.get('sshfs_support'))
         python3_extras = prefix_install_command + str(pkg_commands.get('python3_extras'))
         programming_extras = prefix_install_command + str(pkg_commands.get('programming_extras'))
         cleanup_packages = prefix_command + str(pkg_commands.get('cleanup_packages'))
-        flatpak_packages = str(pkg_commands.get('flatpak_packages'))
-        snap_packages = str(pkg_commands.get('snap_packages'))
-        set_default_editor = str(pkg_commands.get('set_default_editor'))
-
-
-        # Create Array of upgrade commands to parse through
-
-        update_commands_array = [update_command, upgrade_command, full_upgrade_command]
-
-        # Create Array of install commands to parse through
+        
+        # # Create Array of install commands to parse through
 
         install_commamds_array = [  favorite_packages, 
                                     codec_packages, 
