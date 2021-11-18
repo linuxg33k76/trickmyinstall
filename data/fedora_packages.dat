@@ -1708,6 +1708,7 @@ libcurl-7.79.1-1.fc35.i686
 gnome-shell-extension-pop-shell-shortcut-overrides-1.2.0^4.1fddaa8-1.fc35.noarch
 gnome-extensions-app-41~rc-1.fc35.x86_64
 gnome-shell-extension-pop-shell-1.2.0^4.1fddaa8-1.fc35.noarch
+gnome-shell-extension-dash-to-dock.noarch
 f34-backgrounds-extras-base-34.0.1-2.fc35.noarch
 f34-backgrounds-base-34.0.1-2.fc35.noarch
 f34-backgrounds-gnome-34.0.1-2.fc35.noarch
