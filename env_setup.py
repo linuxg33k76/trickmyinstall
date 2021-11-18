@@ -353,7 +353,7 @@ def main():
 
     elif 'fedora' in os_info:
         update_commands_array = ['sudo dnf update', 'sudo dnf upgrade']
-        install_commamds_array = ['sudo yum -y install $(cat data/fedora_packages.dat)']
+        install_commamds_array = ['sudo yum -y -b --skip-broken install $(cat data/fedora_packages.dat)']
     else:
         print('OS type not found!')
         quit()
