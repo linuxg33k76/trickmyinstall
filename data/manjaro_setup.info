@@ -1,0 +1,22 @@
+Manjaro Installation Packages
+
+Pacman
+gnome-terminal-fedora - for gnome terminal tranparency (replaces pre installed gnome-terminal)
+linux513-broadcom-wl - macmini wi-fi network driver
+vim - cli file editor
+
+
+AUR
+google-chrome - to play Stadia Games
+
+
+Flatpak
+sudo flatpak install flathub code - select #17
+
+
+Edits
+
+/etc/environment
+  Set EDITOR to -->  EDITOR=/usr/bin/vim
+  
+
