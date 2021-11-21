@@ -31,3 +31,15 @@ Environment:
             POWERLINE_BASH_SELECT=1
             . /usr/share/powerline/bash/powerline.sh
         fi" >> /home/${USER}/.bashrc
+    - mkdir -p /home/${USER}/.config/powerline
+    - >
+        cat <<-'EOF' > ~/.config/powerline/config.json
+            {
+                "ext": {
+                    "shell": {
+                            "theme": "default_leftonly"
+                            }
+                        }
+            }
+        EOF
+    - powerline-daemon --replace
