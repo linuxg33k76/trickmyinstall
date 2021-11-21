@@ -9,7 +9,8 @@ Packages:
     - echo "Enabling RPMFusion Repos..."
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
     - sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-    - sudo dnf install gnome-shell-extension-dash-to-dock gnome-shell-extension-pop-shell neofetch steam vim f34-backgrounds-gnome f33-backgrounds-gnome
+    - sudo dnf install gnome-shell-extension-dash-to-dock gnome-shell-extension-pop-shell neofetch steam vim snapd f34-backgrounds-gnome f33-backgrounds-gnome
+    - snap install 1password
 
 MacDevice:
     - sudo dnf install broadcom-wl-dkms
@@ -22,4 +23,4 @@ VimSetup:
     - sudo dnf install vim-default-editor
 
 Environment:
-    - grep "neofetch" /home/($USER)/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
+    - grep "neofetch" /home/${USER}/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
