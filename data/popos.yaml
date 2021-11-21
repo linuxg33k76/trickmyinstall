@@ -6,7 +6,7 @@ Update:
     - sudo apt full-upgrade
 
 Packages:
-    - sudo apt install snapd google-chrome-stable neofetch gnome-tweaks gnome-boxes libavcoded-extra steam sysfsutils
+    - sudo apt install snapd google-chrome-stable neofetch gnome-tweaks gnome-boxes libavcoded-extra steam sysfsutils powerline
     - sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
     - sudo apt install exfat-fuse exfat-utils sshfs
     - sudo apt install python3-pip python3-venv
@@ -29,4 +29,11 @@ Environment:
     - grep "alias upgrade='sudo apt update && sudo apt full-upgrade'" /home/${USER}/.bash_aliases || echo "alias upgrade='sudo apt update && sudo apt full-upgrade'" /home/${USER}/.bash_aliases
     - grep "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" /home/${USER}/.bash_aliases || echo "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" /home/${USER}/.bash_aliases
     - grep "module/bluetooth/parameters/disable_ertm=1" /etc/sysfs.conf || sudo echo "module/bluetooth/parameters/disable_ertm=1" /etc/sysfs.conf
+    - >
+        grep "powerline-daemon" /home/${USER}/.bashrc || echo "if [ -f `which powerline-daemon` ]; then
+            powerline-daemon -q
+            POWERLINE_BASH_CONTINUATION=1
+            POWERLINE_BASH_SELECT=1
+            . /usr/share/powerline/bash/powerline.sh
+        fi" >> /home/${USER}/.bashrc
     - sudo apt autoremove
