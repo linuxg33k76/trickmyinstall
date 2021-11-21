@@ -1,0 +1,29 @@
+#YAML
+
+Update:
+    - sudo apt update
+    - sudo apt upgrade
+    - sudo apt full-upgrade
+
+Packages:
+    - sudo apt install snapd google-chrome-stable neofetch gnome-tweaks gnome-boxes libavcoded-extra steam sysfsutils
+    - sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
+    - sudo apt install exfat-fuse exfat-utils sshfs
+    - sudo apt install python3-pip python3-venv
+    - suod apt install rustc vim code
+    - sudo flatpak install org.raspberrypi.rpi-imager
+    - sudo snap install 1password
+
+VimSetup:
+    - echo "set number" > /home/${USER}/.vimrc
+    - echo "syntax on" >> /home/${USER}/.vimrc
+    - echo "colorscheme ron" >> /home/${USER}/.vimrc
+    - sudo update-alternatives --cofnig editor
+
+Environment:
+    - grep "neofetch" /home/${USER}/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
+    - grep "alias update='sudo apt update && sudo apt upgrade && flatpak update -y && sudo snap refresh --list" /home/${USER}/.bash_aliases || echo "alias update='sudo apt update && sudo apt upgrade && flatpak update -y && sudo snap refresh --list" /home/${USER}/.bash_aliases
+    - grep "alias upgrade='sudo apt update && sudo apt full-upgrade'" /home/${USER}/.bash_aliases || echo "alias upgrade='sudo apt update && sudo apt full-upgrade'" /home/${USER}/.bash_aliases
+    - grep "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" /home/${USER}/.bash_aliases || echo "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" /home/${USER}/.bash_aliases
+    - grep "module/bluetooth/parameters/disable_ertm=1" /etc/sysfs.conf || sudo echo "module/bluetooth/parameters/disable_ertm=1" /etc/sysfs.conf
+    - sudo apt autoremove

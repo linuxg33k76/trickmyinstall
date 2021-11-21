@@ -1,0 +1,22 @@
+#YAML
+
+Update:
+    - sudo dnf update
+    - sudo dnf upgrade
+    - sudo dnf full-upgrade
+
+Packages:
+    - echo "Enabling RPMFusion Repos..."
+    - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    - sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    - sudo dnf install gnome-shell-extension-dash-to-dock gnome-shell-extension-pop-shell neofetch steam vim f34-backgrounds-gnome f33-backgrounds-gnome
+
+VimSetup:
+    - echo "set number" > /home/${USER}/.vimrc
+    - echo "syntax on" >> /home/${USER}/.vimrc
+    - echo "colorscheme ron" >> /home/${USER}/.vimrc
+    - sudo dnf remove nano-default-editor
+    - sudo dnf install vim-default-editor
+
+Environment:
+    - grep "neofetch" /home/($USER)/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc

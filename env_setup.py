@@ -13,8 +13,9 @@ Distros Supported:  Ubuntu, Fedora,
 
 import os
 import re
-import json
+import yaml
 from classes import ArgsClass as AC
+from classes import LinuxSystemInfo as LSI
 
 # Declare Program Functions
 
@@ -141,7 +142,7 @@ def write_config_file(file, lines):
 def read_config_file(file):
 
     '''
-    Read data from config file
+    Read data from config file - in YAML format
 
     file: string (complete path to file)
 
@@ -149,21 +150,21 @@ def read_config_file(file):
     '''
 
     with open(file, 'r') as rf:
-        return rf.readlines()
+        return yaml.safe_load(rf)
 
 
-def read_json_file(file):
-    '''
-    Process commands in config file and return json object
+# def read_json_file(file):
+#     '''
+#     Process commands in config file and return json object
 
-    file: string (complete path to file)
+#     file: string (complete path to file)
 
-    return: Python Object
-    '''
+#     return: Python Object
+#     '''
 
-    with open(file, 'rb') as json_file:
-        json_data = json_file.read()
-    return json.loads(json_data)
+#     with open(file, 'rb') as json_file:
+#         json_data = json_file.read()
+#     return json.loads(json_data)
 
 
 def process_config_file(config_file, search_term, script_syntax):
@@ -251,10 +252,7 @@ def main():
     # Declare Constants and Variables
 
     HOME_DIR = os.getenv("HOME")
-    ALIAS_FILE = HOME_DIR + '/.bash_aliases'
-    BASHRC_FILE = HOME_DIR + '/.bashrc'
-    VIMRC_FILE = HOME_DIR + '/.vimrc'
-    ETC_SYSFS_CONF_FILE = '/etc/sysfs.conf'
+    os_info = LSI.LinuxSystemInfo().system
 
     # Identify Terminal Size
 
@@ -276,13 +274,6 @@ def main():
     else:
         download_dir = args.directory
 
-    # Validate Download Directory
-
-    # dir_exists = validate_dir(download_dir)
-
-    # if dir_exists is False:
-    #     args.skip = '3rdParty'
-
     # Create Backup Directory
 
     print('\n' + '*'*columns + '\n\tCreating Backup Directory for config files...\n' + '*'*columns + '\n')
@@ -302,78 +293,43 @@ def main():
         print('Backup Directory creation failed.  Exiting script.')
         quit()
 
-    # Identify System Type - unpack os.uname() tuple
-
     # Read /etc/os-release and decide what OS the system is
 
-    os_info = os.popen('cat /etc/*-release | grep ID', 'r').read()
-
     if "ubuntu" in os_info:
-        prefix_command = 'sudo apt '
-        prefix_install_command = 'sudo apt install -y '
+
+        # Ubuntu/Pop OS setup parameters
+        script = read_config_file('data/ubuntu.yaml')
+        update_commands_array = yaml_config['Update']
+        install_commamds_array = yaml_config['Packages']
+        macwifi_commands_array = yaml_config['MacDevice']
+        vim_commands_array = yaml_config['VimSetup']
+        environment_commands = yaml_config['Environment']
     
-        # Ubuntu Install from ubuntu_packages.dat
-        update_commands_array = ['sudo apt update', 'sudo apt upgrade', 'sudo apt full-upgrade']
-        
-        # # Command Variables - Can be user defined.  New variable can be added to update_command array.
-
-        pkg_commands = read_json_file('data/pkgcommands.json')
-        set_default_editor = str(pkg_commands.get('set_default_editor'))
-        flatpak_packages = str(pkg_commands.get('flatpak_packages'))
-        snap_packages = str(pkg_commands.get('snap_packages'))
-
-        # Read Python Object attributes and store in variables
-        
-        favorite_packages = prefix_install_command + str(pkg_commands.get('favorite_packages'))
-        codec_packages = prefix_install_command + str(pkg_commands.get('codec_packages'))
-        sshfs_support = prefix_install_command + str(pkg_commands.get('sshfs_support'))
-        python3_extras = prefix_install_command + str(pkg_commands.get('python3_extras'))
-        programming_extras = prefix_install_command + str(pkg_commands.get('programming_extras'))
-        cleanup_packages = prefix_command + str(pkg_commands.get('cleanup_packages'))
-        
-        # # Create Array of install commands to parse through
-
-        install_commamds_array = [  favorite_packages, 
-                                    codec_packages, 
-                                    sshfs_support, 
-                                    python3_extras, 
-                                    programming_extras, 
-                                    cleanup_packages, 
-                                    flatpak_packages, 
-                                    snap_packages
-                                ]
-
     elif 'fedora' in os_info:
-        update_commands_array = ['sudo dnf update', 'sudo dnf upgrade']
-        install_commamds_array = ['sudo yum -y -b --skip-broken install $(cat data/fedora_packages.dat)']
+
+        # Fedora setup parameters
+        script = read_config_file('data/fedora.yaml')
+        update_commands_array = yaml_config['Update']
+        install_commamds_array = yaml_config['Packages']
+        macwifi_commands_array = yaml_config['MacDevice']
+        vim_commands_array = yaml_config['VimSetup']
+        environment_commands = yaml_config['Environment']
+    
+    elif 'manjaro' in os_info:
+
+        # Manjaro setup parameters
+        yaml_config = read_config_file('data/manjaro.yaml')
+        update_commands_array = yaml_config['Update']
+        install_commamds_array = yaml_config['Packages']
+        macwifi_commands_array = yaml_config['MacDevice']
+        vim_commands_array = yaml_config['VimSetup']
+        environment_commands = yaml_config['Environment']
+
     else:
         print('OS type not found!')
         quit()
 
-    # Configuration Script Data
-
-    syntax_commands = read_json_file('data/syntaxcommands.json')
-
-    # Read Python Object attributes and store in variables
-    syntax_dot_bash_rc = str(syntax_commands.get('syntax_dot_bash_rc'))
-    syntax_bash_aliases = str(syntax_commands.get('syntax_bash_aliases'))
-    syntax_dot_vimrc = str(syntax_commands.get('syntax_dot_vimrc'))
-
-    # Create Array of script variables to parse through
-
-    script_syntax_array = [ syntax_dot_bash_rc, 
-                            syntax_bash_aliases, 
-                            syntax_dot_vimrc
-                          ]
-
-    if "ubuntu" in os_info:
-        syntax_bluetooth_ERTM_disable = str(syntax_commands.get('syntax_bluetooth_ERTM_disable'))
-        script_syntax_array.append(syntax_bluetooth_ERTM_disable)
-
     print('\n' + '*'*columns + '\n\tGetting Kernel and other System information...\n' + '*'*columns + '\n')
-
-    shell = os.getenv('SHELL')
-    kernel = os.system('uname -svr')
     
     # Run install and setup commands
 
@@ -406,7 +362,7 @@ def main():
         elif "fedora" in os_info:
             third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.rpm', val)]
         else:
-            pass
+            third_party_apps = ['None']
 
         # Print 3rdParty Apps to install
         print(f'The following 3rdParty Apps will be installed:\n\t{", ".join(third_party_apps)}')
@@ -421,77 +377,20 @@ def main():
         else:
             pass
 
-        # Check for new versions
-        print('\nUpdating system after 3rdParty App updates...\n')
+    # Check for new versions
+    print('\nUpdating system after 3rdParty App Install...\n')
 
-        if "ubuntu" in os_info:
-            os.system('sudo apt update && sudo apt upgrade')
-        elif "fedora" in os_info:
-            os.system('sudo dnf update && sudo dnf upgrade')
-        else:
-            pass
+    process_commands(update_commands_array)
    
     # Set Default CLI editor...I like Vim!
     print('\n' + '*'*columns + '\n\tSetting the default editor (I like VIM)...\n' + '*'*columns + '\n')
     
-    if "ubuntu" in os_info:    
-        os.system(set_default_editor)
-    elif "fedora" in os_info:
-        os.system('sudo dnf remove nano-default-editor')
-        os.system('sudo dnf install vim-default-editor')
-    else:
-        pass
+    process_commands(vim_commands_array)
 
-    # Add lines to configuration files
+    # Setting up Environment (See YAML files for details on commands)
 
-    print('\n' + '*'*columns + '\n\tConfiguring the Config files...\n' + '*'*columns + '\n')
-
-    # Create Config File Array to parse through.  Create Dictionary of config files : config script data.
-
-    if "ubuntu" in os_info:
-        config_files_array = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE, ETC_SYSFS_CONF_FILE]
-    elif "fedora" in os_info:
-        config_files_array = [BASHRC_FILE, ALIAS_FILE, VIMRC_FILE]
-    else:
-        pass
+    process_commands(environment_commands)
     
-    # Check for length of arrays to be equal - program check!
-
-    if len(config_files_array) != len(script_syntax_array):
-        print('Please check script files.  Length mismatch!')
-        quit()
-
-
-    # Write Config Files
-
-    for config_file, script_syntax in zip(config_files_array, script_syntax_array):
-        bf = backup_file(config_file)
-        if bf is True:
-            # entry_exists = False
-            if config_file == BASHRC_FILE:
-                process_config_file(config_file, 'neofetch', script_syntax)
-
-            elif config_file == ALIAS_FILE:
-                process_config_file(config_file, 'alias update=', script_syntax)
-
-            elif config_file == VIMRC_FILE:
-                process_config_file(config_file, 'colorscheme', script_syntax)
-
-            elif config_file == ETC_SYSFS_CONF_FILE:
-                process_config_file(config_file, 'module/bluetooth/parameters/disable_ertm=1', script_syntax)
-
-            else:
-                pass
-    
-    # Post Installation Work
-    print('\n' + '*'*columns + '\n\tPost Installation Cleanup...\n' + '*'*columns + '\n')
-
-    # System Package Cleanup
-
-    if "ubuntu" in os_info:
-        print('\nRemoving Unused Packages...\n')
-        os.system('sudo apt autoremove')
-
     # Store a list of installed packages in HOME/backup (overwrite if file exists ">"; NOT append ">>")
 
     print(f'\n Creating a list of installed packages in {backup_directory}...')
@@ -500,6 +399,8 @@ def main():
         os.system(f'dpkg --get-selections > {backup_directory}Installed_Ubuntu_Packages_$(date +%m_%d_%Y).log')
     elif "fedora" in os_info:
         os.system(f'sudo rpm -qa > {backup_directory}Installed_Fedora_Packages_$(date  +%m_%d_%Y).log')
+    elif 'manjaro' in os_info:
+        os.system(f'sudo pacman -Qe > {backup_directory}Installed_Manjaro_Packages_$(date +%m_%d_%Y).log')
     else:
         pass
 
