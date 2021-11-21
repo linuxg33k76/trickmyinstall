@@ -22,4 +22,4 @@ VimSetup:
     - sudo dnf install vim-default-editor
 
 Environment:
-    - grep "neofetch" /home/($USER)/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
+    - grep "neofetch" /home/${USER}/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
