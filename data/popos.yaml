@@ -35,7 +35,7 @@ Environment:
             powerline-daemon -q
             POWERLINE_BASH_CONTINUATION=1
             POWERLINE_BASH_SELECT=1
-            . /usr/share/powerline/bash/powerline.sh
+            . /usr/share/powerline/integrations/powerline.sh
         fi" >> /home/${USER}/.bashrc
     - mkdir -p /home/${USER}/.config/powerline
     - >
