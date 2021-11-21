@@ -208,37 +208,29 @@ def main():
 
         # Ubuntu/Pop OS setup parameters
         yaml_config = read_config_file('data/popos.yaml')
-        update_commands_array = yaml_config['Update']
-        install_commamds_array = yaml_config['Packages']
-        macwifi_commands_array = yaml_config['MacDevice']
-        vim_commands_array = yaml_config['VimSetup']
-        environment_commands = yaml_config['Environment']
     
     elif 'fedora' in os_info:
 
         # Fedora setup parameters
         yaml_config = read_config_file('data/fedora.yaml')
-        update_commands_array = yaml_config['Update']
-        install_commamds_array = yaml_config['Packages']
-        macwifi_commands_array = yaml_config['MacDevice']
-        vim_commands_array = yaml_config['VimSetup']
-        environment_commands = yaml_config['Environment']
     
     elif 'manjaro' in os_info:
 
         # Manjaro setup parameters
         yaml_config = read_config_file('data/manjaro.yaml')
-        update_commands_array = yaml_config['Update']
-        install_commamds_array = yaml_config['Packages']
-        macwifi_commands_array = yaml_config['MacDevice']
-        vim_commands_array = yaml_config['VimSetup']
-        environment_commands = yaml_config['Environment']
+        
 
     else:
         print('OS type not found!  Exiting the system.')
         quit()
 
-    print('\n' + '*'*columns + '\n\tGetting Kernel and other System information...\n' + '*'*columns + '\n')
+    # Configure Variables based on config files
+
+    update_commands_array = yaml_config['Update']
+    install_commamds_array = yaml_config['Packages']
+    macwifi_commands_array = yaml_config['MacDevice']
+    vim_commands_array = yaml_config['VimSetup']
+    environment_commands = yaml_config['Environment']
     
     # Run install and setup commands
 
@@ -303,6 +295,10 @@ def main():
 
     # Setting up Environment (See YAML files for details on commands)
 
+    if args.macwifi is True:
+        print('\n' + '*'*columns + '\n\tInstalling Mac Wi-Fi Drivers...\n' + '*'*columns + '\n')
+        process_commands(macwifi_commands_array)
+
     print('\n' + '*'*columns + '\n\tRunning Configuration Scripts...\n' + '*'*columns + '\n')
 
     process_commands(environment_commands)
@@ -332,6 +328,6 @@ if __name__ == '__main__':
     # Call CLI Parser and get command line arguments
 
     args = AC.CLIParser().get_args()
- 
+
     # Start program
     main()
