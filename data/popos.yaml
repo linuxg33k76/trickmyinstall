@@ -11,14 +11,16 @@ Packages:
     - sudo apt install exfat-fuse exfat-utils sshfs
     - sudo apt install python3-pip python3-venv
     - suod apt install rustc vim code
-    - sudo flatpak install org.raspberrypi.rpi-imager
     - sudo snap install 1password
+
+MacDevice:
+    - sudo apt firmware-b43-installer
 
 VimSetup:
     - echo "set number" > /home/${USER}/.vimrc
     - echo "syntax on" >> /home/${USER}/.vimrc
     - echo "colorscheme ron" >> /home/${USER}/.vimrc
-    - sudo update-alternatives --cofnig editor
+    - sudo update-alternatives --config editor
 
 Environment:
     - grep "neofetch" /home/${USER}/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
