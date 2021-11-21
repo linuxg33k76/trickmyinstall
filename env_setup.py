@@ -5,9 +5,9 @@ Pop! OS Python Setup Script
 Author:  Ben C. Calvert
 Date:  18 September 2021
 
-Description:  This program configures Linux environment per user requirements found in data/.
+Description:  This program configures Linux environment per YAML config found in data/.
 
-Distros Supported:  Ubuntu, Fedora, 
+Distros Supported:  Pop!_OS, Ubuntu, Fedora, Manjaro
 
 '''
 
@@ -121,22 +121,6 @@ def backup_file(file):
     else:
         print(f'Could not create: {file}')
         return False
-   
-
-def write_config_file(file, lines):
-
-    '''
-    Write data to config file based on values in lines
-
-    file: string (complete path to file)
-    lines: array of strings
-
-    return: none
-    '''
-
-    with open(file, 'a') as of:
-        of.write(lines)
-    return
 
 
 def read_config_file(file):
@@ -153,63 +137,6 @@ def read_config_file(file):
         return yaml.safe_load(rf)
 
 
-# def read_json_file(file):
-#     '''
-#     Process commands in config file and return json object
-
-#     file: string (complete path to file)
-
-#     return: Python Object
-#     '''
-
-#     with open(file, 'rb') as json_file:
-#         json_data = json_file.read()
-#     return json.loads(json_data)
-
-
-def process_config_file(config_file, search_term, script_syntax):
-    '''
-    Process config file script entries based on search term and 
-    make a decision to write script_syntax or not to write the syntax.
-
-    config_file: string (complete path to file)
-    search_term: string
-    script_syntax: string
-
-    return: none
-    '''
-
-    entry_exists = False
-
-    # Read config file lines
-    lines = read_config_file(config_file)
-
-    # Search each line for the specified search term
-    print(f'Checking {config_file} for: \n{script_syntax}')
-    for line in lines:
-        if re.search(search_term, line):
-            entry_exists = True
-            output_config_file_msg(config_file, 1)
-
-    # If serach terms do not appear, write script syntax
-
-    if entry_exists is False and config_file != '/etc/sysfs.conf':
-        print(f'No entry in {config_file}')
-        write_config_file(config_file, script_syntax)
-        output_config_file_msg(config_file, 2)
-
-    # Check for special case file /etc/sysfs.conf - Xbox controller support for gaming
-    elif entry_exists is False and config_file == '/etc/sysfs.conf':
-        os.system(f'sudo chmod o+w {config_file}')
-        write_config_file(config_file, script_syntax)
-        output_config_file_msg(config_file, 2)
-        os.system(f'sudo chmod o-w {config_file}')
-    else:
-        pass
-
-    return
-
-
 def process_commands(commands_array):
     '''
     Process commands in array
@@ -222,24 +149,6 @@ def process_commands(commands_array):
     for command in commands_array:
             os.system(command)    
 
-
-def output_config_file_msg(config_file, msg):
-    '''
-    Method to print a config file message based on msg value - code simplification
-
-    config_file: string (complete path to file)
-    msg: integer (values 1 or 2 accepted)
-
-    return: none
-    '''
-
-    if msg == 1:
-        print(f'Config file entry exists in: {config_file}  No edit required.\n')
-    elif msg == 2:
-        print(f'New lines added to {config_file}.\n')
-    else:
-        print(f'Invalid message type:  {msg}.\n')
-    return
 
 # Main Program
 
