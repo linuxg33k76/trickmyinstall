@@ -3,7 +3,6 @@
 Update:
     - sudo dnf update
     - sudo dnf upgrade
-    - sudo dnf full-upgrade
 
 Packages:
     - echo "Enabling RPMFusion Repos..."
