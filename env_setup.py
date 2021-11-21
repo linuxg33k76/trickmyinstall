@@ -293,7 +293,7 @@ def main():
         print('Backup Directory creation failed.  Exiting script.')
         quit()
 
-    # Read /etc/os-release and decide what OS the system is
+    # Used os_info to decide which YAML file to use
 
     if "ubuntu" in os_info:
 
@@ -326,7 +326,7 @@ def main():
         environment_commands = yaml_config['Environment']
 
     else:
-        print('OS type not found!')
+        print('OS type not found!  Exiting the system.')
         quit()
 
     print('\n' + '*'*columns + '\n\tGetting Kernel and other System information...\n' + '*'*columns + '\n')
@@ -357,6 +357,7 @@ def main():
         print('\n' + '*'*columns + '\n\tInstalling Additional 3rd Party Packages...\n' + '*'*columns + '\n')
 
         # Python Foo:  get diretory list and filter for *.deb using Regular Expressions!
+        
         if "ubuntu" in os_info:
             third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.deb', val)]
         elif "fedora" in os_info:
@@ -365,9 +366,11 @@ def main():
             third_party_apps = ['None']
 
         # Print 3rdParty Apps to install
+
         print(f'The following 3rdParty Apps will be installed:\n\t{", ".join(third_party_apps)}')
 
         # Install the app(s)
+
         if "ubuntu" in os_info:
             for app in third_party_apps:
                 os.system(f'sudo apt install {download_dir}{app}')
@@ -378,16 +381,20 @@ def main():
             pass
 
     # Check for new versions
+
     print('\nUpdating system after 3rdParty App Install...\n')
 
     process_commands(update_commands_array)
    
     # Set Default CLI editor...I like Vim!
+
     print('\n' + '*'*columns + '\n\tSetting the default editor (I like VIM)...\n' + '*'*columns + '\n')
     
     process_commands(vim_commands_array)
 
     # Setting up Environment (See YAML files for details on commands)
+
+    print('\n' + '*'*columns + '\n\tRunning Configuration Scripts...\n' + '*'*columns + '\n')
 
     process_commands(environment_commands)
     
