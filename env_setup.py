@@ -295,10 +295,10 @@ def main():
 
     # Used os_info to decide which YAML file to use
 
-    if "ubuntu" in os_info:
+    if "pop" in os_info:
 
         # Ubuntu/Pop OS setup parameters
-        script = read_config_file('data/ubuntu.yaml')
+        yaml_config = read_config_file('data/popos.yaml')
         update_commands_array = yaml_config['Update']
         install_commamds_array = yaml_config['Packages']
         macwifi_commands_array = yaml_config['MacDevice']
@@ -308,7 +308,7 @@ def main():
     elif 'fedora' in os_info:
 
         # Fedora setup parameters
-        script = read_config_file('data/fedora.yaml')
+        yaml_config = read_config_file('data/fedora.yaml')
         update_commands_array = yaml_config['Update']
         install_commamds_array = yaml_config['Packages']
         macwifi_commands_array = yaml_config['MacDevice']
