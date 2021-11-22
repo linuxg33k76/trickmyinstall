@@ -219,7 +219,6 @@ def main():
         # Manjaro setup parameters
         yaml_config = read_config_file('data/manjaro.yaml')
         
-
     else:
         print('OS type not found!  Exiting the system.')
         quit()
