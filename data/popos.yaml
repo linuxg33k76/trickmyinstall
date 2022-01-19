@@ -13,6 +13,7 @@ Packages:
     - sudo apt install rustc vim code
     - sudo apt install powerline geary
     - flatpak install org.raspberrypi.rpi-imager
+    - flatpak install Mailspring
     - sudo snap install 1password
 
 MacDevice:
