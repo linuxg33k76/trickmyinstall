@@ -19,6 +19,24 @@ from classes import LinuxSystemInfo as LSI
 
 # Declare Program Functions
 
+def check_for_root():
+
+    '''
+    Check for root user
+
+    return: bool
+    '''
+
+    user = os.popen('whoami','r').read().strip('\n')
+
+    print(f'\n*** User: {user} is executing this script.***\n')
+
+    if user == 'root':
+        return True
+    else:
+        return False
+
+
 def validate_dir(dir_path):
 
     '''
@@ -162,6 +180,13 @@ def main():
 
     HOME_DIR = os.getenv("HOME")
     os_info = LSI.LinuxSystemInfo().system
+    user_test = check_for_root()
+
+    # User check - if root exit script and print error message
+
+    if user_test is True:
+        print("\n***Script Aborting...  Please execute with a privileged user other than root user.***\n")
+        quit()
 
     # Identify Terminal Size
 
@@ -258,7 +283,7 @@ def main():
 
         # Python Foo:  get diretory list and filter for *.deb using Regular Expressions!
         
-        if "ubuntu" in os_info:
+        if "pop" in os_info:
             third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.deb', val)]
         elif "fedora" in os_info:
             third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.rpm', val)]
@@ -271,12 +296,16 @@ def main():
 
         # Install the app(s)
 
-        if "ubuntu" in os_info:
+        if "pop" in os_info:
+
             for app in third_party_apps:
                 os.system(f'sudo apt install {download_dir}{app}')
+    
         elif "fedora" in os_info:
+        
             for app in third_party_apps:
                 os.system(f'sudo dnf install {download_dir}{app}')
+    
         else:
             pass
 
@@ -306,7 +335,7 @@ def main():
 
     print(f'\n Creating a list of installed packages in {backup_directory}...')
 
-    if "ubuntu" in os_info:
+    if "pop" in os_info:
         os.system(f'dpkg --get-selections > {backup_directory}Installed_Ubuntu_Packages_$(date +%m_%d_%Y).log')
     elif "fedora" in os_info:
         os.system(f'sudo rpm -qa > {backup_directory}Installed_Fedora_Packages_$(date  +%m_%d_%Y).log')
