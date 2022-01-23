@@ -229,6 +229,9 @@ def main():
 
     # Used os_info to decide which YAML file to use
 
+    if "ubuntu" in os_info:
+        os_info = "pop"
+
     if "pop" in os_info:
 
         # Ubuntu/Pop OS setup parameters
