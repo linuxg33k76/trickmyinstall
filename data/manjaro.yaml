@@ -18,6 +18,7 @@ VimSetup:
     - sudo sed -i 's/nano/vim/g' /etc/environment
 
 Environment:
+    - grep "# Added by TrickMyInstall Script" /home/${USER}/.zshrc || echo "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.zshrc
     - grep "neofetch" /home/${USER}/.zshrc || echo "neofetch" >> /home/${USER}/.zshrc
     - grep "alias ls='ls --color'" /home/${USER}/.zshrc || echo "alias ls='ls --color'" >> /home/${USER}/.zshrc
     - grep "alias upadate='sudo pacman -Syu'" /home/${USER}/.zshrc || echo "alias update='sudo pacman -Syu'" >> /home/${USER}/.zshrc
