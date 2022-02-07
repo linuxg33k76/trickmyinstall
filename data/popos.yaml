@@ -11,7 +11,7 @@ Packages:
     - sudo apt install exfat-fuse exfat-utils sshfs
     - sudo apt install python3-pip python3-venv
     - sudo apt install rustc vim code
-    - sudo apt install powerline geary
+    - sudo apt install powerline timeshift
     - flatpak install org.raspberrypi.rpi-imager
     - flatpak install Mailspring
     - sudo snap install 1password
