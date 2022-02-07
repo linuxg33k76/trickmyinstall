@@ -4,7 +4,7 @@ Update:
     - sudo pacman -Syu 
 
 Packages:
-    - sudo pacman -Syy snapd gnome-terminal-fedora neofetch gnome-boxes steam sysfsutils vim yay steam-manjaro geary
+    - sudo pacman -Syy snapd gnome-terminal-fedora neofetch gnome-boxes steam sysfsutils vim yay steam-manjaro geary timeshift
     - yay --aur google-chrome
     - yay --aur visual-studio-code-bin
 
