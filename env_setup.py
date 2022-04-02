@@ -334,6 +334,16 @@ def main():
 
     process_commands(environment_commands)
     
+    # To Do:  Setup Remote Backup File Store
+    '''
+    1. Get user input for share location, credentials, and pull user info (e.g. id and whoami)
+    2. Test for/Create credentials file (with dot notation)
+    3. Test for/Create /etc/hosts entry
+    4. Test for/Create /etc/fstab entry
+    5. Mount new fstab entry
+    '''
+
+
     # Store a list of installed packages in HOME/backup (overwrite if file exists ">"; NOT append ">>")
 
     print(f'\n Creating a list of installed packages in {backup_directory}...')
