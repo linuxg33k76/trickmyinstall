@@ -11,9 +11,11 @@ Packages:
     - sudo apt install exfat-fuse exfat-utils sshfs cifs-utils
     - sudo apt install python3-pip python3-venv
     - sudo apt install rustc vim code
-    - sudo apt install powerline timeshift
+    - sudo apt install powerline
+    - echo && echo "Installing Flatpaks..." && echo
     - flatpak install org.raspberrypi.rpi-imager
     - flatpak install Mailspring
+    - echo && echo "Installing Snap Apps..." && echo
     - sudo snap install 1password
 
 MacDevice:
