@@ -5,13 +5,18 @@ Update:
     - sudo dnf upgrade
 
 Packages:
-    - echo "Enabling RPMFusion Repos..."
+    - echo && echo "Enabling RPMFusion Repos..." && echo
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
     - sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-    - sudo dnf install neofetch vim snapd f34-backgrounds-gnome f33-backgrounds-gnome
-    - sudo dnf install powerline google-chrome-stable deja-dup
+    - echo && echo "Installing Core Apps..." && echo
+    - sudo dnf install neofetch vim snapd sshfs
+    - sudo dnf install powerline google-chrome-stable deja-dup gnome-tweaks
+    - echo && echo "Installing Gnome Shell Extensions..." && echo
+    - sudo dnf install gnome-shell-extension-pop-shell
+    - echo && echo "Installing Snap Apps..." && echo
     - snap install 1password
-    - flatpak install flathub com.visualstudio.code
+    - echo && echo "Installing Flatpaks..." && echo
+    - flatpak install teams
 
 MacDevice:
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
