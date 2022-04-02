@@ -13,6 +13,7 @@ Distros Supported:  Pop!_OS, Ubuntu, Fedora, Manjaro
 
 import os
 import re
+from urllib import response
 import yaml
 from classes import ArgsClass as AC
 from classes import LinuxSystemInfo as LSI
@@ -167,6 +168,36 @@ def process_commands(commands_array):
     for command in commands_array:
             os.system(command)    
 
+def get_remote_backup_info():
+    '''
+    Collect System and User Input
+
+    return: dictionary
+    '''
+    regex = r'uid=(\d{1,4})\D{1,}gid=(\d{1,4})'
+    regex_gid = r'\Dgid=(\d{1,4})'
+    current_user = os.popen('whoami','r').read().strip('\n')
+    id_info = os.popen('id','r').read().strip('\n')
+    uid = re.match(regex, id_info).group(1)
+    gid = re.match(regex, id_info).group(2)
+    invalid = True
+    while invalid:
+        host = input('Remote Samba Server hostname or IP Address: ')
+        user_cred = input('Remote Samba Share Username: ')
+        pass_cred = input('Remote Samba Share Password: ')
+        domain_cred = input('Remote Samba Share Domain: ')
+        print(f'Samba Host: {host}\nSamba user: {user_cred}\nSamba pass: {pass_cred}\nSamba domain: {domain_cred}\n')
+        response = input("Does the information look correct? (Y/N)")
+        print(response)
+        if 'Y' in response or 'y' in response:
+            invalid = False
+    
+    return {
+        'host': host,
+        'user_cred': user_cred,
+        'pass_cred': pass_cred,
+        'domain_cred': domain_cred,
+    }
 
 # Main Program
 
@@ -335,13 +366,27 @@ def main():
     process_commands(environment_commands)
     
     # To Do:  Setup Remote Backup File Store
-    '''
-    1. Get user input for share location, credentials, and pull user info (e.g. id and whoami)
-    2. Test for/Create credentials file (with dot notation)
-    3. Test for/Create /etc/hosts entry
-    4. Test for/Create /etc/fstab entry
-    5. Mount new fstab entry
-    '''
+
+    if args.remote_backup_flag is True:
+        '''
+        1. Get user input for share location, credentials, and pull user info (e.g. id and whoami)
+        2. Test for/Create credentials file (with dot notation)
+        3. Test for/Create /etc/hosts entry
+        4. Test for/Create /etc/fstab entry
+        5. Mount new fstab entry
+        '''
+        # create function
+        rb_data = get_remote_backup_info()
+        print(rb_data)
+
+
+
+        #testing info
+        # print(id_info)
+        # print(f'1: {current_user}, 2: {uid}, 3: {gid}, 4: {user_home}, 5: {host}')
+        quit()
+    
+
 
 
     # Store a list of installed packages in HOME/backup (overwrite if file exists ">"; NOT append ">>")
