@@ -8,9 +8,10 @@ Packages:
     - echo "Enabling RPMFusion Repos..."
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
     - sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-    - sudo dnf install gnome-shell-extension-dash-to-dock gnome-shell-extension-pop-shell neofetch steam vim snapd f34-backgrounds-gnome f33-backgrounds-gnome
-    - sudo dnf install powerline google-chrome-stable timeshift
+    - sudo dnf install neofetch vim snapd f34-backgrounds-gnome f33-backgrounds-gnome
+    - sudo dnf install powerline google-chrome-stable deja-dup
     - snap install 1password
+    - flatpak install flathub com.visualstudio.code
 
 MacDevice:
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
