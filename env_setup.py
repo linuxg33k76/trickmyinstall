@@ -357,6 +357,11 @@ def main():
     else:
         pass
 
+    # Backup Dconf (Gnome) settings
+    
+    print(f'\n Creating a Gnome Settings (dconf) in {backup_directory}...')
+    os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
+
     # Test to see if reboot is needed
 
     if test_for_file_exists('/var/run/reboot-required'):
