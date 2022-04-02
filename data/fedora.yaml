@@ -26,7 +26,7 @@ VimSetup:
     - sudo dnf install vim-default-editor
 
 Environment:
-    - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo "\n# Added by TrickMyInstall Script" >> /home/${USER}/.bashrc
+    - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo "# Added by TrickMyInstall Script" >> /home/${USER}/.bashrc
     - >
         grep "powerline-daemon" /home/${USER}/.bashrc || echo "if [ -f `which powerline-daemon` ]; then
             powerline-daemon -q
