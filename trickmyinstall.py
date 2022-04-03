@@ -11,10 +11,10 @@ Distros Supported:  Pop!_OS, Ubuntu, Fedora, Manjaro
 
 '''
 
+from logging import raiseExceptions
 import os
 import re
 import getpass
-from urllib import response
 import yaml
 from classes import ArgsClass as AC
 from classes import LinuxSystemInfo as LSI
@@ -110,37 +110,6 @@ def create_file(file):
         print(f'File: {file} could not be created.')
     else:
         print(f'Created: {file} successfully!!')
-
-
-# def backup_file(file):
-
-#     '''
-#     Test for file and if doesn't exist, create it then preform backup
-
-#     file: string (complete path to file)
-
-#     return: bool
-#     '''
-
-#     # get just the filename for copy purposes by splitting, reversing [::-1], and grabbing first element [0]
-    
-#     filename = file.split("/")[::-1][0]
-
-#     if not os.path.isfile(file):
-#         os.system('touch ' + file)
-#         os.system(f"echo '#! Create by Pop_OS Py Script' >> {file}")
-#         return True
-
-#     elif os.path.isfile(file):
-#         print(f'Backing up: {file}')
-
-#         # Make a backup file
-    
-#         os.system(f'cp {file} ~/backup/{filename}.bkup')
-#         return True
-#     else:
-#         print(f'Could not create: {file}')
-#         return False
 
 
 def read_config_file(file):
@@ -280,10 +249,7 @@ def main():
 
     # Used os_info to decide which YAML file to use
 
-    if "ubuntu" in os_info:
-        os_info = "pop"
-
-    if "pop" in os_info:
+    if "ubuntu" in os_info or "pop" in os_info:
 
         # Ubuntu/Pop OS setup parameters
         yaml_config = read_config_file('data/popos.yaml')
@@ -450,7 +416,7 @@ def main():
     # Backup Dconf (Gnome) settings
     
     print(f'\n Creating a Gnome Settings (dconf) in {backup_directory}...')
-    os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
+    os.system(f'dconfz dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
 
     # Test to see if reboot is needed
 
