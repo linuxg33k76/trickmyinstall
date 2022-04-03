@@ -450,7 +450,10 @@ def main():
     # Backup Dconf (Gnome) settings
     
     print(f'\n Creating a Gnome Settings (dconf) in {backup_directory}...')
-    os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
+    try:
+        os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
+    except:
+        pass
 
     # Test to see if reboot is needed
 
