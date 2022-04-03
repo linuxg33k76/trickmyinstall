@@ -112,35 +112,35 @@ def create_file(file):
         print(f'Created: {file} successfully!!')
 
 
-def backup_file(file):
+# def backup_file(file):
 
-    '''
-    Test for file and if doesn't exist, create it then preform backup
+#     '''
+#     Test for file and if doesn't exist, create it then preform backup
 
-    file: string (complete path to file)
+#     file: string (complete path to file)
 
-    return: bool
-    '''
+#     return: bool
+#     '''
 
-    # get just the filename for copy purposes by splitting, reversing [::-1], and grabbing first element [0]
+#     # get just the filename for copy purposes by splitting, reversing [::-1], and grabbing first element [0]
     
-    filename = file.split("/")[::-1][0]
+#     filename = file.split("/")[::-1][0]
 
-    if not os.path.isfile(file):
-        os.system('touch ' + file)
-        os.system(f"echo '#! Create by Pop_OS Py Script' >> {file}")
-        return True
+#     if not os.path.isfile(file):
+#         os.system('touch ' + file)
+#         os.system(f"echo '#! Create by Pop_OS Py Script' >> {file}")
+#         return True
 
-    elif os.path.isfile(file):
-        print(f'Backing up: {file}')
+#     elif os.path.isfile(file):
+#         print(f'Backing up: {file}')
 
-        # Make a backup file
+#         # Make a backup file
     
-        os.system(f'cp {file} ~/backup/{filename}.bkup')
-        return True
-    else:
-        print(f'Could not create: {file}')
-        return False
+#         os.system(f'cp {file} ~/backup/{filename}.bkup')
+#         return True
+#     else:
+#         print(f'Could not create: {file}')
+#         return False
 
 
 def read_config_file(file):
@@ -385,7 +385,9 @@ def main():
 
     process_commands(environment_commands)
     
-    # To Do:  Setup Remote Backup File Store
+    # Setup Remote Samba File Store
+
+    print('\n' + '*'*columns + '\n\tSetup Samba Share\n' + '*'*columns + '\n')
 
     user_response = input('\nSetup Remote Samba Share with /mnt/remote_cifs? (Y/n)')
 
@@ -408,6 +410,9 @@ def main():
         samba_file = HOME_DIR + '/.sambacreds'
         os.system(('echo "username={0}\npassword={1}\ndomain={2}" > {3}')\
             .format(rb_data['user_cred'], rb_data['pass_cred'],rb_data['domain_cred'], samba_file))
+        
+        # Backup Samba Directory
+        os.system(f'cp {HOME_DIR}/.sambacreds {backup_directory}')
 
         # Create /mnt mount point
         REMOTE_MNT = '/mnt/remote_cifs'
