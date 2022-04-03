@@ -13,6 +13,7 @@ Distros Supported:  Pop!_OS, Ubuntu, Fedora, Manjaro
 
 import os
 import re
+import getpass
 from urllib import response
 import yaml
 from classes import ArgsClass as AC
@@ -58,7 +59,7 @@ def validate_dir(dir_path):
 def create_backup_dir(backup_dir):
 
     '''
-    Create a backup directory under user's HOME
+    Create a backup directory
 
     backup_dir: string
 
@@ -180,24 +181,43 @@ def get_remote_backup_info():
     id_info = os.popen('id','r').read().strip('\n')
     uid = re.match(regex, id_info).group(1)
     gid = re.match(regex, id_info).group(2)
+
+    # Collect User inputs
+
     invalid = True
     while invalid:
-        host = input('Remote Samba Server hostname or IP Address: ')
+        host_ip = input('Remote Samba Server IP Address: ')
+        host_name = input('Remote Samba Server name: ')
+        host_share = input ('Remote Samba Share name: ')
         user_cred = input('Remote Samba Share Username: ')
-        pass_cred = input('Remote Samba Share Password: ')
+        password_check_invalid = True
+        while password_check_invalid:
+            pass_cred1 = getpass.getpass('Remote Samba Share Password: ')
+            pass_cred2 = getpass.getpass('Please confirm password: ')
+            if pass_cred1 == pass_cred2:
+                pass_cred = pass_cred1
+                password_check_invalid = False
+            else:
+                print('Passwords Do NOT match!  Please try again.')
         domain_cred = input('Remote Samba Share Domain: ')
-        print(f'Samba Host: {host}\nSamba user: {user_cred}\nSamba pass: {pass_cred}\nSamba domain: {domain_cred}\n')
-        response = input("Does the information look correct? (Y/N)")
+        print(f'Samba Host IP: {host_ip}\nSamba Host Name: {host_name}\nSamba share: {host_share}\nSamba user: {user_cred}\nSamba pass: {pass_cred}\nSamba domain: {domain_cred}\n')
+        response = input("Does the information look correct? (Y/n)")
         print(response)
         if 'Y' in response or 'y' in response:
             invalid = False
     
-    return {
-        'host': host,
+    results = {
+        'host_ip': host_ip,
+        'host_name': host_name,
+        'host_share': host_share,
         'user_cred': user_cred,
         'pass_cred': pass_cred,
         'domain_cred': domain_cred,
+        'current_user': current_user,
+        'uid': uid,
+        'gid': gid
     }
+    return results
 
 # Main Program
 
@@ -367,26 +387,46 @@ def main():
     
     # To Do:  Setup Remote Backup File Store
 
-    if args.remote_backup_flag is True:
+    user_response = input('\nSetup Remote Samba Share with /mnt/remote_cifs? (Y/n)')
+
+    if "Y" in user_response or "y" in user_response:
         '''
-        1. Get user input for share location, credentials, and pull user info (e.g. id and whoami)
-        2. Test for/Create credentials file (with dot notation)
-        3. Test for/Create /etc/hosts entry
-        4. Test for/Create /etc/fstab entry
-        5. Mount new fstab entry
+        Setup remote samba share
         '''
-        # create function
+        # Get cifs share information
         rb_data = get_remote_backup_info()
-        print(rb_data)
 
+        # Alert User process is starting
 
+        print('\n' + '*'*columns + '\n\tSetting Up Remote Samba Share...\n' + '*'*columns + '\n')
 
-        #testing info
-        # print(id_info)
-        # print(f'1: {current_user}, 2: {uid}, 3: {gid}, 4: {user_home}, 5: {host}')
-        quit()
+        # Create /etc/host entry
+        os.system(('grep "{0}" /etc/hosts || echo "{0}  {1}" | sudo tee -a /etc/hosts')\
+            .format(rb_data['host_ip'], rb_data['host_name']))
+
+        # Write Credentials to user's home directory
+        samba_file = HOME_DIR + '/.sambacreds'
+        os.system(('echo "username={0}\npassword={1}\ndomain={2}" > {3}')\
+            .format(rb_data['user_cred'], rb_data['pass_cred'],rb_data['domain_cred'], samba_file))
+
+        # Create /mnt mount point
+        REMOTE_MNT = '/mnt/remote_cifs'
+        user = rb_data['current_user']
+        os.system(f'test -d {REMOTE_MNT} || sudo mkdir {REMOTE_MNT}')
+        os.system(f'sudo chmod -R 770 {REMOTE_MNT}')
+        os.system(f'sudo chown -R {user}:{user} {REMOTE_MNT}')
+
+        # Write cifs entry to /etc/fstab
+        os.system('grep "# Samba Mount created by TrickMyInstall Script" /etc/fstab || echo "# Samba Mount created by TrickMyInstall Script" | sudo tee -a /etc/fstab')
+        os.system(('grep "//{0}/{1}" /etc/fstab || echo "//{0}/{1}  /mnt/remote_cifs  cifs  credentials={2},uid={3},gid={4}  0       0 " | sudo tee -a /etc/fstab')\
+            .format(rb_data['host_name'], rb_data['host_share'], samba_file, rb_data['uid'], rb_data['gid']))
     
+        # Mount cifs share
 
+        os.system('sudo systemctl daemon-reload')
+        os.system('sudo mount -a')
+    else:
+        print('\n' + '*'*columns + '\n\tSkipping Remote Samba Share...\n' + '*'*columns + '\n')
 
 
     # Store a list of installed packages in HOME/backup (overwrite if file exists ">"; NOT append ">>")
