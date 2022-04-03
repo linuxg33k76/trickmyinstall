@@ -5,12 +5,18 @@ Update:
     - sudo dnf upgrade
 
 Packages:
-    - echo "Enabling RPMFusion Repos..."
+    - echo && echo "Enabling RPMFusion Repos..." && echo
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
     - sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-    - sudo dnf install gnome-shell-extension-dash-to-dock gnome-shell-extension-pop-shell neofetch steam vim snapd f34-backgrounds-gnome f33-backgrounds-gnome
-    - sudo dnf install powerline google-chrome-stable timeshift
+    - echo && echo "Installing Core Apps..." && echo
+    - sudo dnf install neofetch vim snapd sshfs
+    - sudo dnf install powerline google-chrome-stable deja-dup gnome-tweaks
+    - echo && echo "Installing Gnome Shell Extensions..." && echo
+    - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell
+    - echo && echo "Installing Snap Apps..." && echo
     - snap install 1password
+    - echo && echo "Installing Flatpaks..." && echo
+    - flatpak install teams
 
 MacDevice:
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
@@ -25,7 +31,7 @@ VimSetup:
     - sudo dnf install vim-default-editor
 
 Environment:
-    - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.bashrc
+    - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo "# Added by TrickMyInstall Script" >> /home/${USER}/.bashrc
     - >
         grep "powerline-daemon" /home/${USER}/.bashrc || echo "if [ -f `which powerline-daemon` ]; then
             powerline-daemon -q
