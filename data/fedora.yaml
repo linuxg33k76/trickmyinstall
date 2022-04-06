@@ -15,8 +15,9 @@ Packages:
     - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell
     - echo && echo "Installing Snap Apps..." && echo
     - snap install 1password
+    - snap install Mailspring
     - echo && echo "Installing Flatpaks..." && echo
-    - flatpak install teams
+    - flatpak install Teams
 
 MacDevice:
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
