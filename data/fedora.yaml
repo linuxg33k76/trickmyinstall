@@ -11,6 +11,7 @@ Packages:
     - echo && echo "Installing Core Apps..." && echo
     - sudo dnf install neofetch vim snapd sshfs dnf-utils
     - sudo dnf install powerline google-chrome-stable deja-dup gnome-tweaks
+    - sudo dnf install onedrive
     - echo && echo "Installing Gnome Shell Extensions..." && echo
     - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell
     - echo && echo "Installing Snap Apps..." && echo
