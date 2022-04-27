@@ -1,0 +1,22 @@
+#YAML
+
+Update:
+    -  softwareupdate -lai
+
+Packages:
+    - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    - brew install neofetch
+    - brew install python3
+
+MacDevice:
+    - 
+
+VimSetup:
+    - echo "set number" > /home/${USER}/.vimrc
+    - echo "syntax on" >> /home/${USER}/.vimrc
+    - echo "colorscheme ron" >> /home/${USER}/.vimrc
+
+Environment:
+    - grep "# Added by TrickMyInstall Script" /home/${USER}/.zprofile || echo "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.zprofile
+    - grep "neofetch" /home/${USER}/.zprofile || echo "neofetch" >> /home/${USER}/.zprofile
+    - grep "alias ls='ls --color'" /home/${USER}/.zprofile || echo "alias ls='ls --color'" >> /home/${USER}/.zprofile

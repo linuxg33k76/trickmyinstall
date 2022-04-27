@@ -17,7 +17,7 @@ import re
 import getpass
 import yaml
 from classes import ArgsClass as AC
-from classes import LinuxSystemInfo as LSI
+from classes import SystemInfo as SI
 
 # Declare Program Functions
 
@@ -199,7 +199,13 @@ def main():
     # Declare Constants and Variables
 
     HOME_DIR = os.getenv("HOME")
-    os_info = LSI.LinuxSystemInfo().system
+    UNAME = os.popen('uname', 'r').read().strip()
+
+    if 'Darwin' in UNAME:
+        os_info = SI.MacOSSystemInfo().system
+    else:
+        os_info = SI.LinuxSystemInfo().system
+    
     user_test = check_for_root()
 
     # User check - if root exit script and print error message
