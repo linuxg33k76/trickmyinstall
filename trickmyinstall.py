@@ -170,7 +170,7 @@ def get_remote_backup_info():
                 print('Passwords Do NOT match!  Please try again.')
         domain_cred = input('Remote Samba Share Domain: ')
         print(f'Samba Host IP: {host_ip}\nSamba Host Name: {host_name}\nSamba share: {host_share}\nSamba user: {user_cred}\nSamba pass: {pass_cred}\nSamba domain: {domain_cred}\n')
-        response = input("Does the information look correct? (Y/n)")
+        response = input('Does the information look correct? (Y/n)')
         print(response)
         if 'Y' in response or 'y' in response:
             invalid = False
@@ -198,14 +198,14 @@ def main():
 
     # Declare Constants and Variables
 
-    HOME_DIR = os.getenv("HOME")
+    HOME_DIR = os.getenv('HOME')
     os_info = LSI.LinuxSystemInfo().system
     user_test = check_for_root()
 
     # User check - if root exit script and print error message
 
     if user_test is True:
-        print("\n***Script Aborting...  Please execute with a privileged user other than root user.***\n")
+        print('\n***Script Aborting...  Please execute with a privileged user other than root user.***\n')
         quit()
 
     # Identify Terminal Size
@@ -249,7 +249,7 @@ def main():
 
     # Used os_info to decide which YAML file to use
 
-    if "ubuntu" in os_info or "pop" in os_info:
+    if 'ubuntu' in os_info or 'pop' in os_info:
 
         # Ubuntu/Pop OS setup parameters
         yaml_config = read_config_file('data/popos.yaml')
@@ -280,14 +280,14 @@ def main():
 
     skip_items = ' '.join(args.skip)
 
-    if "update" in skip_items.lower():
+    if 'update' in skip_items.lower():
         print('\n' + '*'*columns + '\n\tSkipping Update Process\n' + '*'*columns + '\n')
     else:
         print('\n' + '*'*columns + '\n\tUpdating System...\n' + '*'*columns + '\n')
 
         process_commands(update_commands_array)
 
-    if "install" in skip_items.lower():
+    if 'install' in skip_items.lower():
         print('\n' + '*'*columns + '\n\tSkipping Package Install Process\n' + '*'*columns + '\n')
     else:
         print('\n' + '*'*columns + '\n\tInstalling Additional Packages...\n' + '*'*columns + '\n')
@@ -296,16 +296,16 @@ def main():
 
     # Install 3rd Party Packages
 
-    if "3rdparty" in skip_items.lower():
+    if '3rdparty' in skip_items.lower():
         print('\n' + '*'*columns + '\n\tSkipping 3rd Party Package Install Process\n' + '*'*columns + '\n')
     else:
         print('\n' + '*'*columns + '\n\tInstalling Additional 3rd Party Packages...\n' + '*'*columns + '\n')
 
         # Python Foo:  get diretory list and filter for *.deb using Regular Expressions!
         
-        if "pop" in os_info:
+        if 'pop' in os_info:
             third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.deb', val)]
-        elif "fedora" in os_info:
+        elif 'fedora' in os_info:
             third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.rpm', val)]
         else:
             third_party_apps = ['None']
@@ -316,12 +316,12 @@ def main():
 
         # Install the app(s)
 
-        if "pop" in os_info:
+        if 'pop' in os_info:
 
             for app in third_party_apps:
                 os.system(f'sudo apt install {download_dir}{app}')
     
-        elif "fedora" in os_info:
+        elif 'fedora' in os_info:
         
             for app in third_party_apps:
                 os.system(f'sudo dnf install {download_dir}{app}')
@@ -357,7 +357,7 @@ def main():
 
     user_response = input('\nSetup Remote Samba Share with /mnt/remote_cifs? (Y/n)')
 
-    if "Y" in user_response or "y" in user_response:
+    if 'Y' in user_response or 'y' in user_response:
         '''
         Setup remote samba share
         '''
@@ -404,9 +404,9 @@ def main():
 
     print(f'\n Creating a list of installed packages in {backup_directory}...')
 
-    if "pop" in os_info:
+    if 'pop' in os_info:
         os.system(f'dpkg --get-selections > {backup_directory}Installed_Ubuntu_Packages_$(date +%m_%d_%Y).log')
-    elif "fedora" in os_info:
+    elif 'fedora' in os_info:
         os.system(f'sudo rpm -qa > {backup_directory}Installed_Fedora_Packages_$(date  +%m_%d_%Y).log')
     elif 'manjaro' in os_info:
         os.system(f'sudo pacman -Qe > {backup_directory}Installed_Manjaro_Packages_$(date +%m_%d_%Y).log')
@@ -420,8 +420,11 @@ def main():
 
     # Test to see if reboot is needed
 
-    if test_for_file_exists('/var/run/reboot-required'):
-        print('\n' + '*'*columns + '\n\tPlease reboot to complete installation\n' + '*'*columns + '\n')
+    if 'pop' in os_info or 'ubuntu' in os_info:
+        if test_for_file_exists('/var/run/reboot-required'):
+            print('\n' + '*'*columns + '\n\tPlease reboot to complete installation\n' + '*'*columns + '\n')
+    elif 'fedora' in os_info:
+        os.system('sudo needs-restarting -r')
     else:
         print('\n' + '*'*columns + '\n\tInstallation Complete!\n' + '*'*columns + '\n')
 
