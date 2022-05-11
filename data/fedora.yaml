@@ -11,7 +11,7 @@ Packages:
     - echo && echo "Installing Core Apps..." && echo
     - sudo dnf install neofetch vim snapd sshfs dnf-utils
     - sudo dnf install powerline google-chrome-stable deja-dup gnome-tweaks
-    - sudo dnf install rclone
+    - sudo dnf install rclone ffmpeg
     - echo && echo "Installing Gnome Shell Extensions..." && echo
     - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell
     - echo && echo "Installing Snap Apps..." && echo
@@ -19,10 +19,11 @@ Packages:
     - snap install Mailspring
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    - flatpak install flatseal
     - flatpak install com.microsoft.Teams
     - flatpak install sh.cider.Cider
-    - flatpak install flathub com.microsoft.Edge
-    - flatpak install flatseal
+    - flatpak install com.microsoft.Edge
+    - flatpak install com.visualstudio.code
 
 MacDevice:
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
