@@ -15,7 +15,6 @@ Packages:
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak install org.raspberrypi.rpi-imager
     - flatpak install Mailspring
-    - flatpak install com.bitwarden.desktop
     - echo && echo "Installing Snap Apps..." && echo
     - sudo snap install 1password
 
