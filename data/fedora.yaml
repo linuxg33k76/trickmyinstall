@@ -24,6 +24,7 @@ Packages:
     - flatpak install sh.cider.Cider
     - flatpak install com.microsoft.Edge
     - flatpak install com.visualstudio.code
+    - flatpak install bitwarden
 
 MacDevice:
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
