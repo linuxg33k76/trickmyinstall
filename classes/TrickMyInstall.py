@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+import os
+import re
+import getpass
+import yaml
+
 class TrickMyInstall():
 
     def __init__(self):
