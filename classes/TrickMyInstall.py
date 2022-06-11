@@ -126,7 +126,7 @@ class TrickMyInstall():
         return: none
         '''
 
-        for command in tqdm(commands_array):
+        for command in tqdm(commands_array, colour="blue"):
                 os.system(command)    
 
     def get_remote_backup_info(self):
