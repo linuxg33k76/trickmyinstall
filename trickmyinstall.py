@@ -16,7 +16,7 @@ import os
 import re
 from classes import TrickMyInstall as TMI
 from classes import ArgsClass as AC
-from classes import LinuxSystemInfo as LSI
+from classes import SystemInfo as SI
 
 
 # Main Program
@@ -29,9 +29,21 @@ def main():
 
     # Declare Constants and Variables
 
+<<<<<<< HEAD
+    HOME_DIR = os.getenv("HOME")
+    UNAME = os.popen('uname', 'r').read().strip()
+
+    if 'Darwin' in UNAME:
+        os_info = SI.MacOSSystemInfo().system
+    else:
+        os_info = SI.LinuxSystemInfo().system
+    
+    user_test = check_for_root()
+=======
     HOME_DIR = os.getenv('HOME')
     os_info = LSI.LinuxSystemInfo().system
     user_test = tmi.check_for_root()
+>>>>>>> develop
 
     # User check - if root exit script and print error message
 
