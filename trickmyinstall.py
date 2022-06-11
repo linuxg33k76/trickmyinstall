@@ -97,6 +97,7 @@ def main():
         
     else:
         print('OS type not found!  Exiting the system.')
+        tmi.process_commands(["uname -srv", "neofetch"])
         quit()
 
     # Configure Variables based on config files
