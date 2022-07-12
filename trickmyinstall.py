@@ -14,7 +14,7 @@ Distros Supported:  Pop!_OS, Ubuntu, Fedora, Manjaro
 from logging import raiseExceptions
 import os
 import re
-from classes import TrickMyInstall as TMI
+from classes import TMIClass as TMIC
 from classes import ArgsClass as AC
 from classes import SystemInfo as SI
 
@@ -29,7 +29,6 @@ def main():
 
     # Declare Constants and Variables
 
-<<<<<<< HEAD
     HOME_DIR = os.getenv("HOME")
     UNAME = os.popen('uname', 'r').read().strip()
 
@@ -38,12 +37,7 @@ def main():
     else:
         os_info = SI.LinuxSystemInfo().system
     
-    user_test = check_for_root()
-=======
-    HOME_DIR = os.getenv('HOME')
-    os_info = LSI.LinuxSystemInfo().system
     user_test = tmi.check_for_root()
->>>>>>> develop
 
     # User check - if root exit script and print error message
 
@@ -277,7 +271,7 @@ if __name__ == '__main__':
     # Call CLI Parser and get command line arguments
 
     args = AC.CLIParser().get_args()
-    tmi = TMI.TrickMyInstall()
+    tmi = TMIC.TrickMyInstall()
 
     # Start program
     main()
