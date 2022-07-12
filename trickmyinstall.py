@@ -14,9 +14,9 @@ Distros Supported:  Pop!_OS, Ubuntu, Fedora, Manjaro
 from logging import raiseExceptions
 import os
 import re
-from classes import TrickMyInstall as TMI
+from classes import TMIClass as TMIC
 from classes import ArgsClass as AC
-from classes import LinuxSystemInfo as LSI
+from classes import SystemInfo as SI
 
 
 # Main Program
@@ -29,8 +29,14 @@ def main():
 
     # Declare Constants and Variables
 
-    HOME_DIR = os.getenv('HOME')
-    os_info = LSI.LinuxSystemInfo().system
+    HOME_DIR = os.getenv("HOME")
+    UNAME = os.popen('uname', 'r').read().strip()
+
+    if 'Darwin' in UNAME:
+        os_info = SI.MacOSSystemInfo().system
+    else:
+        os_info = SI.LinuxSystemInfo().system
+    
     user_test = tmi.check_for_root()
 
     # User check - if root exit script and print error message
@@ -265,7 +271,7 @@ if __name__ == '__main__':
     # Call CLI Parser and get command line arguments
 
     args = AC.CLIParser().get_args()
-    tmi = TMI.TrickMyInstall()
+    tmi = TMIC.TrickMyInstall()
 
     # Start program
     main()
