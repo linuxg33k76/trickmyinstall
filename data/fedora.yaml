@@ -62,5 +62,5 @@ Environment:
             }
         EOF
     - powerline-daemon --replace
-    - cd /home/${USER}/dev && git clone git@github.com:linuxg33k76/bash_scripts.git
+    - cd /home/${USER}/dev && test -d bash_scripts || git clone git@github.com:linuxg33k76/bash_scripts.git
 
