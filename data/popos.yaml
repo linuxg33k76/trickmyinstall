@@ -41,7 +41,7 @@ Environment:
             . /usr/share/powerline/integrations/powerline.sh
         fi" >> /home/${USER}/.bashrc
     - grep "neofetch" /home/${USER}/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
-    - grep "/home/${USER}/dev/linux_scripts/backupservercheck.sh" /home/${USER}/.bashrc || echo "/home/${USER}/dev/linux_scripts/backupservercheck.sh" >> /home/${USER}/.bashrc
+    - grep "/home/${USER}/dev/bash_scripts/backupservercheck.sh" /home/${USER}/.bashrc || echo "/home/${USER}/dev/bash_scripts/backupservercheck.sh" >> /home/${USER}/.bashrc
     - mkdir -p /home/${USER}/.config/powerline
     - >
         cat <<-'EOF' > ~/.config/powerline/config.json
@@ -54,5 +54,5 @@ Environment:
             }
         EOF
     - powerline-daemon --replace
-    - cd /home/${USER}/dev && git clone git@github.com:linuxg33k76/linux_scripts.git
+    - cd /home/${USER}/dev && git clone git@github.com:linuxg33k76/bash_scripts.git
     - sudo apt autoremove
