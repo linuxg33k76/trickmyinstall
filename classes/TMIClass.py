@@ -4,7 +4,7 @@ import os
 import re
 import getpass
 import yaml
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 class TrickMyInstall():
 
@@ -128,6 +128,7 @@ class TrickMyInstall():
 
         for command in tqdm(commands_array, desc="Processing Commands",colour="blue"):
                 os.system(command)    
+
 
     def get_remote_backup_info(self):
         '''
