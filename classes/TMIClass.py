@@ -4,7 +4,7 @@ import os
 import re
 import getpass
 import yaml
-from tqdm.auto import tqdm
+from tqdm import tqdm
 
 class TrickMyInstall():
 
