@@ -30,7 +30,9 @@ def main():
     # Declare Constants and Variables
 
     HOME_DIR = os.getenv("HOME")
+    # LOGFILE = HOME_DIR + '/trickmyinstall_log/' + os.system("$(date  +%m_%d_%Y).log")
     UNAME = os.popen('uname', 'r').read().strip()
+
 
     if 'Darwin' in UNAME:
         os_info = SI.MacOSSystemInfo().system
@@ -100,8 +102,14 @@ def main():
 
         # Manjaro setup parameters
         yaml_config = tmi.read_config_file('data/manjaro.yaml')
+
+    elif 'Darwin' in os_info:
+
+        # Manjaro setup parameters
+        yaml_config = tmi.read_config_file('data/macos.yaml')
         
     else:
+        print(os_info)
         print('OS type not found!  Exiting the system.')
         tmi.process_commands(["uname -srv", "neofetch"])
         quit()
