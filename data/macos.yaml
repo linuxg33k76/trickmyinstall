@@ -1,7 +1,7 @@
 #YAML
 
 Update:
-    -  softwareupdate -lai
+    - softwareupdate -lai
 
 Packages:
     - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
