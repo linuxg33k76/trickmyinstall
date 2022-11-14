@@ -136,13 +136,14 @@ class TrickMyInstall():
 
         return: dictionary
         '''
-        regex = r'uid=(\d{1,4})\D{1,}gid=(\d{1,4})'
-        regex_gid = r'\Dgid=(\d{1,4})'
+
+        regex_uid = r'uid=(\d{1,4})'
+        regex_gid = r'gid=(\d{1,4})'
         current_user = os.popen('whoami','r').read().strip('\n')
         id_info = os.popen('id','r').read().strip('\n')
-        uid = re.match(regex, id_info).group(1)
-        gid = re.match(regex, id_info).group(2)
-
+        uid = re.findall(regex_uid, id_info)[0]
+        gid = re.findall(regex_gid, id_info)[0]
+   
         # Collect User inputs
 
         invalid = True
