@@ -235,7 +235,7 @@ def main():
 
         # Write cifs entry to /etc/fstab
         os.system('grep "# Samba Mount created by TrickMyInstall Script" /etc/fstab || echo "# Samba Mount created by TrickMyInstall Script" | sudo tee -a /etc/fstab')
-        os.system(('grep "//{0}/{1}" /etc/fstab || echo "//{0}/{1}  /mnt/remote_cifs  cifs  credentials={2},uid={3},gid={4}  0       0 " | sudo tee -a /etc/fstab')\
+        os.system(('grep "//{0}/{1}" /etc/fstab || echo "//{0}/{1}  /mnt/remote_cifs  cifs  credentials={2},uid={3},gid={4},file_mode=0755,dir_mode=0755  0  0 " | sudo tee -a /etc/fstab')\
             .format(rb_data['host_name'], rb_data['host_share'], samba_file, rb_data['uid'], rb_data['gid']))
     
         # Mount cifs share
