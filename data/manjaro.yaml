@@ -7,6 +7,11 @@ Packages:
     - sudo pacman -Syy snapd gnome-terminal-fedora neofetch gnome-boxes steam sysfsutils vim yay steam-manjaro geary timeshift
     - yay --aur google-chrome
     - yay --aur visual-studio-code-bin
+    - flatpak install flatseal
+    - flatpak install com.microsoft.Teams
+    - flatpak install sh.cider.Cider
+    - flatpak install com.microsoft.Edge
+    - flatpak install com.brave.Browser
 
 MacDevice:
     - sudo pacman -Syy broadcom-wl-dkms
