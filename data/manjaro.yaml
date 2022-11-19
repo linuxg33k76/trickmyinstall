@@ -15,6 +15,8 @@ Packages:
     - flatpak install sh.cider.Cider
     - flatpak install com.microsoft.Edge
     - flatpak install com.brave.Browser
+    - flatpak install com.getmailspring.Mailspring
+    - snap install 1password 
 
 MacDevice:
     - sudo pacman -Syy broadcom-wl-dkms
