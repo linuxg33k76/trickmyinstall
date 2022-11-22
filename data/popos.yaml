@@ -18,8 +18,8 @@ Packages:
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak install org.raspberrypi.rpi-imager
     - flatpak install Mailspring
-    - flatpak install Steam
     - flatpak install Flatseal
+    - flatpak install com.valvesoftware.Steam
     - flatpak install com.visualstudio.code
     - echo && echo "Installing Snap Apps..." && echo
     - sudo snap install 1password
