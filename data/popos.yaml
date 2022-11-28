@@ -16,11 +16,11 @@ Packages:
     - sudo apt install python3-pip python3-venv
     - sudo apt install rustc vim
     - sudo apt install powerline
+    - sudo apt install steam
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak install org.raspberrypi.rpi-imager
     - flatpak install Mailspring
     - flatpak install Flatseal
-    - flatpak install com.valvesoftware.Steam
     - flatpak install com.visualstudio.code
     - echo && echo "Installing Snap Apps..." && echo
     - sudo snap install 1password
