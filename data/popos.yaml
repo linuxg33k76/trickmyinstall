@@ -8,6 +8,7 @@ Update:
 Packages:
     - sudo apt install snapd google-chrome-stable neofetch gnome-tweaks gnome-boxes libavcodec-extra
     - sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
+    - sudo apt install system76-firmware
     - sudo apt install exfat-fuse exfat-utils sshfs 
     - sudo apt install cifs-utils
     - suod apt install sysfsutils
