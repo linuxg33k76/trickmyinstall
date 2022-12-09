@@ -10,11 +10,11 @@ Packages:
     - sudo pacman -Syu sysfsutils 
     - sudo pacman -Syu vim
     - sudo pacman -Syu code
+    - sudo pacman -Syu steam
     - flatpak install flatseal
     - flatpak install com.microsoft.Teams
     - flatpak install sh.cider.Cider
     - flatpak install com.getmailspring.Mailspring
-    - flatpak install com.valvesoftware.Steam
     - snap install 1password 
 
 MacDevice:
