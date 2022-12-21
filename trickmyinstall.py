@@ -88,31 +88,42 @@ def main():
 
     # Used os_info to decide which YAML file to use
 
-    if 'ubuntu' in os_info or 'pop' in os_info:
+    # Test for user specified YAML config file - Default value is 'none'
 
-        # Ubuntu/Pop OS setup parameters
-        yaml_config = tmi.read_config_file('data/popos.yaml')
-    
-    elif 'fedora' in os_info:
+    if args.yamlfile != 'none':
 
-        # Fedora setup parameters
-        yaml_config = tmi.read_config_file('data/fedora.yaml')
-    
-    elif 'manjaro' in os_info:
+        # Read user specified file
+        yaml_config = tmi.read_config_file(args.yamlfile)
 
-        # Manjaro setup parameters
-        yaml_config = tmi.read_config_file('data/manjaro.yaml')
-
-    elif 'Darwin' in os_info:
-
-        # Manjaro setup parameters
-        yaml_config = tmi.read_config_file('data/macos.yaml')
-        
     else:
-        print(os_info)
-        print('OS type not found!  Exiting the system.')
-        tmi.process_commands(["uname -srv", "neofetch"])
-        quit()
+
+        # If no user argument provided, then use defaults based on OS
+
+        if 'ubuntu' in os_info or 'pop' in os_info:
+
+            # Ubuntu/Pop OS setup parameters
+            yaml_config = tmi.read_config_file('data/popos.yaml')
+        
+        elif 'fedora' in os_info:
+
+            # Fedora setup parameters
+            yaml_config = tmi.read_config_file('data/fedora.yaml')
+        
+        elif 'manjaro' in os_info:
+
+            # Manjaro setup parameters
+            yaml_config = tmi.read_config_file('data/manjaro.yaml')
+
+        elif 'Darwin' in os_info:
+
+            # Manjaro setup parameters
+            yaml_config = tmi.read_config_file('data/macos.yaml')
+            
+        else:
+            print(os_info)
+            print('OS type not found!  Exiting the system.')
+            tmi.process_commands(["uname -srv", "neofetch"])
+            quit()
 
     # Configure Variables based on config files
 
@@ -153,6 +164,8 @@ def main():
             third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.deb', val)]
         elif 'fedora' in os_info:
             third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.rpm', val)]
+        elif 'manjaro' in os_info:
+            third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.xz', val)]
         else:
             third_party_apps = ['None']
 
@@ -172,6 +185,11 @@ def main():
             for app in third_party_apps:
                 os.system(f'sudo dnf install {download_dir}{app}')
     
+        elif 'manjaro' in os_info:
+
+            for app in third_party_apps:
+                os.system(f'sudo pacman -U {download_dir}{app}')
+
         else:
             pass
 

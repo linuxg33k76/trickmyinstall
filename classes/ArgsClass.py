@@ -24,6 +24,7 @@ class CLIParser(argparse.ArgumentParser):
         self.parser.add_argument('-b', '--directory', type=str, help='User Specified Download Directory.', default='default')
         self.parser.add_argument('-d', '--backup_directory', type=str, help='User Specified Backup Directory.', default='default')
         self.parser.add_argument('-v', '--verbose', help='Display log file output', action='store_true')
+        self.parser.add_argument('-f', '--yamlfile', help='specify user yaml file including path', default='none')
         self.parser.add_argument('--test', help='Turn on test output', action='store_true')
         self.args = self.parser.parse_args()
 
