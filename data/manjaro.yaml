@@ -29,7 +29,9 @@ VimSetup:
 Environment:
     - grep "# Added by TrickMyInstall Script" /home/${USER}/.zshrc || echo "# Added by TrickMyInstall Script" >> /home/${USER}/.zshrc
     - grep "neofetch" /home/${USER}/.zshrc || echo "neofetch" >> /home/${USER}/.zshrc
-    - grep "/home/${USER}/dev/bash_scripts/backupservercheck.sh" /home/${USER}/.zshrc || echo "/home/${USER}/dev/bash_scripts/backupservercheck.sh" >> /home/${USER}/.zshrc
     - grep "alias ls='ls --color'" /home/${USER}/.zshrc || echo "alias ls='ls --color'" >> /home/${USER}/.zshrc
-    - grep "alias upadate='sudo pacman -Syu'" /home/${USER}/.zshrc || echo "alias update='sudo pacman -Syu'" >> /home/${USER}/.zshrc
+    - grep "alias update='sudo pacman -Syu'" /home/${USER}/.zshrc || echo "alias update='sudo pacman -Syu'" >> /home/${USER}/.zshrc
+    - grep "alias vpnconnect='expressvpn connect \"USA - Denver\"'" /home/${USER}/.zshrc || echo "alias vpnconnect='expressvpn connect \"USA - Denver\"'" >> /home/${USER}/.zshrc
+    - grep "alias vpndisconnect='expressvpn disconnect'" /home/${USER}/.zshrc || echo "alias vpndisconnect='expressvpn disconnect'" >> /home/${USER}/.zshrc
+    - grep "/home/${USER}/dev/bash_scripts/backupservercheck.sh" /home/${USER}/.zshrc || echo "/home/${USER}/dev/bash_scripts/backupservercheck.sh" >> /home/${USER}/.zshrc
     - cd /home/${USER}/dev && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
