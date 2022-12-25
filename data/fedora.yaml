@@ -43,6 +43,7 @@ VimSetup:
 Environment:
     - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo "# Added by TrickMyInstall Script" >> /home/${USER}/.bashrc
     - grep "alias update='sudo dnf update && flatpak update -y && sudo snap refresh --list && sudo needs-restarting -r'" /home/${USER}/.bashrc || echo "alias update='sudo dnf update && flatpak update -y && sudo snap refresh --list && sudo needs-restarting -r'" >> /home/${USER}/.bashrc
+    - grep "alias wirelesspw='nmcli device wifi show-password'" /home/${USER}/.bashrc || echo "alias wirelesspw='nmcli device wifi show-password'" >> /home/${USER}/.bashrc
     - >
         grep "powerline-daemon" /home/${USER}/.bashrc || echo "if [ -f `which powerline-daemon` ]; then
             powerline-daemon -q
