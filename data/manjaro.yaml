@@ -6,7 +6,6 @@ Update:
 Packages:
     - sudo pacman -Syu snapd 
     - sudo pacman -Syu neofetch 
-    - sudo pacman -Syu gnome-boxes
     - sudo pacman -Syu sysfsutils 
     - sudo pacman -Syu vim
     - sudo pacman -Syu code
