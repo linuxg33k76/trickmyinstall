@@ -13,7 +13,7 @@ Packages:
     - sudo dnf install powerline google-chrome-stable deja-dup gnome-tweaks
     - sudo dnf install rclone ffmpeg
     - echo && echo "Installing Gnome Shell Extensions..." && echo
-    - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell
+    - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell gnome-shell-extension-dash-to-dock
     - echo && echo "Installing Rust..." && echo
     - sudo dnf install rust
     - echo && echo "Installing Snap Apps..." && echo
@@ -66,4 +66,5 @@ Environment:
         EOF
     - powerline-daemon --replace
     - cd /home/${USER}/dev && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
-
+    - echo && echo "*** Turning on Experimental Display Scaling feature for Gnome. REQUIRES REBOOT! ***"
+    - gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"

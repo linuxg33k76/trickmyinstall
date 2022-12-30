@@ -35,5 +35,5 @@ Environment:
     - grep "alias wirelesspw='nmcli device wifi show-password'" /home/${USER}/.zshrc || echo "alias wirelesspw='nmcli device wifi show-password'" >> /home/${USER}/.zshrc
     - grep "/home/${USER}/dev/bash_scripts/backupservercheck.sh" /home/${USER}/.zshrc || echo "/home/${USER}/dev/bash_scripts/backupservercheck.sh" >> /home/${USER}/.zshrc
     - cd /home/${USER}/dev && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
-    - echo && echo "*** Turning on Experimental Display Scaling feature for Gnome ***"
+    - echo && echo "*** Turning on Experimental Display Scaling feature for Gnome. REQUIRES REBOOT! ***"
     - gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
