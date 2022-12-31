@@ -18,7 +18,6 @@ Packages:
     - sudo dnf install rust
     - echo && echo "Installing Snap Apps..." && echo
     - snap install 1password
-    - snap install Mailspring
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     - flatpak install flatseal
