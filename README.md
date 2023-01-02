@@ -1,5 +1,5 @@
 # trickmyinstall
-Python Script for setting up my custom Pop! OS, Fedoara, and Manjaro configurations.
+Python Script for setting up my custom Pop! OS, Fedora, and Manjaro configurations.
 
 Install:  git clone git@github.com:linuxg33k76/trickmyinstall.git 
 
