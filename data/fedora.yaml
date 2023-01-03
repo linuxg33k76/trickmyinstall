@@ -14,8 +14,6 @@ Packages:
     - sudo dnf install rclone ffmpeg
     - echo && echo "Installing Gnome Shell Extensions..." && echo
     - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell gnome-shell-extension-dash-to-dock 
-    - echo && echo "Installing Rust..." && echo
-    - sudo dnf install rust
     - echo && echo "Installing Snap Apps..." && echo
     - snap install 1password
     - echo && echo "Installing Flatpaks..." && echo
