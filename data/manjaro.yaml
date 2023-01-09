@@ -12,8 +12,9 @@ Packages:
     - sudo pacman -Syu steam
     - flatpak install flatseal
     - flatpak install com.microsoft.Teams
-    - flatpak install sh.cider.Cider
     - flatpak install com.getmailspring.Mailspring
+    - flatpak install com.microsoft.Edge
+    - flatpak install com.brave.Browser
     - snap install 1password 
 
 MacDevice:
@@ -29,7 +30,7 @@ Environment:
     - grep "# Added by TrickMyInstall Script" /home/${USER}/.zshrc || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.zshrc
     - grep "neofetch" /home/${USER}/.zshrc || echo "neofetch" >> /home/${USER}/.zshrc
     - grep "alias ls='ls --color'" /home/${USER}/.zshrc || echo "alias ls='ls --color'" >> /home/${USER}/.zshrc
-    - grep "alias update='sudo pacman -Syu'" /home/${USER}/.zshrc || echo "alias update='sudo pacman -Syu'" >> /home/${USER}/.zshrc
+    - grep "alias update='sudo pacman -Syu && flatpak update -y && sudo snap refresh --list'" /home/${USER}/.zshrc || echo "alias update='sudo pacman -Syu && flatpak update -y && sudo snap refresh --list'" >> /home/${USER}/.zshrc
     - grep "alias vpnconnect='expressvpn connect \"USA - Denver\"'" /home/${USER}/.zshrc || echo "alias vpnconnect='expressvpn connect \"USA - Denver\"'" >> /home/${USER}/.zshrc
     - grep "alias vpndisconnect='expressvpn disconnect'" /home/${USER}/.zshrc || echo "alias vpndisconnect='expressvpn disconnect'" >> /home/${USER}/.zshrc
     - grep "alias wirelesspw='nmcli device wifi show-password'" /home/${USER}/.zshrc || echo "alias wirelesspw='nmcli device wifi show-password'" >> /home/${USER}/.zshrc
