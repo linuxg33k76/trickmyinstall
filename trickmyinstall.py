@@ -281,6 +281,11 @@ def main():
     
     print(f'\n Creating a Gnome Settings (dconf) in {backup_directory}...')
     os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
+ 
+    # Copy Wallpapers to the user's Pictures directory
+
+    print('\n Copying Wallpapers to Pictures directory...')
+    os.system(f'cp -r data/wallpaper/ {HOME_DIR}/Pictures')
 
     # Test to see if reboot is needed
 
