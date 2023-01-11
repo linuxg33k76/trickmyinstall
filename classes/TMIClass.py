@@ -161,9 +161,11 @@ class TrickMyInstall():
                 else:
                     print('Passwords Do NOT match!  Please try again.')
             domain_cred = input('Remote Samba Share Domain: ')
-            print(f'Samba Host IP: {host_ip}\nSamba Host Name: {host_name}\nSamba share: {host_share}\nSamba user: {user_cred}\nSamba pass: {pass_cred}\nSamba domain: {domain_cred}\n')
+            
+            print(f'\n\tSamba Host IP: {host_ip}\n\tSamba Host Name: {host_name}\n\tSamba share: {host_share}\n\tSamba user: {user_cred}\n\tSamba pass: {pass_cred}\n\tSamba domain: {domain_cred}\n')
+            
             response = input('Does the information look correct? (Y/n)')
-            print(response)
+
             if 'Y' in response or 'y' in response:
                 invalid = False
         
@@ -178,4 +180,31 @@ class TrickMyInstall():
             'uid': uid,
             'gid': gid
         }
+        return results
+
+
+    def get_git_global_name_email(self):
+        '''
+        Collect Git Global User Name and Email Input
+
+        return: tuple
+        '''
+
+        # Collect User inputs
+
+        invalid = True
+        while invalid:
+            print('Please provide your user name and email for git\'s global config file.\n')
+            git_name = input('User\'s Name for git: ')
+            git_email = input ('Email Address for git: ')
+            
+            print(f'\n\tGit User Name: {git_name}\n\tGit Email Address: {git_email}')
+            
+            response = input('\nDoes the information above look correct? (Y/n)')
+ 
+            if 'Y' in response or 'y' in response:
+                invalid = False
+        
+        results = (git_name, git_email)
+
         return results

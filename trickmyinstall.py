@@ -257,16 +257,21 @@ def main():
             .format(rb_data['host_name'], rb_data['host_share'], samba_file, rb_data['uid'], rb_data['gid']))
     
         # Mount cifs share
-
         os.system('sudo systemctl daemon-reload')
         os.system('sudo mount -a')
-    else:
-        print('\n' + '*'*columns + '\n\tSkipping Remote Samba Share...\n' + '*'*columns + '\n')
 
+    else:
+
+        print('\nSamba Share setup aborted.')
+
+
+    # Performing File System Activities
+
+    print('\n' + '*'*columns + '\n\tPerforming Files System Activites\n' + '*'*columns + '\n')
 
     # Store a list of installed packages in HOME/backup (overwrite if file exists ">"; NOT append ">>")
 
-    print(f'\n Creating a list of installed packages in {backup_directory}...')
+    print(f'\nCreating a list of installed packages in {backup_directory}...')
 
     if 'pop' in os_info:
         os.system(f'dpkg --get-selections > {backup_directory}Installed_Ubuntu_Packages_$(date +%m_%d_%Y).log')
@@ -279,8 +284,30 @@ def main():
 
     # Backup Dconf (Gnome) settings
     
-    print(f'\n Creating a Gnome Settings (dconf) in {backup_directory}...')
+    print(f'\nCreating a Gnome Settings (dconf) in {backup_directory}...')
     os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
+ 
+    # Copy Wallpapers to the user's Pictures directory
+
+    print('\nCopying Wallpapers to Pictures directory...')
+    os.system(f'cp -r data/wallpaper/ {HOME_DIR}/Pictures')
+
+    # Setup Git Environment
+
+    print('\n' + '*'*columns + '\n\tSetup Global git Config\n' + '*'*columns + '\n')
+
+    user_response = input('\nSetup global git configuration file? (Y/n)')
+
+    if 'Y' in user_response or 'y' in user_response:
+
+        print('\nSetting Up git configuration...\n')
+        git_name, git_email = tmi.get_git_global_name_email()
+        os.system(f'git config --global user.name \"{git_name}\"')
+        os.system(f'git config --global user.email \"{git_email}\"')
+
+    else:
+
+        print('\ngit global config setup aborted.')
 
     # Test to see if reboot is needed
 
