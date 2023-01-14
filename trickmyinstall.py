@@ -49,12 +49,12 @@ def main():
 
     # Identify Terminal Size
 
-    c = os.popen('stty size', 'r').read().split()[1]
+    terminal_width = tmi.get_terminal_width()
 
-    if int(c) > 120:
+    if terminal_width > 120:
         columns = 120
     else:
-        columns = int(c)
+        columns = terminal_width
 
     # Process CLI arguments
 
