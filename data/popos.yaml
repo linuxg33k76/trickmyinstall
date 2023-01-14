@@ -35,7 +35,7 @@ VimSetup:
     - sudo update-alternatives --config editor
 
 Environment:
-    - grep "# Added by TrickMyInstall Script" /home/${USER}/.bash_alias || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.bash_alias
+    - grep "# Added by TrickMyInstall Script" /home/${USER}/.bash_aliases || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.bash_aliases
     - grep "alias update='sudo apt update && sudo apt upgrade && flatpak update -y && sudo snap refresh --list'" /home/${USER}/.bash_aliases || echo "alias update='sudo apt update && sudo apt upgrade && flatpak update -y && sudo snap refresh --list'" >> /home/${USER}/.bash_aliases
     - grep "alias upgrade='sudo apt update && sudo apt full-upgrade'" /home/${USER}/.bash_aliases || echo "alias upgrade='sudo apt update && sudo apt full-upgrade'" >> /home/${USER}/.bash_aliases
     - grep "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" /home/${USER}/.bash_aliases || echo "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" >> /home/${USER}/.bash_aliases

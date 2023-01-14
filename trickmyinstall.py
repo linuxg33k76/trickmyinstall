@@ -30,13 +30,19 @@ def main():
     # Declare Constants and Variables
 
     HOME_DIR = os.getenv("HOME")
-    # LOGFILE = HOME_DIR + '/trickmyinstall_log/' + os.system("$(date  +%m_%d_%Y).log")
-    UNAME = os.popen('uname', 'r').read().strip()
+    UNAME = os.popen('uname -r', 'r').read().strip()
 
 
-    if 'Darwin' in UNAME:
+    if 'DARWIN' in UNAME.upper():
+
         os_info = SI.MacOSSystemInfo().system
+
+    elif "MICROSOFT" in UNAME.upper():
+
+        os_info = "WSL"
+
     else:
+
         os_info = SI.LinuxSystemInfo().system
     
     user_test = tmi.check_for_root()
@@ -118,6 +124,11 @@ def main():
 
             # Manjaro setup parameters
             yaml_config = tmi.read_config_file('data/macos.yaml')
+
+        elif 'WSL' in os_info:
+
+            # WSL (Ubuntu) setup parameters
+            yaml_config = tmi.read_config_file('data/wsl.yaml')
             
         else:
             print(os_info)
@@ -285,7 +296,9 @@ def main():
     # Backup Dconf (Gnome) settings
     
     print(f'\nCreating a Gnome Settings (dconf) in {backup_directory}...')
-    os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
+
+    if os_info != 'WSL':
+        os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
  
     # Copy Wallpapers to the user's Pictures directory
 
