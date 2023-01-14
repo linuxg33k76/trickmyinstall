@@ -29,6 +29,21 @@ class TrickMyInstall():
             return False
 
 
+    def get_terminal_width(self):
+       
+        '''
+        Check for terminal window size
+
+        return: integer
+        '''
+
+        width = os.popen('stty size', 'r').read().split()[1]
+
+        print(f'Screen Width: {width}')
+
+        return int(width)
+
+
     def validate_dir(self, dir_path):
 
         '''
