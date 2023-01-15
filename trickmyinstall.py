@@ -322,13 +322,15 @@ def main():
 
         print('\ngit global config setup aborted.')
 
-    # Test to see if reboot is needed
+    # Test to see if reboot is needed and final messages
 
     if 'pop' in os_info or 'ubuntu' in os_info:
         if tmi.test_for_file_exists('/var/run/reboot-required'):
             print('\n' + '*'*columns + '\n\tPlease reboot to complete installation\n' + '*'*columns + '\n')
     elif 'fedora' in os_info:
         os.system('sudo needs-restarting -r')
+    elif 'WSL' in os_info:
+        print('\n\t***NOTE *** See this link to install Powerline Fonts in WSL: https://logfetch.com/wsl2-install-powerline/ \n')
     else:
         print('\n' + '*'*columns + '\n\tInstallation Complete!\n' + '*'*columns + '\n')
 
