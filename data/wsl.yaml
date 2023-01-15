@@ -6,6 +6,7 @@ Update:
 Packages:
     - sudo apt install powerline
     - sudo apt install neofetch
+    - sudo apt install unzip
     
 MacDevice:
 
