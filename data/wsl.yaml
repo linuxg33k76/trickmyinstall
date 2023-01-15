@@ -6,7 +6,7 @@ Update:
 Packages:
     - sudo apt install powerline
     - sudo apt install neofetch
-
+    
 MacDevice:
 
 VimSetup:
@@ -20,27 +20,18 @@ Environment:
     - grep "alias update='sudo apt update && sudo apt upgrade'" /home/${USER}/.bash_aliases || echo "alias update='sudo apt update && sudo apt upgrade'" >> /home/${USER}/.bash_aliases
     - grep "alias upgrade='sudo apt update && sudo apt full-upgrade'" /home/${USER}/.bash_aliases || echo "alias upgrade='sudo apt update && sudo apt full-upgrade'" >> /home/${USER}/.bash_aliases
     - grep "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" /home/${USER}/.bash_aliases || echo "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" >> /home/${USER}/.bash_aliases
+    # Brew & Oh-My-Posh installation
+    - sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+    - sudo chmod +x /usr/local/bin/oh-my-posh
+    - mkdir ~/.poshthemes
+    - wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/.poshthemes/themes.zip
+    - unzip ~/.poshthemes/themes.zip -d ~/.poshthemes
+    - chmod u+rw ~/.poshthemes/*.omp.*
+    - rm ~/.poshthemes/themes.zip
+    # Add Shell Startup Applications
     - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.bashrc
-    - >
-        grep "powerline-daemon" /home/${USER}/.bashrc || echo "if [ -f `which powerline-daemon` ]; then
-            powerline-daemon -q
-            POWERLINE_BASH_CONTINUATION=1
-            POWERLINE_BASH_SELECT=1
-            . /usr/share/powerline/integrations/powerline.sh
-        fi" >> /home/${USER}/.bashrc
     - grep "neofetch" /home/${USER}/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
-    - grep "/home/${USER}/code/bash_scripts/backupservercheck.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/backupservercheck.sh" >> /home/${USER}/.bashrc
-    - mkdir -p /home/${USER}/.config/powerline
-    - >
-        cat <<-'EOF' > ~/.config/powerline/config.json
-            {
-                "ext": {
-                    "shell": {
-                            "theme": "default_leftonly"
-                            }
-                        }
-            }
-        EOF
-    - powerline-daemon --replace
+    - grep "/home/${USER}/code/bash_scripts/backupservercheck.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/backupservercheck.sh" >> /home/${USER}/.bashrc      # Add Oh-My-Posh prompt setup
+    - grep 'eval "$(oh-my-posh init bash --config /home/${USER}/.poshthemes/aliens.omp.json)"' /home/${USER}/.bashrc || echo 'eval "$(oh-my-posh init bash --config /home/${USER}/.poshthemes/aliens.omp.json)"' >> /home/${USER}/.bashrc
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
     - sudo apt autoremove
