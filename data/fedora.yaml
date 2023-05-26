@@ -22,7 +22,7 @@ Packages:
     - flatpak install com.microsoft.Teams
     - flatpak install sh.cider.Cider
     - flatpak install com.microsoft.Edge
-    - flatpak install com.visualstudio.code
+    - flatpak install flathub com.visualstudio.code
     - flatpak install com.brave.Browser
     - flatpak install com.getmailspring.Mailspring
 
