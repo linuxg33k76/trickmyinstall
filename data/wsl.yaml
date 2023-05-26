@@ -21,7 +21,7 @@ Environment:
     - grep "alias update='sudo apt update && sudo apt upgrade'" /home/${USER}/.bash_aliases || echo "alias update='sudo apt update && sudo apt upgrade'" >> /home/${USER}/.bash_aliases
     - grep "alias upgrade='sudo apt update && sudo apt full-upgrade'" /home/${USER}/.bash_aliases || echo "alias upgrade='sudo apt update && sudo apt full-upgrade'" >> /home/${USER}/.bash_aliases
     - grep "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" /home/${USER}/.bash_aliases || echo "alias cleanup='sudo apt update && sudo apt autoremove && sudo flatpak uninstall --unused'" >> /home/${USER}/.bash_aliases
-    # Brew & Oh-My-Posh installation
+    # Oh-My-Posh installation
     - sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
     - sudo chmod +x /usr/local/bin/oh-my-posh
     - mkdir ~/.poshthemes
