@@ -8,13 +8,13 @@ Packages:
     - sudo pacman -Syu neofetch 
     - sudo pacman -Syu sysfsutils 
     - sudo pacman -Syu vim
-    - sudo pacman -Syu code
     - sudo pacman -Syu steam
     - flatpak install flatseal
     - flatpak install com.microsoft.Teams
     - flatpak install com.getmailspring.Mailspring
     - flatpak install com.microsoft.Edge
     - flatpak install com.brave.Browser
+    - flatpak install flathub com.visualstudio.code 
     - snap install 1password 
 
 MacDevice:

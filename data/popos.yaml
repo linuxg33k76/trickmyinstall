@@ -21,7 +21,7 @@ Packages:
     - flatpak install org.raspberrypi.rpi-imager
     - flatpak install Mailspring
     - flatpak install Flatseal
-    - flatpak install com.visualstudio.code
+    - flatpak install flathub com.visualstudio.code
     - echo && echo "Installing Snap Apps..." && echo
     - sudo snap install 1password
 

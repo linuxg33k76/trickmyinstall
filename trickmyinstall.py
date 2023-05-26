@@ -341,5 +341,9 @@ if __name__ == '__main__':
     args = AC.CLIParser().get_args()
     tmi = TMIC.TrickMyInstall()
 
+    # Test for root user
+    if os.getuid() == 0:
+        print(f'I am (g)Root!')
+
     # Start program
     main()
