@@ -14,7 +14,8 @@ Packages:
     - flatpak install com.getmailspring.Mailspring
     - flatpak install com.microsoft.Edge
     - flatpak install com.brave.Browser
-    - flatpak install flathub com.visualstudio.code 
+    - flatpak install flathub com.visualstudio.code
+    - flatpak install flathub cider
     - snap install 1password 
 
 MacDevice:

@@ -22,6 +22,7 @@ Packages:
     - flatpak install Mailspring
     - flatpak install Flatseal
     - flatpak install flathub com.visualstudio.code
+    - flatpak install flathub cider
     - echo && echo "Installing Snap Apps..." && echo
     - sudo snap install 1password
 
