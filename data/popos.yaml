@@ -51,6 +51,7 @@ Environment:
         fi" >> /home/${USER}/.bashrc
     - grep "neofetch" /home/${USER}/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
     - grep "/home/${USER}/code/bash_scripts/backupservercheck.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/backupservercheck.sh" >> /home/${USER}/.bashrc
+    - grep "/home/${USER}/code/bash_scripts/battstatus.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/battstatus.sh" >> /home/${USER}/.bashrc
     - mkdir -p /home/${USER}/.config/powerline
     - >
         cat <<-'EOF' > ~/.config/powerline/config.json
