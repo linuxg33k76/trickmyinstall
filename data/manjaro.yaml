@@ -12,7 +12,6 @@ Packages:
     - sudo pacman -Syu tpl
     - sudo pacman -Syu tplui
     - flatpak install flatseal
-    - flatpak install com.microsoft.Teams
     - flatpak install com.getmailspring.Mailspring
     - flatpak install com.microsoft.Edge
     - flatpak install com.brave.Browser

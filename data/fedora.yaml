@@ -19,7 +19,6 @@ Packages:
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     - flatpak install flatseal
-    - flatpak install com.microsoft.Teams
     - flatpak install sh.cider.Cider
     - flatpak install com.microsoft.Edge
     - flatpak install flathub com.visualstudio.code
