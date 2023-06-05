@@ -12,12 +12,11 @@ Packages:
     - sudo pacman -Syu tpl
     - sudo pacman -Syu tplui
     - flatpak install flatseal
-    - flatpak install com.microsoft.Teams
     - flatpak install com.getmailspring.Mailspring
     - flatpak install com.microsoft.Edge
-    - flatpak install com.brave.Browser
     - flatpak install flathub com.visualstudio.code
     - flatpak install flathub cider
+    - sudo systemctl enable snapd --now
     - snap install 1password 
 
 MacDevice:

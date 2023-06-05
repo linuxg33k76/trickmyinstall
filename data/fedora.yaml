@@ -15,6 +15,7 @@ Packages:
     - echo && echo "Installing Gnome Shell Extensions..." && echo
     - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell gnome-shell-extension-dash-to-dock -y 
     - echo && echo "Installing Snap Apps..." && echo
+    - sudo systemctl enable snapd --now
     - snap install 1password
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
