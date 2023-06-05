@@ -148,12 +148,16 @@ def main():
 
     skip_items = ' '.join(args.skip)
 
+    # Update System
+
     if 'update' in skip_items.lower():
         print('\n' + '*'*columns + '\n\tSkipping Update Process\n' + '*'*columns + '\n')
     else:
         print('\n' + '*'*columns + '\n\tUpdating System...\n' + '*'*columns + '\n')
 
         tmi.process_commands(update_commands_array)
+
+    # Install Packages
 
     if 'install' in skip_items.lower():
         print('\n' + '*'*columns + '\n\tSkipping Package Install Process\n' + '*'*columns + '\n')
