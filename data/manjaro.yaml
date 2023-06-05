@@ -9,14 +9,12 @@ Packages:
     - sudo pacman -Syu sysfsutils 
     - sudo pacman -Syu vim
     - sudo pacman -Syu steam
-    - sudo pacman -Syu tpl
-    - sudo pacman -Syu tplui
     - flatpak install flatseal
     - flatpak install com.getmailspring.Mailspring
     - flatpak install com.microsoft.Edge
-    - flatpak install com.brave.Browser
     - flatpak install flathub com.visualstudio.code
     - flatpak install flathub cider
+    - sudo systemctl enable snapd --now
     - snap install 1password 
 
 MacDevice:
@@ -41,5 +39,3 @@ Environment:
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
     - echo && echo "*** Turning on Experimental Display Scaling feature for Gnome. REQUIRES REBOOT! ***"
     - gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
-    - echo && echo "*** Enabling TPL Power Management ***"
-    - sudo systemctl enable tlp --now
