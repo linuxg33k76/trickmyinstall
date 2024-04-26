@@ -11,7 +11,7 @@ Packages:
     - echo && echo "Installing Core Apps..." && echo
     - sudo dnf install neofetch vim snapd sshfs dnf-utils gparted -y
     - sudo dnf install powerline deja-dup gnome-tweaks -y
-    - sudo dnf install rclone ffmpeg -y
+    - sudo dnf install acpi rclone ffmpeg -y
     - echo && echo "Installing Gnome Shell Extensions..." && echo
     - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell gnome-shell-extension-dash-to-dock -y 
     - echo && echo "Installing Snap Apps..." && echo
