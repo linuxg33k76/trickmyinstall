@@ -24,6 +24,7 @@ Packages:
     - flatpak install Flatseal
     - flatpak install flathub com.visualstudio.code
     - flatpak install flathub cider
+    - flatpak install com.mattjakeman.ExtensionManager
     - echo && echo "Installing Snap Apps..." && echo
     - sudo snap install 1password
 

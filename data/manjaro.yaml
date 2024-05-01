@@ -14,6 +14,7 @@ Packages:
     - flatpak install com.microsoft.Edge
     - flatpak install flathub com.visualstudio.code
     - flatpak install flathub cider
+    - flatpak install com.mattjakeman.ExtensionManager
     - sudo systemctl enable snapd --now
     - snap install 1password 
 
