@@ -21,6 +21,7 @@ Packages:
     - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     - flatpak install flatseal
     - flatpak install com.microsoft.Edge
+    - flatpak install com.mattjakeman.ExtensionManager
     # - flatpak install flathub com.visualstudio.code
 
 MacDevice:
