@@ -5,7 +5,7 @@ Update:
 
 Packages:
     - sudo pamac install snapd 
-    - sudo pamac install neofetch 
+    - sudo pamac install fastfetch 
     - sudo pamac install sysfsutils 
     - sudo pamac install vim
     - sudo pamac install steam
@@ -14,6 +14,7 @@ Packages:
     - flatpak install com.microsoft.Edge
     - flatpak install flathub com.visualstudio.code
     - flatpak install flathub cider
+    - flatpak install com.mattjakeman.ExtensionManager
     - sudo systemctl enable snapd --now
     - snap install 1password 
 
@@ -28,7 +29,7 @@ VimSetup:
 
 Environment:
     - grep "# Added by TrickMyInstall Script" /home/${USER}/.zshrc || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.zshrc
-    - grep "neofetch" /home/${USER}/.zshrc || echo "neofetch" >> /home/${USER}/.zshrc
+    - grep "fastfetch" /home/${USER}/.zshrc || echo "fastfetch" >> /home/${USER}/.zshrc
     - grep "alias ls='ls --color'" /home/${USER}/.zshrc || echo "alias ls='ls --color'" >> /home/${USER}/.zshrc
     - grep "alias update='sudo pamac update && flatpak update -y && sudo snap refresh --list'" /home/${USER}/.zshrc || echo "alias update='sudo pamac update && flatpak update -y && sudo snap refresh --list'" >> /home/${USER}/.zshrc
     - grep "alias vpnconnect='expressvpn connect \"USA - Denver\"'" /home/${USER}/.zshrc || echo "alias vpnconnect='expressvpn connect \"USA - Denver\"'" >> /home/${USER}/.zshrc

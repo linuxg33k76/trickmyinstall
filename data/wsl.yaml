@@ -5,7 +5,7 @@ Update:
 
 Packages:
     - sudo apt install powerline
-    - sudo apt install neofetch
+    - sudo apt install fastfetch
     - sudo apt install unzip
     
 MacDevice:
@@ -31,7 +31,7 @@ Environment:
     - rm ~/.poshthemes/themes.zip
     # Add Shell Startup Applications
     - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.bashrc
-    - grep "neofetch" /home/${USER}/.bashrc || echo "neofetch" >> /home/${USER}/.bashrc
+    - grep "fastfetch" /home/${USER}/.bashrc || echo "fastfetch" >> /home/${USER}/.bashrc
     - grep "/home/${USER}/code/bash_scripts/backupservercheck.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/backupservercheck.sh" >> /home/${USER}/.bashrc      # Add Oh-My-Posh prompt setup
     - grep 'eval "$(oh-my-posh init bash --config /home/${USER}/.poshthemes/aliens.omp.json)"' /home/${USER}/.bashrc || echo 'eval "$(oh-my-posh init bash --config /home/${USER}/.poshthemes/aliens.omp.json)"' >> /home/${USER}/.bashrc
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
