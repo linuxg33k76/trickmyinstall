@@ -15,6 +15,7 @@ Packages:
     - flatpak install flathub com.visualstudio.code
     - flatpak install flathub cider
     - flatpak install com.mattjakeman.ExtensionManager
+    - flatpak install com.gnome.Podcasts
     - sudo systemctl enable snapd --now
     - snap install 1password 
 
