@@ -22,7 +22,7 @@ Packages:
     - flatpak install flatseal
     - flatpak install com.microsoft.Edge
     - flatpak install com.mattjakeman.ExtensionManager
-    - flatpak install com.gnome.Podcasts
+    - flatpak install Podcasts
     # - flatpak install flathub com.visualstudio.code
 
 MacDevice:
