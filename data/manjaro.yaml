@@ -16,6 +16,7 @@ Packages:
     - flatpak install flathub cider
     - flatpak install com.mattjakeman.ExtensionManager
     - flatpak install com.gnome.Podcasts
+    - flatpak install flathub com.brave.Browser
     - sudo systemctl enable snapd --now
     - snap install 1password 
 
