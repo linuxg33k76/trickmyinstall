@@ -17,10 +17,7 @@ Packages:
     - sudo dnf install acpi rclone ffmpeg -y
     - sudo dnf install code -y
     - echo && echo "Installing Gnome Shell Extensions..." && echo
-    - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell gnome-shell-extension-dash-to-dock -y 
-    - echo && echo "Installing Snap Apps..." && echo
-    - sudo systemctl enable snapd --now
-    - snap install 1password
+    - sudo dnf install gnome-extensions-app gnome-shell-extension-dash-to-panel gnome-shell-extension-dash-to-dock -y
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     - flatpak install flatseal
