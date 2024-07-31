@@ -15,7 +15,7 @@ Packages:
     - sudo dnf install fastfetch vim snapd sshfs dnf-utils gparted -y
     - sudo dnf install powerline deja-dup gnome-tweaks -y
     - sudo dnf install acpi rclone ffmpeg -y
-    - sudo dnf install code
+    - sudo dnf install code -y
     - echo && echo "Installing Gnome Shell Extensions..." && echo
     - sudo dnf install gnome-extensions-app gnome-shell-extension-pop-shell gnome-shell-extension-dash-to-dock -y 
     - echo && echo "Installing Snap Apps..." && echo
@@ -28,6 +28,7 @@ Packages:
     - flatpak install com.mattjakeman.ExtensionManager
     - flatpak install Podcasts
     - flatpak install flathub com.brave.Browser
+    - flatpak install https://downloads.1password.com/linux/flatpak/1Password.flatpakref
 
 MacDevice:
     - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
