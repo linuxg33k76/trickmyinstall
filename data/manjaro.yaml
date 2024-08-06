@@ -8,7 +8,7 @@ Packages:
     - sudo pamac install sysfsutils 
     - sudo pamac install vim
     - sudo pamac install steam
-    - sudo pamac install code
+    - sudo pamac build visual-studio-code-bin
     - sudo pamac install fprintd libfprint
     - sudo pamac install deja-dup
     - sudo systemctl start fprintd.service
