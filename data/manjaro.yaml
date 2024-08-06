@@ -4,21 +4,23 @@ Update:
     - sudo pamac update 
 
 Packages:
-    - sudo pamac install snapd 
+    # - sudo pamac install snapd 
     - sudo pamac install fastfetch 
     - sudo pamac install sysfsutils 
     - sudo pamac install vim
     - sudo pamac install steam
+    - sudo pamac install code
     - flatpak install flatseal
-    - flatpak install com.getmailspring.Mailspring
+    # - flatpak install com.getmailspring.Mailspring
     - flatpak install com.microsoft.Edge
-    - flatpak install flathub com.visualstudio.code
+    # - flatpak install flathub com.visualstudio.code
     - flatpak install flathub cider
     - flatpak install com.mattjakeman.ExtensionManager
     - flatpak install com.gnome.Podcasts
     - flatpak install flathub com.brave.Browser
-    - sudo systemctl enable snapd --now
-    - snap install 1password 
+    - flatpak install https://downloads.1password.com/linux/flatpak/1Password.flatpakref
+    # - sudo systemctl enable snapd --now
+    # - snap install 1password 
 
 MacDevice:
     - sudo pamac install broadcom-wl-dkms
