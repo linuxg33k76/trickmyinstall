@@ -10,6 +10,7 @@ Packages:
     - sudo pamac install steam
     - sudo pamac install code
     - sudo pamac install fprintd libfprint
+    - sudo pamac install deja-dup
     - sudo systemctl start fprintd.service
     - flatpak install flatseal
     - flatpak install com.microsoft.Edge
