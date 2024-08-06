@@ -40,7 +40,8 @@ Environment:
     - grep "alias vpndisconnect='expressvpn disconnect'" /home/${USER}/.zshrc || echo "alias vpndisconnect='expressvpn disconnect'" >> /home/${USER}/.zshrc
     - grep "alias wirelesspw='nmcli device wifi show-password'" /home/${USER}/.zshrc || echo "alias wirelesspw='nmcli device wifi show-password'" >> /home/${USER}/.zshrc
     - grep "/home/${USER}/code/bash_scripts/backupservercheck.sh" /home/${USER}/.zshrc || echo "/home/${USER}/code/bash_scripts/backupservercheck.sh" >> /home/${USER}/.zshrc
-    - grep "/home/${USER}/code/bash_scripts/battstatus.sh" /home/${USER}/.zshrc || echo "/home/${USER}/code/bash_scripts/battstatus.sh" >> /home/${USER}/.zshrc
+    - grep "export EDITOR='/usr/bin/vim'" /home/${USER}/.zshrc || echo "export EDITOR='/usr/bin/vim'" >> /home/${USER}/.zshrc
+    # - grep "/home/${USER}/code/bash_scripts/battstatus.sh" /home/${USER}/.zshrc || echo "/home/${USER}/code/bash_scripts/battstatus.sh" >> /home/${USER}/.zshrc
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
     - echo && echo "*** Turning on Experimental Display Scaling feature for Gnome. REQUIRES REBOOT! ***"
     - gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
