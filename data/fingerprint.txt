@@ -1,0 +1,14 @@
+Install these packages:
+sudo pamac install fprintd libfprint
+sudo systemctl start fprintd.service
+
+Edit the /etc/sddm.conf file
+sudo vim /etc/sddm.conf
+[General]
+EnablePAM=true
+
+Edit PAM Configuration for SDDM
+sudo vim /etc/pam.d/sddm
+auth sufficient pam_fprintd.so
+
+sudo systemctl daemon-reload
