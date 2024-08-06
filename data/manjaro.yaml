@@ -9,6 +9,8 @@ Packages:
     - sudo pamac install vim
     - sudo pamac install steam
     - sudo pamac install code
+    - sudo pamac install fprintd libfprint
+    - sudo systemctl start fprintd.service
     - flatpak install flatseal
     - flatpak install com.microsoft.Edge
     - flatpak install flathub cider
