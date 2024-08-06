@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 '''
-Pop! OS Python Setup Script
+Linux OS Python Setup Script
 Author:  Ben C. Calvert
 Date:  18 September 2021
 
