@@ -42,3 +42,11 @@ Environment:
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
     - echo && echo "*** Turning on Experimental Display Scaling feature for Gnome. REQUIRES REBOOT! ***"
     - gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+
+Fingerprint:
+    - sudo pamac install fprintd libfprint
+    - sudo systemctl start fprintd.service
+    - grep "EnablePAM=true" /etc/sddm.conf || sudo sed -i '11i\EnablePAM=true' /etc/sddm.conf
+    - grep "pam_fprintd.so" /etc/pam.d/sddm || sudo sed -i '2i\auth\t\tsufficient\tpam_fprintd.so' /etc/pam.d/sddm
+    - grep "pam_fprintd.so" /etc/pam.d/sudo || sudo sed -i '2i\auth\t\tsufficient\tpam_fprintd.so' /etc/pam.d/sudo
+    - grep "pam_fprintd.so" /etc/pam.d/su || sudo sed -i '3i\auth\t\tsufficient\tpam_fprintd.so' /etc/pam.d/su

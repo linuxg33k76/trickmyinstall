@@ -20,11 +20,12 @@ class CLIParser(argparse.ArgumentParser):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument('-s', '--skip', type=str, help='Skip specific task: install,update,3rdParty', default='', nargs='+')
         # self.parser.add_argument('-e', '--exclude', type=str, help='Exclude Specified Packages from package file', default='', nargs='+')
+        self.parser.add_argument('-f', '--fingerprint', help='Enable Fingerprint Setup', action='store_true')
         self.parser.add_argument('-m', '--macwifi', help='Install Mac WiFi drivers.', action='store_true')
         self.parser.add_argument('-b', '--directory', type=str, help='User Specified Download Directory.', default='default')
         self.parser.add_argument('-d', '--backup_directory', type=str, help='User Specified Backup Directory.', default='default')
         self.parser.add_argument('-v', '--verbose', help='Display log file output', action='store_true')
-        self.parser.add_argument('-f', '--yamlfile', help='specify user yaml file including path', default='none')
+        self.parser.add_argument('-y', '--yamlfile', help='specify user yaml file including path', default='none')
         self.parser.add_argument('--test', help='Turn on test output', action='store_true')
         self.args = self.parser.parse_args()
 

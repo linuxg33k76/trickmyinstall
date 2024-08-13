@@ -143,6 +143,7 @@ def main():
     macwifi_commands_array = yaml_config['MacDevice']
     vim_commands_array = yaml_config['VimSetup']
     environment_commands = yaml_config['Environment']
+    fingerprint_commands = yaml_config['Fingerprint']
     
     # Run install and setup commands
 
@@ -230,6 +231,12 @@ def main():
 
     tmi.process_commands(environment_commands)
     
+    # Setup Fingerprint Reader
+
+    if args.fingerprint is True:
+        print('\n' + '*'*columns + '\n\tSetting Up Fingerprint Reader...\n' + '*'*columns + '\n')
+        tmi.process_commands(fingerprint_commands)
+
     # Setup Remote Samba File Store
 
     print('\n' + '*'*columns + '\n\tSetup Samba Share\n' + '*'*columns + '\n')
