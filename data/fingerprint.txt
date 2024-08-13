@@ -12,3 +12,30 @@ sudo vim /etc/pam.d/sddm
 auth sufficient pam_fprintd.so
 
 sudo systemctl daemon-reload
+
+
+cat /etc/pam.d/sudo
+
+#%PAM-1.0
+auth            sufficient      pam_fprintd.so
+auth            include         system-auth
+account         include         system-auth
+session         include         system-auth
+
+
+sed commands:
+
+insert a line at the top of the file:  sed -i '1i\This is a new beginning line" example.txt
+
+insert at line 2 of the file:  sed -i '2i\This is a new line' example.txt
+
+insert at the bottom of th file:  sed -i 'test line' example.txt
+
+script
+
+sudo pamac install fprintd libfprint
+sudo systemctl start fprint.service
+sudo sed -i '11i\EnablePAM=true' /etc/sddm.conf
+sudo sed -i 'auth\t\tsufficient\tpam_fprintd.so' /etc/pam.d/sddm
+sudo sed -i '2i\auth\t\tsufficient\tpam_fprintd.so' /etc/pam.d/sudo
+sudo sed -i '3i\auth\t\tsufficient\tpam_fprintd.so' /etc/pam.d/su
