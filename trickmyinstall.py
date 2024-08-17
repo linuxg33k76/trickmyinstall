@@ -143,7 +143,6 @@ def main():
     macwifi_commands_array = yaml_config['MacDevice']
     vim_commands_array = yaml_config['VimSetup']
     environment_commands = yaml_config['Environment']
-    fingerprint_commands = yaml_config['Fingerprint']
     
     # Run install and setup commands
 
