@@ -13,10 +13,12 @@ Packages:
     - sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     - echo && echo "Installing Core Apps..." && echo
     - sudo dnf install fastfetch vim sshfs dnf-utils gparted -y
-    - sudo dnf install powerline deja-dup -y
-    - sudo dnf install vim-powerline -y
+    - sudo dnf install powerline vim-powerline -y
+    - sudo dnf install deja-dup -y
     - sudo dnf install acpi rclone ffmpeg -y
     - sudo dnf install code -y
+    - sudo dnf install yakuake -y
+    - sudo dnf install git-core -y
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     - flatpak install flatseal
