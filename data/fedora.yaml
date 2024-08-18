@@ -48,6 +48,7 @@ VimSetup:
 
 Environment:
     - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.bashrc
+    - grep "alias git-update='git checkout main && git pull origin main && git checkout develop'" /home/${USER}/.bashrc || echo -e "alias git-update='git checkout main && git pull origin main && git checkout develop'" >> /home/${USER}/.bashrc
     - grep "alias update='sudo dnf update && flatpak update -y && sudo snap refresh --list && sudo needs-restarting -r'" /home/${USER}/.bashrc || echo "alias update='sudo dnf update && flatpak update -y && sudo snap refresh --list && sudo needs-restarting -r'" >> /home/${USER}/.bashrc
     - grep "alias wirelesspw='nmcli device wifi show-password'" /home/${USER}/.bashrc || echo "alias wirelesspw='nmcli device wifi show-password'" >> /home/${USER}/.bashrc
     - >
@@ -59,7 +60,6 @@ Environment:
         fi" >> /home/${USER}/.bashrc
     - grep "fastfetch" /home/${USER}/.bashrc || echo "fastfetch" >> /home/${USER}/.bashrc
     - grep "/home/${USER}/code/bash_scripts/backupservercheck.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/backupservercheck.sh" >> /home/${USER}/.bashrc
-    #- grep "/home/${USER}/code/bash_scripts/battstatus.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/battstatus.sh" >> /home/${USER}/.bashrc
     - mkdir -p /home/${USER}/.config/powerline
     - >
         cat <<-'EOF' > ~/.config/powerline/config.json
