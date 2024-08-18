@@ -9,6 +9,7 @@ class LinuxSystemInfo():
         self.diskspace = os.popen('df -h | grep "/dev"', 'r').read()
         self.shell = os.getenv('SHELL')
         self.kernel = os.system('uname -a')
+        self.desktop = os.popen('echo $XDG_CURRENT_DESKTOP', 'r').read()
 
 # To DO:  Work on commands below - self.processor
 class MacOSSystemInfo():

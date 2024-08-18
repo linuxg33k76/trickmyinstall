@@ -45,6 +45,8 @@ def main():
 
         os_info = SI.LinuxSystemInfo().system
     
+    os_desktop = SI.LinuxSystemInfo().desktop
+    
     user_test = tmi.check_for_root()
 
     # User check - if root exit script and print error message
@@ -113,7 +115,10 @@ def main():
         elif 'fedora' in os_info:
 
             # Fedora setup parameters
-            yaml_config = tmi.read_config_file('data/fedora.yaml')
+            if 'KDE' in os_desktop:
+                yaml_config = tmi.read_config_file('data/fedora_kde.yaml')
+            else:
+                yaml_config = tmi.read_config_file('data/fedora.yaml')
         
         elif 'manjaro' in os_info:
 
@@ -234,7 +239,7 @@ def main():
 
     if args.fingerprint is True:
         print('\n' + '*'*columns + '\n\tSetting Up Fingerprint Reader...\n' + '*'*columns + '\n')
-        tmi.process_commands(fingerprint_commands)
+        os.system('./data/scripts/fingerprint.sh')
 
     # Setup Remote Samba File Store
 
@@ -332,6 +337,19 @@ def main():
 
         print('\ngit global config setup aborted.')
 
+    # Set Hostname
+    print('\n' + '*'*columns + '\n\tPlease Set Hostname\n' + '*'*columns + '\n')
+    hostname = input('\nHostname of system? (Press Enter to continue)')
+    if hostname != '':
+        os.system(f'sudo hostnamectl set-hostname {hostname}')
+    else:
+        print('Hostname not set.')
+    
+    # Generate SSH Keys if necessary
+
+    print('\n' + '*'*columns + '\n\tGenerate SSH Keys\n' + '*'*columns + '\n')
+    os.system('./data/scripts/sshkeygen.sh')
+    
     # Test to see if reboot is needed and final messages
 
     if 'pop' in os_info or 'ubuntu' in os_info:

@@ -13,18 +13,15 @@ Packages:
     - sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     - echo && echo "Installing Core Apps..." && echo
     - sudo dnf install fastfetch vim sshfs dnf-utils gparted -y
-    - sudo dnf install powerline deja-dup gnome-tweaks -y
+    - sudo dnf install powerline deja-dup -y
+    - sudo dnf install vim-powerline -y
     - sudo dnf install acpi rclone ffmpeg -y
     - sudo dnf install code -y
-    - echo && echo "Installing Gnome Shell Extensions..." && echo
-    - sudo dnf install gnome-extensions-app gnome-shell-extension-dash-to-panel gnome-shell-extension-dash-to-dock -y
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     - flatpak install flatseal
     - flatpak install com.microsoft.Edge
-    - flatpak install com.mattjakeman.ExtensionManager
     - flatpak install Podcasts
-    - flatpak install flathub com.brave.Browser
     - flatpak install https://downloads.1password.com/linux/flatpak/1Password.flatpakref
 
 MacDevice:
@@ -59,7 +56,6 @@ Environment:
         fi" >> /home/${USER}/.bashrc
     - grep "fastfetch" /home/${USER}/.bashrc || echo "fastfetch" >> /home/${USER}/.bashrc
     - grep "/home/${USER}/code/bash_scripts/backupservercheck.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/backupservercheck.sh" >> /home/${USER}/.bashrc
-    #- grep "/home/${USER}/code/bash_scripts/battstatus.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/battstatus.sh" >> /home/${USER}/.bashrc
     - mkdir -p /home/${USER}/.config/powerline
     - >
         cat <<-'EOF' > ~/.config/powerline/config.json
