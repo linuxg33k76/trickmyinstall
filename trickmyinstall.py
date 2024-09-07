@@ -125,6 +125,11 @@ def main():
             # Manjaro setup parameters
             yaml_config = tmi.read_config_file('data/manjaro.yaml')
 
+        elif 'nobara' in os_info:
+
+            # Nobara setup parameters
+            yaml_config = tmi.read_config_file('data/nobara.yaml')
+        
         elif 'Darwin' in os_info:
 
             # Manjaro setup parameters
@@ -339,11 +344,12 @@ def main():
 
     # Set Hostname
     print('\n' + '*'*columns + '\n\tPlease Set Hostname\n' + '*'*columns + '\n')
-    hostname = input('\nHostname of system? (Press Enter to continue)')
+    print('\nCurrent Hostname: ' + os.popen('hostname', 'r').read().strip())
+    hostname = input('\nHostname of system? (Press [Enter] to leave as is): ')
     if hostname != '':
         os.system(f'sudo hostnamectl set-hostname {hostname}')
     else:
-        print('Hostname not set.')
+        print('Hostname NOT changed.')
     
     # Generate SSH Keys if necessary
 

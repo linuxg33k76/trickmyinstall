@@ -1,0 +1,68 @@
+#YAML
+
+Update:
+    - sudo dnf update
+    - sudo dnf upgrade
+
+Packages:
+    - echo && echo "Enabling Microsoft Code Repos..." && echo
+    - sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    - echo \-e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+    - echo && echo "Installing Core Apps..." && echo
+    - sudo dnf install fastfetch sshfs dnf-utils -y
+    - sudo dnf install powerline vim-powerline -y
+    - sudo dnf install deja-dup -y
+    - sudo dnf install code -y
+    - sudo dnf install yakuake -y
+    - echo && echo "Installing Flatpaks..." && echo
+    - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    - flatpak install https://downloads.1password.com/linux/flatpak/1Password.flatpakref
+
+MacDevice:
+    - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    - sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    - sudo dnf install broadcom-wl
+
+VimSetup:
+    - echo "set number" > /home/${USER}/.vimrc
+    - echo "syntax on" >> /home/${USER}/.vimrc
+    - echo "colorscheme ron" >> /home/${USER}/.vimrc
+    - echo "python3 from powerline.vim import setup as powerline_setup" >> /home/${USER}/.vimrc
+    - echo "python3 powerline_setup()" >> /home/${USER}/.vimrc
+    - echo "python3 del powerline_setup" >> /home/${USER}/.vimrc
+    - echo "set laststatus=2 \" Always display the statusline in all windows" >> /home/${USER}/.vimrc
+    - echo "set showtabline=2 \" Always display the tabline, even if there is only one tab" >> /home/${USER}/.vimrc
+    - echo "set noshowmode \" Hide the default mode text (e.g. -- INSERT -- below the statusline)" >> /home/${USER}/.vimrc"
+    - echo "set t_Co=256" >> /home/${USER}/.vimrc
+    - sudo dnf remove nano-default-editor
+    - sudo dnf install vim-default-editor
+
+Environment:
+    - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.bashrc
+    - grep "alias git-update='git checkout main && git pull origin main && git checkout develop'" /home/${USER}/.bashrc || echo -e "alias git-update='git checkout main && git pull origin main && git checkout develop'" >> /home/${USER}/.bashrc
+    - grep "alias update='sudo dnf update && flatpak update -y && sudo snap refresh --list && sudo needs-restarting -r'" /home/${USER}/.bashrc || echo "alias update='sudo dnf update && flatpak update -y && sudo snap refresh --list && sudo needs-restarting -r'" >> /home/${USER}/.bashrc
+    - grep "alias wirelesspw='nmcli device wifi show-password'" /home/${USER}/.bashrc || echo "alias wirelesspw='nmcli device wifi show-password'" >> /home/${USER}/.bashrc
+    - >
+        grep "powerline-daemon" /home/${USER}/.bashrc || echo "if [ -f `which powerline-daemon` ]; then
+            powerline-daemon -q
+            POWERLINE_BASH_CONTINUATION=1
+            POWERLINE_BASH_SELECT=1
+            . /usr/share/powerline/bash/powerline.sh
+        fi" >> /home/${USER}/.bashrc
+    - grep "fastfetch" /home/${USER}/.bashrc || echo "fastfetch" >> /home/${USER}/.bashrc
+    - grep "/home/${USER}/code/bash_scripts/backupservercheck.sh" /home/${USER}/.bashrc || echo "/home/${USER}/code/bash_scripts/backupservercheck.sh" >> /home/${USER}/.bashrc
+    - mkdir -p /home/${USER}/.config/powerline
+    - >
+        cat <<-'EOF' > ~/.config/powerline/config.json
+            {
+                "ext": {
+                    "shell": {
+                            "theme": "default_leftonly"
+                            }
+                        }
+            }
+        EOF
+    - powerline-daemon --replace
+    - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
+    - echo && echo "*** Turning on Experimental Display Scaling feature for Gnome. REQUIRES REBOOT! ***"
+    - gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
