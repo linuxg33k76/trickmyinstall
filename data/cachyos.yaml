@@ -1,0 +1,26 @@
+#YAML
+
+Update:
+    - sudo paru -Syyu
+
+Packages: 
+    - sudo paru -S sysfsutils 
+    - sudo paru -S cachyos-gaming-meta
+    - sudo paru -S cachyos-gaming-applications
+    - paru -S visual-studio-code-bin
+    - paru -S 1password
+    - sudo paru -S deja-dup
+
+
+MacDevice:
+    - echo "no support for Mac devices"
+
+VimSetup:
+    - echo "set number" > /home/${USER}/.vimrc
+    - echo "syntax on" >> /home/${USER}/.vimrc
+    - echo "colorscheme ron" >> /home/${USER}/.vimrc
+    - echo "set -x EDITOR /usr/bin/vim" >> /home/${USER}/.config/fish/config.fish
+
+Environment:
+    - echo "No Environment setup for CachyOS"
+

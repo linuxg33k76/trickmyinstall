@@ -125,6 +125,11 @@ def main():
             # Manjaro setup parameters
             yaml_config = tmi.read_config_file('data/manjaro.yaml')
 
+        elif 'cachyos' in os_info:
+            
+            # CachyOS setup parameters
+            yaml_config = tmi.read_config_file('data/cachyos.yaml')
+
         elif 'nobara' in os_info:
 
             # Nobara setup parameters
