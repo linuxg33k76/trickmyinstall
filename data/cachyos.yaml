@@ -4,7 +4,8 @@ Update:
     - sudo paru -Syyu
 
 Packages: 
-    - sudo paru -S sysfsutils 
+    - sudo paru -S sysfsutils
+    - sudo paru -S fprintd
     - sudo paru -S cachyos-gaming-meta
     - sudo paru -S cachyos-gaming-applications
     - paru -S visual-studio-code-bin
@@ -13,7 +14,7 @@ Packages:
 
 
 MacDevice:
-    - echo "no support for Mac devices"
+    - echo "No support for Mac devices included in CachyOS setup."
 
 VimSetup:
     - echo "set number" > /home/${USER}/.vimrc
