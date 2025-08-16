@@ -27,4 +27,7 @@ VimSetup:
 
 Environment:
     - echo "No Environment setup for CachyOS"
+    - echo "fish_config prompt choose astronaut"
+    - echo "funcsave fish_prompt"
+
 
