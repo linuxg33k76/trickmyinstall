@@ -12,11 +12,10 @@ Packages:
     - paru -S microsoft-edge-stable-bin
     - paru -S google-chrome
     - paru -S 1password
+    - paru -S yakuake
     - sudo paru -S deja-dup
     - sudo paru -S pamac-aur
     - sudo paru -S discover
-
-
 
 MacDevice:
     - echo "No support for Mac devices included in CachyOS setup."
