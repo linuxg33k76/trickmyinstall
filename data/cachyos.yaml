@@ -31,6 +31,4 @@ VimSetup:
 Environment:
     - echo "Environment setup for CachyOS"
     - echo "Setting fish shell prompt to Astronaut theme"
-    - /usr/bin/fish -c "fish_config prompt choose astronaut"
-    - echo "Saving fish prompt configuration"
-    - /usr/bin/fish -c "funcsave fish_prompt"
+    - /usr/bin/fish -c "fish_config prompt choose astronaut && funcsave fish_prompt"
