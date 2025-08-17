@@ -225,9 +225,12 @@ def main():
 
     # Check for new versions
 
-    print('\nUpdating system after 3rdParty App Install...\n')
-
-    tmi.process_commands(update_commands_array)
+    if 'update' in skip_items.lower():
+        print('\n' + '*'*columns + '\n\tSkipping Update Process\n' + '*'*columns + '\n')
+    else:
+        print('\nUpdating system after 3rdParty App Install...\n')
+        
+        tmi.process_commands(update_commands_array)
    
     # Set Default CLI editor...I like Vim!
 
