@@ -9,6 +9,8 @@ Packages:
     - sudo paru -S cachyos-gaming-meta
     - sudo paru -S cachyos-gaming-applications
     - paru -S visual-studio-code-bin
+    - paru -S microsoft-edge-stable-bin
+    - paru -S google-chrome
     - paru -S 1password
     - sudo paru -S deja-dup
     - sudo paru -S pamac-aur
