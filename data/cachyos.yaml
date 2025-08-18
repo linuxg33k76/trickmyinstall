@@ -31,4 +31,5 @@ Environment:
     - echo "Environment setup for CachyOS"
     - echo "Setting fish shell prompt to Astronaut theme"
     - /usr/bin/fish -c "fish_config prompt choose astronaut && funcsave fish_prompt"
+    - grep "echo && ~/code/bash_scripts/backupservercheck.sh && echo" /home/${USER}/.config/fish/config.fish || echo "echo && ~/code/bash_scripts/backupservercheck.sh && echo" >> /home/${USER}/.config/fish/config.fish
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
