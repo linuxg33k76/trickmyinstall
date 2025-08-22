@@ -331,7 +331,8 @@ def main():
     # Copy Wallpapers to the user's Pictures directory
 
     print('\nCopying Wallpapers to Pictures directory...')
-    os.system(f'cp -r data/wallpaper/ {HOME_DIR}/Pictures')
+    os.system('cd /home/${USER}/code && test -d wallpapers || git clone https://github.com/linuxg33k76/wallpapers')
+    os.system(f'cp -r ~/code/wallpapers/ {HOME_DIR}/Pictures')
 
     # Setup Git Environment
 
