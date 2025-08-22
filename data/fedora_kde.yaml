@@ -26,11 +26,11 @@ Packages:
     - flatpak install Podcasts
     - flatpak install https://downloads.1password.com/linux/flatpak/1Password.flatpakref
 
-MacDevice:
-    - sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-    - sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-    - sudo dnf install broadcom-wl
-
+Backup:
+    - echo "Backing up files for modification during Fedora KDE setup."
+    - cp /home/${USER}/.bashrc /home/${USER}/bashrc.bak
+    - sudo cp /etc/fstab /etc/fstab.bak
+    
 VimSetup:
     - echo "set number" > /home/${USER}/.vimrc
     - echo "syntax on" >> /home/${USER}/.vimrc

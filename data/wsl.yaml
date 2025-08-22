@@ -8,7 +8,11 @@ Packages:
     - sudo apt install fastfetch
     - sudo apt install unzip
     
-MacDevice:
+Backup:
+    - echo "Backing up files for modification during WSL setup."
+    - cp /home/${USER}/.bashrc /home/${USER}/bashrc.bak
+    - cp /home/${USER}/.bash_aliases /home/${USER}/bash_aliases.bak
+    - cp /home/${USER}/.bashrc /home/${USER}/bashrc.bak
 
 VimSetup:
     - echo "set number" > /home/${USER}/.vimrc

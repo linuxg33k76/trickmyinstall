@@ -19,8 +19,11 @@ Packages:
     - flatpak install flathub com.brave.Browser
     - flatpak install https://downloads.1password.com/linux/flatpak/1Password.flatpakref
 
-MacDevice:
-    - sudo pamac install broadcom-wl-dkms
+Backup:
+    - echo "Backing up files for modification during Manjaro setup."
+    - sudo cp /etc/fstab /etc/fstab.bak
+    - cp /home/${USER}/.zshrc /home/${USER}/zshrc.bak
+
 
 VimSetup:
     - echo "set number" > /home/${USER}/.vimrc

@@ -8,16 +8,18 @@ Packages:
     - brew install fastfetch
     - brew install python3
 
-MacDevice:
-    - 
+Backup:
+    - echo "Backing up files for modification during macOS setup."
+    - cp /Users/${USER}/.zprofile /Users/${USER}/zprofile.bak
+    - cp /Users/${USER}/.zshrc /Users/${USER}/zshrc.bak
 
 VimSetup:
-    - echo "set number" > /home/${USER}/.vimrc
-    - echo "syntax on" >> /home/${USER}/.vimrc
-    - echo "colorscheme ron" >> /home/${USER}/.vimrc
+    - echo "set number" > /Users/${USER}/.vimrc
+    - echo "syntax on" >> /Users/${USER}/.vimrc
+    - echo "colorscheme ron" >> /Users/${USER}/.vimrc
 
 Environment:
-    - grep "# Added by TrickMyInstall Script" /home/${USER}/.zprofile || echo "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.zprofile
-    - grep "brew update && brew upgrade" /home/${USER}/.zprofile || echo "brew update && brew upgrade" >> /home/${USER}/.zprofile
-    - grep "fastfetch" /home/${USER}/.zprofile || echo "fastfetch" >> /home/${USER}/.zprofile
-    - grep "alias ls='ls --color'" /home/${USER}/.zprofile || echo "alias ls='ls --color'" >> /home/${USER}/.zprofile
+    - grep "# Added by TrickMyInstall Script" /Users/${USER}/.zprofile || echo "\n# Added by TrickMyInstall Script\n" >> /Users/${USER}/.zprofile
+    - grep "brew update && brew upgrade" /Users/${USER}/.zprofile || echo "brew update && brew upgrade" >> /Users/${USER}/.zprofile
+    - grep "fastfetch" /Users/${USER}/.zprofile || echo "fastfetch" >> /Users/${USER}/.zprofile
+    - grep "alias ls='ls --color'" /Users/${USER}/.zprofile || echo "alias ls='ls --color'" >> /Users/${USER}/.zprofile

@@ -155,7 +155,7 @@ def main():
 
     update_commands_array = yaml_config['Update']
     install_commamds_array = yaml_config['Packages']
-    macwifi_commands_array = yaml_config['MacDevice']
+    backup_commands_array = yaml_config['Backup']
     vim_commands_array = yaml_config['VimSetup']
     environment_commands = yaml_config['Environment']
     
@@ -238,11 +238,11 @@ def main():
     
     tmi.process_commands(vim_commands_array)
 
-    # Setting up Environment (See YAML files for details on commands)
+    # Backup Config Files & Setting up Environment (See YAML files for details on commands)
 
-    if args.macwifi is True:
-        print('\n' + '*'*columns + '\n\tInstalling Mac Wi-Fi Drivers...\n' + '*'*columns + '\n')
-        tmi.process_commands(macwifi_commands_array)
+    print('\n' + '*'*columns + '\n\tBacking up configuration files prior to edits...\n' + '*'*columns + '\n')
+
+    tmi.process_commands(backup_commands_array)
 
     print('\n' + '*'*columns + '\n\tRunning Configuration Scripts...\n' + '*'*columns + '\n')
 
