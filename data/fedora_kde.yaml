@@ -48,6 +48,7 @@ VimSetup:
 Environment:
     - grep "# Added by TrickMyInstall Script" /home/${USER}/.bashrc || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.bashrc
     - grep "alias git-update='git checkout main && git pull origin main && git checkout develop'" /home/${USER}/.bashrc || echo -e "alias git-update='git checkout main && git pull origin main && git checkout develop'" >> /home/${USER}/.bashrc
+    - grep "alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'" /home/${USER}/.bashrc || echo -e "alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'" >> /home/${USER}/.bashrc
     - grep "alias update='sudo dnf update && flatpak update -y && sudo snap refresh --list && sudo needs-restarting -r'" /home/${USER}/.bashrc || echo "alias update='sudo dnf update && flatpak update -y && sudo snap refresh --list && sudo needs-restarting -r'" >> /home/${USER}/.bashrc
     - grep "alias wirelesspw='nmcli device wifi show-password'" /home/${USER}/.bashrc || echo "alias wirelesspw='nmcli device wifi show-password'" >> /home/${USER}/.bashrc
     - >
