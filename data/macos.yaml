@@ -23,3 +23,6 @@ Environment:
     - grep "brew update && brew upgrade" /Users/${USER}/.zprofile || echo "brew update && brew upgrade" >> /Users/${USER}/.zprofile
     - grep "fastfetch" /Users/${USER}/.zprofile || echo "fastfetch" >> /Users/${USER}/.zprofile
     - grep "alias ls='ls --color'" /Users/${USER}/.zprofile || echo "alias ls='ls --color'" >> /Users/${USER}/.zprofile
+    - grep "alias git-update='git checkout main && git pull origin main && git checkout develop'" /User/${USER}/.zprofile || echo -e "alias git-update='git checkout main && git pull origin main && git checkout develop'" >> /User/${USER}/.zprofile
+    - grep "alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'" /User/${USER}/.zprofile || echo -e "alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'" >> /User/${USER}/.zprofile
+    
