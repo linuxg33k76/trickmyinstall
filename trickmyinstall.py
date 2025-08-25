@@ -7,7 +7,9 @@ Date:  18 September 2021
 
 Description:  This program configures Linux environment per YAML config found in data/.
 
-Distros Supported:  Pop!_OS, Ubuntu, Fedora, Manjaro
+Distros Supported:  Pop!_OS, Ubuntu, Fedora, Manjaro, CachyOS, Nobara, MacOS, WSL (Ubuntu)
+
+Updated: 24 August 2025
 
 '''
 
@@ -30,7 +32,7 @@ def main():
     # Declare Constants and Variables
 
     HOME_DIR = os.getenv("HOME")
-    UNAME = os.popen('uname -r', 'r').read().strip()
+    UNAME = os.popen('uname -s', 'r').read().strip()
 
 
     if 'DARWIN' in UNAME.upper():
@@ -256,52 +258,56 @@ def main():
 
     # Setup Remote Samba File Store
 
-    print('\n' + '*'*columns + '\n\tSetup Samba Share\n' + '*'*columns + '\n')
-
-    user_response = input('\nSetup Remote Samba Share with /mnt/remote_cifs? (Y/n)')
-
-    if 'Y' in user_response or 'y' in user_response:
-        '''
-        Setup remote samba share
-        '''
-        # Get cifs share information
-        rb_data = tmi.get_remote_backup_info()
-
-        # Alert User process is starting
-
-        print('\n' + '*'*columns + '\n\tSetting Up Remote Samba Share...\n' + '*'*columns + '\n')
-
-        # Create /etc/host entry
-        os.system(('grep "{0}" /etc/hosts || echo "{0}  {1}" | sudo tee -a /etc/hosts')\
-            .format(rb_data['host_ip'], rb_data['host_name']))
-
-        # Write Credentials to user's home directory
-        samba_file = HOME_DIR + '/.sambacreds'
-        os.system(('echo "username={0}\npassword={1}\ndomain={2}" > {3}')\
-            .format(rb_data['user_cred'], rb_data['pass_cred'],rb_data['domain_cred'], samba_file))
-        
-        # Backup Samba Directory
-        os.system(f'cp {HOME_DIR}/.sambacreds {backup_directory}')
-
-        # Create /mnt mount point
-        REMOTE_MNT = '/mnt/remote_cifs'
-        user = rb_data['current_user']
-        os.system(f'test -d {REMOTE_MNT} || sudo mkdir {REMOTE_MNT}')
-        os.system(f'sudo chmod -R 770 {REMOTE_MNT}')
-        os.system(f'sudo chown -R {user}:{user} {REMOTE_MNT}')
-
-        # Write cifs entry to /etc/fstab
-        os.system('grep "# Samba Mount created by TrickMyInstall Script" /etc/fstab || echo "# Samba Mount created by TrickMyInstall Script" | sudo tee -a /etc/fstab')
-        os.system(('grep "//{0}/{1}" /etc/fstab || echo "//{0}/{1}  /mnt/remote_cifs  cifs  credentials={2},uid={3},gid={4},file_mode=0755,dir_mode=0755  0  0 " | sudo tee -a /etc/fstab')\
-            .format(rb_data['host_name'], rb_data['host_share'], samba_file, rb_data['uid'], rb_data['gid']))
-    
-        # Mount cifs share
-        os.system('sudo systemctl daemon-reload')
-        os.system('sudo mount -a')
-
+    if 'Darwin' in os_info or 'WSL' in os_info:
+        pass
     else:
 
-        print('\nSamba Share setup aborted.')
+        print('\n' + '*'*columns + '\n\tSetup Samba Share\n' + '*'*columns + '\n')
+
+        user_response = input('\nSetup Remote Samba Share with /mnt/remote_cifs? (Y/n)')
+
+        if 'Y' in user_response or 'y' in user_response:
+            '''
+            Setup remote samba share
+            '''
+            # Get cifs share information
+            rb_data = tmi.get_remote_backup_info()
+
+            # Alert User process is starting
+
+            print('\n' + '*'*columns + '\n\tSetting Up Remote Samba Share...\n' + '*'*columns + '\n')
+
+            # Create /etc/host entry
+            os.system(('grep "{0}" /etc/hosts || echo "{0}  {1}" | sudo tee -a /etc/hosts')\
+                .format(rb_data['host_ip'], rb_data['host_name']))
+
+            # Write Credentials to user's home directory
+            samba_file = HOME_DIR + '/.sambacreds'
+            os.system(('echo "username={0}\npassword={1}\ndomain={2}" > {3}')\
+                .format(rb_data['user_cred'], rb_data['pass_cred'],rb_data['domain_cred'], samba_file))
+            
+            # Backup Samba Directory
+            os.system(f'cp {HOME_DIR}/.sambacreds {backup_directory}')
+
+            # Create /mnt mount point
+            REMOTE_MNT = '/mnt/remote_cifs'
+            user = rb_data['current_user']
+            os.system(f'test -d {REMOTE_MNT} || sudo mkdir {REMOTE_MNT}')
+            os.system(f'sudo chmod -R 770 {REMOTE_MNT}')
+            os.system(f'sudo chown -R {user}:{user} {REMOTE_MNT}')
+
+            # Write cifs entry to /etc/fstab
+            os.system('grep "# Samba Mount created by TrickMyInstall Script" /etc/fstab || echo "# Samba Mount created by TrickMyInstall Script" | sudo tee -a /etc/fstab')
+            os.system(('grep "//{0}/{1}" /etc/fstab || echo "//{0}/{1}  /mnt/remote_cifs  cifs  credentials={2},uid={3},gid={4},file_mode=0755,dir_mode=0755  0  0 " | sudo tee -a /etc/fstab')\
+                .format(rb_data['host_name'], rb_data['host_share'], samba_file, rb_data['uid'], rb_data['gid']))
+        
+            # Mount cifs share
+            os.system('sudo systemctl daemon-reload')
+            os.system('sudo mount -a')
+
+        else:
+
+            print('\nSamba Share setup aborted.')
 
 
     # Performing File System Activities
@@ -319,20 +325,25 @@ def main():
     elif 'manjaro' in os_info:
         os.system(f'sudo pacman -Qe > {backup_directory}Installed_Manjaro_Packages_$(date +%m_%d_%Y).log')
     else:
-        pass
+        print('No package list created - OS not supported!')
 
     # Backup Dconf (Gnome) settings
     
-    print(f'\nCreating a Gnome Settings (dconf) in {backup_directory}...')
+    if 'Darwin' in os_info or 'WSL' in os_info:
+        pass
+    else:
+        print(f'\nCreating a Gnome Settings (dconf) in {backup_directory}...')
 
-    if os_info != 'WSL':
         os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
  
     # Copy Wallpapers to the user's Pictures directory
 
-    print('\nCopying Wallpapers to Pictures directory...')
-    os.system('cd /home/${USER}/code && test -d wallpapers || git clone https://github.com/linuxg33k76/wallpapers')
-    os.system(f'cp -r ~/code/wallpapers/ {HOME_DIR}/Pictures')
+    if 'Darwin' in os_info or 'WSL' in os_info:
+        pass
+    else:
+        print('\nCopying Wallpapers to Pictures directory...')
+        os.system('cd /home/${USER}/code && test -d wallpapers || git clone https://github.com/linuxg33k76/wallpapers')
+        os.system(f'cp -r ~/code/wallpapers/ {HOME_DIR}/Pictures')
 
     # Setup Git Environment
 

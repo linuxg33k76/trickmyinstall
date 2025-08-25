@@ -1,0 +1,10 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
+fastfetch
+
+echo
+echo "Welcome, ${USER}! Remember to update you brew installations! (brewup)"
+echo
+
+alias git-update='git checkout main && git pull origin main && git checkout develop'
+alias brewup='brew update && brew upgrade'
+

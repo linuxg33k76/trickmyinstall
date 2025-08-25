@@ -1,0 +1,11 @@
+eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/aliens.omp.json)"
+
+# Initialize Tab autocompletion
+autoload -Uz compinit
+compinit
+
+# Optional for more intelligent completion
+zstyle ':completion:*' menu select
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}%d%f'
+zstyle ':completion:*' list-colors ''
