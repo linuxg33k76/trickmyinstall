@@ -20,5 +20,5 @@ VimSetup:
     - echo "colorscheme ron" >> /Users/${USER}/.vimrc
 
 Environment:
-    - cp /Users/${USER}/code/trickmyinstall/data/macdata/zshrc.example /Users/${USER}/.zshrc
-    - cp /Users/${USER}/code/trickmyinstall/data/macdata/zprofile.example /Users/${USER}/.zprofile
+    - cp /Users/${USER}/code/trickmyinstall/data/mac_data/zshrc.example /Users/${USER}/.zshrc
+    - cp /Users/${USER}/code/trickmyinstall/data/mac_data/zprofile.example /Users/${USER}/.zprofile
