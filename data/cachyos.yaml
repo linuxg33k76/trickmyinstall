@@ -34,10 +34,6 @@ Environment:
     - echo "Environment setup for CachyOS"
     - echo "Setting fish shell prompt to Astronaut theme"
     - /usr/bin/fish -c "fish_config prompt choose astronaut && funcsave fish_prompt"
-    - grep "alias git-update='git checkout main && git pull origin main && git checkout develop'" /home/${USER}/.config/fish/config.fish || echo -e "alias git-update='git checkout main && git pull origin main && git checkout develop'" >> /home/${USER}/.config/fish/config.fish
-    - grep "alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'" /home/${USER}/.config/fish/config.fish || echo -e "alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'" >> /home/${USER}/.config/fish/config.fish
-    - grep "alias update='sudo paru -Syyu && flatpak update -y'" /home/${USER}/.config/fish/config.fish || echo "alias update='sudo paru -Syyu && flatpak update -y'" >> /home/${USER}/.config/fish/config.fish
-    - grep "alias wirelesspw='nmcli device wifi show-password'" /home/${USER}/.config/fish/config.fish || echo "alias wirelesspw='nmcli device wifi show-password'" >> /home/${USER}/.config/fish/config.fish
-    - grep "echo && ~/code/bash_scripts/backupservercheck.sh && echo" /home/${USER}/.config/fish/config.fish || echo "echo && ~/code/bash_scripts/backupservercheck.sh && echo" >> /home/${USER}/.config/fish/config.fish
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
-    - grep "auth            sufficient      pam_fprintd.so" /etc/pam.d/sudo || sudo sed -i "2i auth            sufficient      pam_fprintd.so" /etc/pam.d/sudo
+    - cp /home/${USER}/code/trickmyinstall/data/cachyos_data/config.fish /home/${USER}/.config/fish/config.fish
+    - sudo cp /home/${USER}/code/trickmyinstall/data/cachyos_data/sudo /etc/pam.d/sudo
