@@ -10,7 +10,7 @@ source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 set -x EDITOR /usr/bin/vim
 echo && ~/code/bash_scripts/backupservercheck.sh && echo
-alias git-update='git checkout main && git pull origin main && git checkout develop'
+alias git-update='git checkout main && git pull origin main && git checkout develop && git pull origin develop'
 alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'
 alias update='sudo paru -Syyu && flatpak update -y'
 alias wirelesspw='nmcli device wifi show-password'

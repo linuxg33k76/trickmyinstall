@@ -5,7 +5,8 @@ echo
 echo "Welcome, ${USER}! Remember to update you brew installations! (brewup)"
 echo
 
-alias git-update='git checkout main && git pull origin main && git checkout develop'
+alias git-update='git checkout main && git pull origin main && git checkout develop && git pull origin develop'
 alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'
 alias brewup='brew update && brew upgrade'
+alias cleanup='brew cleanup'
 
