@@ -18,6 +18,7 @@ Packages:
     - sudo apt install rustc vim
     - sudo apt install powerline
     - sudo apt install steam
+    - sudo apt install solaar
     - echo && echo "Installing Flatpaks..." && echo
     - flatpak install com.microsoft.Edge
     - flatpak install Mailspring
@@ -36,9 +37,7 @@ Backup:
     - cp /home/${USER}/.bashrc /home/${USER}/bashrc.bak
 
 VimSetup:
-    - echo "set number" > /home/${USER}/.vimrc
-    - echo "syntax on" >> /home/${USER}/.vimrc
-    - echo "colorscheme ron" >> /home/${USER}/.vimrc
+    - cp /home/${USER}/code/trickmyinstall/data/vim_data/vimrc.example /home/${USER}/.vimrc
     - sudo update-alternatives --config editor
 
 Environment:

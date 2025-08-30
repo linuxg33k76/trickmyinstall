@@ -13,6 +13,7 @@ Packages:
     - paru -S google-chrome
     - paru -S 1password
     - paru -S yakuake
+    - paru -S solaar
     - sudo paru -S deja-dup
     - sudo paru -S pamac-aur
     - sudo paru -S discover

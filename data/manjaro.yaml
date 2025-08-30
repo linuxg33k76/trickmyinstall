@@ -11,6 +11,7 @@ Packages:
     - sudo pamac build visual-studio-code-bin
     - sudo pamac install fprintd libfprint
     - sudo pamac install deja-dup
+    - sudo pamac install solaar
     - sudo systemctl start fprintd.service
     - flatpak install flatseal
     - flatpak install com.microsoft.Edge
@@ -26,9 +27,7 @@ Backup:
 
 
 VimSetup:
-    - echo "set number" > /home/${USER}/.vimrc
-    - echo "syntax on" >> /home/${USER}/.vimrc
-    - echo "colorscheme ron" >> /home/${USER}/.vimrc
+    - cp /home/${USER}/code/trickmyinstall/data/vim_data/vimrc.example /home/${USER}/.vimrc
     - sudo sed -i 's/nano/vim/g' /etc/environment
 
 Environment:
