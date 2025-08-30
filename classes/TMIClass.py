@@ -3,8 +3,14 @@
 import os
 import re
 import getpass
-import yaml
 
+# Install required Python packages if error on import
+try:
+    import yaml
+except ImportError:
+    print('Installing required Python packages...')
+    os.system('pip3 install -r requirements.txt')
+    import yaml
 class TrickMyInstall():
 
     def __init__(self):
