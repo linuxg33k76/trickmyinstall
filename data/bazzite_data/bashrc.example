@@ -40,8 +40,8 @@ elif [ -f /usr/share/git/completion/git-prompt.sh ]; then
     source /usr/share/git/completion/git-prompt.sh
 fi
 
-# Custom PS1: username@hostname cwd [git branch|status] HH:MM
-export PS1='\[\e[0;32m\]\u@\h \[\e[0;34m\]\w \[\e[0;33m\]$(__git_ps1 "[%s]") \[\e[0;36m\]\A\[\e[0m\]\n\$ '
+# Custom PS1: username@hostname cwd (left), [git branch|status] HH:MM (right)
+export PS1='\[\e[0;32m\]\u@\h \[\e[0;34m\]\w\[\e[0m\]$(printf "%*s" $((COLUMNS - ${#USER} - ${#HOSTNAME} - ${#PWD} - 4)) " \[\e[0;33m\]$(__git_ps1 "[ %s ]") \[\e[0;36m\]\A\[\e[0m\]")\n\$ '
 
 # Startup items
 
