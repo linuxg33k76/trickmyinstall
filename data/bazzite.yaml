@@ -24,4 +24,4 @@ Environment:
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
     - echo "Applying Flatpak Visual Studio Code KDE Wallet fix..."
     - flatpak override --user --talk-name=org.kde.kwalletd5 --talk-name=org.freedesktop.secrets com.visualstudio.code
-    - /home/${USER}/code/trickmyinstall/data/bazzite_data/vscodewalletfix.sh
+    - /home/${USER}/code/trickmyinstall/data/scripts/vscodewalletfix.sh

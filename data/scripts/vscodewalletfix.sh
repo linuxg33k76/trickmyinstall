@@ -9,6 +9,7 @@ fi
 # sed command to insert the line before the closing brace and adds a tab before the text for proper JSON formatting
 
 echo "Applying VS Code Flatpak KDE Wallet fix..."
+sed -i '19s/$/,\n/' /home/${USER}/.vscode/argv.json
 sed -i '/}/i\\t// Password Store Setup for VS Code Flatpak on KDE Plasma' /home/${USER}/.vscode/argv.json
 sed -i '/}/i\\t"password-store": "kwallet5",' /home/${USER}/.vscode/argv.json
 
