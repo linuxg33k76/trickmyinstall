@@ -31,6 +31,20 @@ alias git-merge='git checkout main && git pull origin main && git merge main dev
 alias update='flatpak update -y'
 alias wirelesspw='nmcli device wifi show-password'
 
+# Prompt Setup
+
+# Load git-prompt.sh for advanced git status in prompt
+if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+    source /usr/share/git-core/contrib/completion/git-prompt.sh
+elif [ -f /usr/share/git/completion/git-prompt.sh ]; then
+    source /usr/share/git/completion/git-prompt.sh
+fi
+
+# Custom PS1: username@hostname cwd [git branch|status] HH:MM
+export PS1='\[\e[0;32m\]\u@\h \[\e[0;34m\]\w \[\e[0;33m\]$(__git_ps1 "[%s]") \[\e[0;36m\]\A\[\e[0m\]\n\$ '
+
+# Startup items
+
 echo
 fastfetch
 echo
