@@ -1,0 +1,22 @@
+Update:
+    - flatpak update
+
+Packages:
+    - echo && echo "Enabling Flatpak Repo..." && echo
+    - flatpak install https://downloads.1password.com/linux/flatpak/1Password.flatpakref
+    - flatpak install com.microsoft.Edge
+    - flatpak install org.gnome.DejaDup
+    - flatpak install com.visualstudio.code
+
+Backup:
+    - echo "Backing up files for modification..."
+    - sudo cp /etc/fstab /etc/fstab.bak
+    
+VimSetup:
+    - echo && echo "Starting Vim setup..."
+    - cp /home/${USER}/code/trickmyinstall/data/vim_data/vimrc.example /home/${USER}/.vimrc
+
+Environment:
+    - echo "Environment setup for Bazzite..."
+    - cp /home/${USER}/code/trickmyinstall/data/bazzite_data/bashrc.example /home/${USER}/.bashrc
+    - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts

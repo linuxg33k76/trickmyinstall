@@ -1,0 +1,37 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+export PATH
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+if [ -d ~/.bashrc.d ]; then
+    for rc in ~/.bashrc.d/*; do
+        if [ -f "$rc" ]; then
+            . "$rc"
+        fi
+    done
+fi
+unset rc
+
+# Added by TrickMyInstall Script
+
+alias git-update='git checkout main && git pull origin main && git checkout develop && git pull origin develop'
+alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'
+alias update='flatpak update -y'
+alias wirelesspw='nmcli device wifi show-password'
+
+echo
+fastfetch
+echo
+/home/samurai/code/bash_scripts/backupservercheck.sh

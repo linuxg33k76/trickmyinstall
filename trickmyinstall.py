@@ -137,6 +137,11 @@ def main():
             # Nobara setup parameters
             yaml_config = tmi.read_config_file('data/nobara.yaml')
         
+        elif 'bazzite' in os_info:
+
+            # Bazzite setup parameters
+            yaml_config = tmi.read_config_file('data/bazzite.yaml')
+        
         elif 'Darwin' in os_info:
 
             # Manjaro setup parameters
