@@ -7,6 +7,7 @@ Packages:
     - flatpak install com.microsoft.Edge
     - flatpak install org.gnome.DejaDup
     - flatpak install com.visualstudio.code
+    - flatpak install io.github.pwr_solaar.solaar
 
 Backup:
     - echo "Backing up files for modification..."
