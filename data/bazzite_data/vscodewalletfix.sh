@@ -10,6 +10,6 @@ fi
 
 echo "Applying VS Code Flatpak KDE Wallet fix..."
 sed -i '/}/i\\t// Password Store Setup for VS Code Flatpak on KDE Plasma' /home/${USER}/.vscode/argv.json
-sed -i '/}/i\\t"password-store":"kwallet5"' /home/${USER}/.vscode/argv.json
+sed -i '/}/i\\t"password-store": "kwallet5"' /home/${USER}/.vscode/argv.json
 
 exit 0
