@@ -1,6 +1,6 @@
 # This script applies a fix for VS Code Flatpak to work with KDE Wallet
 
-if grep -q '"password-store":"kwallet5"' /home/${USER}/.vscode/argv.json; then
+if grep -q '"password-store": "kwallet5",' /home/${USER}/.vscode/argv.json; then
     echo "VS Code Flatpak already configured for KDE Wallet."
     exit 1
 fi
@@ -10,6 +10,6 @@ fi
 
 echo "Applying VS Code Flatpak KDE Wallet fix..."
 sed -i '/}/i\\t// Password Store Setup for VS Code Flatpak on KDE Plasma' /home/${USER}/.vscode/argv.json
-sed -i '/}/i\\t"password-store": "kwallet5"' /home/${USER}/.vscode/argv.json
+sed -i '/}/i\\t"password-store": "kwallet5",' /home/${USER}/.vscode/argv.json
 
 exit 0
