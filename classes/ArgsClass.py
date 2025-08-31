@@ -18,7 +18,7 @@ class CLIParser(argparse.ArgumentParser):
 
     def __init__(self):
         self.parser = argparse.ArgumentParser()
-        self.parser.add_argument('-s', '--skip', type=str, help='Skip specific task: install,update,3rdParty', default='', nargs='+')
+        self.parser.add_argument('-s', '--skip', type=str, help='Skip specific task: install,update,3rdParty, or all', default='', nargs='+')
         # self.parser.add_argument('-e', '--exclude', type=str, help='Exclude Specified Packages from package file', default='', nargs='+')
         self.parser.add_argument('-f', '--fingerprint', help='Enable Fingerprint Setup', action='store_true')
         self.parser.add_argument('-b', '--directory', type=str, help='User Specified Download Directory.', default='default')

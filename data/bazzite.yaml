@@ -12,6 +12,7 @@ Packages:
 Backup:
     - echo "Backing up files for modification..."
     - sudo cp /etc/fstab /etc/fstab.bak
+    - cp /home/${USER}/.vscode/argv.json /home/${USER}/.vscode/argv.json.bak
     
 VimSetup:
     - echo && echo "Starting Vim setup..."
@@ -21,6 +22,6 @@ Environment:
     - echo "Environment setup for Bazzite..."
     - cp /home/${USER}/code/trickmyinstall/data/bazzite_data/bashrc.example /home/${USER}/.bashrc
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
-    - echo "Applying Flatpak VS Code KDE Wallet fix..."
+    - echo "Applying Flatpak Visual Studio Code KDE Wallet fix..."
     - flatpak override --user --talk-name=org.kde.kwalletd5 --talk-name=org.freedesktop.secrets com.visualstudio.code
-    - cp /home/${USER}/code/trickmyinstall/data/bazzite_data/argv.json /home/${USER}/.vscode/argv.json
+    - /home/${USER}/code/trickmyinstall/data/bazzite_data/vscodewalletfix.sh

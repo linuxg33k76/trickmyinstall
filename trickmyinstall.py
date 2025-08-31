@@ -168,7 +168,10 @@ def main():
     
     # Run install and setup commands
 
-    skip_items = ' '.join(args.skip)
+    if 'all' in args.skip:
+        skip_items = 'install,update,3rdparty'
+    else:
+        skip_items = ' '.join(args.skip)
 
     # Update System
 
