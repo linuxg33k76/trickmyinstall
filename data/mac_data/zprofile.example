@@ -2,7 +2,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 fastfetch
 
 echo
-echo "Welcome, ${USER}! Remember to update you brew installations! (brewup)"
+# Print welcome message and capitalize the first letter of the username.
+echo "Welcome, ${(C)USER}! Remember to update you brew installations! (brewup)"
 echo
 
 alias git-update='git checkout main && git pull origin main && git checkout develop && git pull origin develop'

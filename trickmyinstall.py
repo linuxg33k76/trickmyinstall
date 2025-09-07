@@ -351,7 +351,8 @@ def main():
     else:
         print('\nCopying Wallpapers to Pictures directory...')
         os.system('cd /home/${USER}/code && test -d wallpapers || git clone https://github.com/linuxg33k76/wallpapers')
-        os.system(f'rsync -av --exclude=".git" ~/code/wallpapers/ {HOME_DIR}/Pictures')
+        os.system(f'test -d {HOME_DIR}/Pictures/wallpapers || mkdir -p {HOME_DIR}/Pictures/wallpapers')
+        os.system(f'rsync -av --exclude=".git" ~/code/wallpapers/ {HOME_DIR}/Pictures/wallpapers/')
 
     # Setup Git Environment
 
