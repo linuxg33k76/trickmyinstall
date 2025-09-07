@@ -34,8 +34,12 @@ alias cronjobs='systemctl --user --all list-timers'
 alias gamebkup='${HOME}/code/bash_scripts/steampicssync.sh'
 alias convert='${HOME}/code/bash_scripts/imageconvert.sh .'
 
-# Prompt Setup
+# Setup Default Editor
 
+export VISUAL=/usr/bin/vim
+export EDITOR=$VISUAL
+
+# Prompt Setup
 # Load git-prompt.sh for advanced git status in prompt
 if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
     source /usr/share/git-core/contrib/completion/git-prompt.sh
