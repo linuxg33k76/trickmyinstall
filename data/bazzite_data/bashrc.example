@@ -31,6 +31,8 @@ alias git-merge='git checkout main && git pull origin main && git merge main dev
 alias update='flatpak update -y'
 alias wirelesspw='nmcli device wifi show-password'
 alias cronjobs='systemctl --user --all list-timers'
+alias gamebkup='${HOME}/code/bash_scripts/steampicssync.sh'
+alias convert='${HOME}/code/bash_scripts/imageconvert.sh .'
 
 # Prompt Setup
 
