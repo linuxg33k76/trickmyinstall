@@ -19,9 +19,17 @@ VimSetup:
     - cp /home/${USER}/code/trickmyinstall/data/vim_data/vimrc.example /home/${USER}/.vimrc
 
 Environment:
-    - echo "Environment setup for Bazzite..."
+    - echo "Environment setup for Bazzite..." && echo
     - cp /home/${USER}/code/trickmyinstall/data/bazzite_data/bashrc.example /home/${USER}/.bashrc
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
     - echo "Applying Flatpak Visual Studio Code KDE Wallet fix..."
     - flatpak override --user --talk-name=org.kde.kwalletd5 --talk-name=org.freedesktop.secrets com.visualstudio.code
     - /home/${USER}/code/trickmyinstall/data/scripts/vscodewalletfix.sh
+    - echo && echo "Setting up Steam Screenshot Sync Service...(systemd user timer + service)" && echo
+    - mkdir -p /home/${USER}/.config/systemd/user/ || echo "Directory already exists, skipping..."
+    - cp /home/${USER}/code/trickmyinstall/data/bazzite_data/steam-screenshot-sync.* /home/${USER}/.config/systemd/user/
+    - systemctl --user daemon-reload
+    - systemctl --user start steam-screenshot-sync.timer
+    - systemctl --user enable steam-screenshot-sync.timer
+    - systemctl --user --all list-timers
+    - echo && echo "Bazzite environment setup complete!"
