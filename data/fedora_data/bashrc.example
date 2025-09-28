@@ -30,6 +30,8 @@ alias git-update='git checkout main && git pull origin main && git checkout deve
 alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'
 alias update='sudo dnf update && flatpak update -y && sudo snap refresh --list && sudo needs-restarting -r'
 alias wirelesspw='nmcli device wifi show-password'
+alias cronjobs='systemctl --user --all list-timers'
+
 if [ -f /usr/bin/powerline-daemon ]; then
     powerline-daemon -q
     POWERLINE_BASH_CONTINUATION=1

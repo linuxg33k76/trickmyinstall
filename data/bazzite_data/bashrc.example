@@ -30,6 +30,7 @@ alias git-update='git checkout main && git pull origin main && git checkout deve
 alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'
 alias update='flatpak update -y'
 alias wirelesspw='nmcli device wifi show-password'
+alias cronjobs='systemctl --user --all list-timers'
 
 # Setup Default Editor
 
