@@ -1,0 +1,11 @@
+[Unit]
+Description=Steam Screenshot Sync Service
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rsync -av --delete ${HOME}/Pictures/Steam /mnt/remote_cifs/Steam-Photos-Backup
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

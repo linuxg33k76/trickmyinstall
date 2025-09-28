@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Steam Screenshot Sync periodically
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+Unit=steam-screenshot-sync.service
+
+[Install]
+WantedBy=timers.target
