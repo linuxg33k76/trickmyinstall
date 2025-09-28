@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/rsync -av --delete ${HOME}/Pictures/Steam /mnt/remote_cifs/Steam-Photos-Backup
+ExecStart=/usr/bin/rsync -av --delete ${HOME}/Pictures/Steam/ /mnt/remote_cifs/Steam-Photos-Backup/
 Restart=on-failure
 
 [Install]
