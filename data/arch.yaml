@@ -15,6 +15,7 @@ Backup:
     - sudo cp /etc/fstab /etc/fstab.bak.$(date '+%m-%d-%Y-%H_%M_%S')
     - sudo cp /home/${USER}/.bashrc /home/${USER}/.bashrc.bak.$(date '+%m-%d-%Y-%H_%M_%S')
     - sudo cp /home/${USER}/.config/hypr/bindings.conf /home/${USER}/.config/hypr/bindings.conf.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+    - sudo cp /home/${USER}/.config/waybar/style.css /home/${USER}/.config/waybar/style.css.bak.$(date '+%m-%d-%Y-%H_%M_%S')
     - sudo cp /etc/pam.d/sudo /etc/pam.d/sudo.bak.$(date '+%m-%d-%Y-%H_%M_%S')
 
 VimSetup:
@@ -29,3 +30,4 @@ Environment:
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts.git
     - cp /home/${USER}/code/trickmyinstall/data/omarchy_data/bashrc.example /home/${USER}/.bashrc
     - cp /home/${USER}/code/trickmyinstall/data/omarchy_data/bindings.conf.example /home/${USER}/.config/hypr/bindings.conf
+    - cp /home/${USER}/code/trickmyinstall/data/omarchy_data/style.css.example /home/${USER}/.config/waybar/style.css
