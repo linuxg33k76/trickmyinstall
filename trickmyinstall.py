@@ -151,6 +151,11 @@ def main():
 
             # WSL (Ubuntu) setup parameters
             yaml_config = tmi.read_config_file('data/wsl.yaml')
+
+        elif 'arch' in os_info:
+
+            # Arch Linux setup parameters
+            yaml_config = tmi.read_config_file('data/arch.yaml')
             
         else:
             print(os_info)
@@ -332,6 +337,8 @@ def main():
         os.system(f'sudo rpm -qa > {backup_directory}Installed_Fedora_Packages_$(date  +%m_%d_%Y).log')
     elif 'manjaro' in os_info:
         os.system(f'sudo pacman -Qe > {backup_directory}Installed_Manjaro_Packages_$(date +%m_%d_%Y).log')
+    elif 'arch' in os_info:
+        os.system(f'sudo pacman -Qe > {backup_directory}Installed_Arch_Packages_$(date +%m_%d_%Y).log')
     else:
         print('No package list created - OS not supported!')
 

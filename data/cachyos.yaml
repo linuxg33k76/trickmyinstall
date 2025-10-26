@@ -20,9 +20,9 @@ Packages:
 
 Backup:
     - echo "Backing up files for modification during CachyOS setup."
-    - sudo cp /etc/fstab /etc/fstab.bak
-    - cp /home/${USER}/.config/fish/config.fish /home/${USER}/.config/fish/config.fish.bak
-    - sudo cp /etc/pam.d/sudo /etc/pam.d/sudo.bak
+    - sudo cp /etc/fstab /etc/fstab.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+    - cp /home/${USER}/.config/fish/config.fish /home/${USER}/.config/fish/config.fish.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+    - sudo cp /etc/pam.d/sudo /etc/pam.d/sudo.bak.$(date '+%m-%d-%Y-%H_%M_%S')
 
 VimSetup:
     - echo "set number" > /home/${USER}/.vimrc
