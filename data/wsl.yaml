@@ -10,9 +10,9 @@ Packages:
     
 Backup:
     - echo "Backing up files for modification during WSL setup."
-    - cp /home/${USER}/.bashrc /home/${USER}/bashrc.bak
-    - cp /home/${USER}/.bash_aliases /home/${USER}/bash_aliases.bak
-    - cp /home/${USER}/.bashrc /home/${USER}/bashrc.bak
+    - cp /home/${USER}/.bashrc /home/${USER}/bashrc.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+    - cp /home/${USER}/.bash_aliases /home/${USER}/bash_aliases.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+    - cp /home/${USER}/.bashrc /home/${USER}/bashrc.bak.$(date '+%m-%d-%Y-%H_%M_%S')
 
 VimSetup:
     - echo "set number" > /home/${USER}/.vimrc

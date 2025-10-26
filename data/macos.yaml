@@ -11,8 +11,8 @@ Packages:
 
 Backup:
     - echo "Backing up files for modification during macOS setup."
-    - cp /Users/${USER}/.zprofile /Users/${USER}/zprofile.bak
-    - cp /Users/${USER}/.zshrc /Users/${USER}/zshrc.bak
+    - cp /Users/${USER}/.zprofile /Users/${USER}/zprofile.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+    - cp /Users/${USER}/.zshrc /Users/${USER}/zshrc.bak.$(date '+%m-%d-%Y-%H_%M_%S')
 
 VimSetup:
     - echo "set number" > /Users/${USER}/.vimrc
