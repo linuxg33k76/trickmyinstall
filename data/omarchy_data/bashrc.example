@@ -12,7 +12,7 @@ source ~/.local/share/omarchy/default/bash/rc
 
 # Added By TrickMyInstall
 alias git-update='git checkout main && git pull origin main && git checkout develop && git pull origin develop'
-alias git-merge='gicheckoutt checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'
+alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'
 alias cronjobs='systemctl --user --all list-timers'
 
 # Manual Entries #
