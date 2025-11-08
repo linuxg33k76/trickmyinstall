@@ -6,8 +6,9 @@ Update:
 Packages: 
     - sudo pacman -S sysfsutils
     - sudo pacman -S fprintd
-    - sudo packman -S solaar
-    - sudo packman -S deja-dup
+    - sudo pacman -S solaar
+    - sudo pacman -S deja-dup
+    - sudo pacman -S rsync
     - yay -S microsoft-edge-stable-bin
     - yay -S google-chrome
     - yay -S visual-studio-code-bin
