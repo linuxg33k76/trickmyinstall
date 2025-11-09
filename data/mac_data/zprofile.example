@@ -10,4 +10,4 @@ alias git-update='git checkout main && git pull origin main && git checkout deve
 alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'
 alias brewup='brew update && brew upgrade'
 alias cleanup='brew cleanup'
-
+alias brewlist='brew list | tee brew_packages_$(date +%d%b%Y_%HH_%MM_%Ss).txt'
