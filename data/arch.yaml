@@ -17,9 +17,14 @@ Backup:
     - echo "Backing up files for modification during Omarchy setup."
     - sudo cp /etc/fstab /etc/fstab.bak.$(date '+%m-%d-%Y-%H_%M_%S')
     - sudo cp /home/${USER}/.bashrc /home/${USER}/.bashrc.bak.$(date '+%m-%d-%Y-%H_%M_%S')
-    - sudo cp /home/${USER}/.config/hypr/bindings.conf /home/${USER}/.config/hypr/bindings.conf.bak.$(date '+%m-%d-%Y-%H_%M_%S')
-    - sudo cp /home/${USER}/.config/hypr/looknfeel.conf /home/${USER}/.config/hypr/looknfeel.conf.bak.$(date '+%m-%d-%Y-%H_%M_%S')
-    - sudo cp /home/${USER}/.config/waybar/style.css /home/${USER}/.config/waybar/style.css.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+    - > 
+        if test -d /home/${USER}/.config/omarchy/; then
+            echo "Omarchy config directory exists."
+            sudo cp /home/${USER}/.config/hypr/bindings.conf /home/${USER}/.config/hypr/bindings.conf.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+            sudo cp /home/${USER}/.config/hypr/looknfeel.conf /home/${USER}/.config/hypr/looknfeel.conf.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+            sudo cp /home/${USER}/.config/waybar/style.css /home/${USER}/.config/waybar/style.css.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+            echo "Backed up Omarchy configuration files is complete."
+        fi
     - sudo cp /etc/pam.d/sudo /etc/pam.d/sudo.bak.$(date '+%m-%d-%Y-%H_%M_%S')
 
 VimSetup:
@@ -32,7 +37,13 @@ VimSetup:
 Environment:
     - echo "Environment setup for Omarchy Linux"
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts.git
-    - cp /home/${USER}/code/trickmyinstall/data/omarchy_data/bashrc.example /home/${USER}/.bashrc
-    - cp /home/${USER}/code/trickmyinstall/data/omarchy_data/bindings.conf.example /home/${USER}/.config/hypr/bindings.conf
-    - cp /home/${USER}/code/trickmyinstall/data/omarchy_data/looknfeel.conf.example /home/${USER}/.config/hypr/looknfeel.conf
-    - cp /home/${USER}/code/trickmyinstall/data/omarchy_data/style.css.example /home/${USER}/.config/waybar/style.css
+    # Test for omarchy_data directory and copy example config files
+    - >
+        if test -d /home/${USER}/.config/omarchy/; then
+            echo "Omarchy config directory exists."
+            cp /home/${USER}/code/trickmyinstall/data/omarchy_data/bashrc.example /home/${USER}/.bashrc
+            cp /home/${USER}/code/trickmyinstall/data/omarchy_data/bindings.conf.example /home/${USER}/.config/hypr/bindings.conf
+            cp /home/${USER}/code/trickmyinstall/data/omarchy_data/looknfeel.conf.example /home/${USER}/.config/hypr/looknfeel.conf
+            cp /home/${USER}/code/trickmyinstall/data/omarchy_data/style.css.example /home/${USER}/.config/waybar/style.css
+            echo "Copied configuration files for Omarchy."
+        fi
