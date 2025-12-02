@@ -14,6 +14,7 @@ Updated: 24 August 2025
 '''
 
 from logging import raiseExceptions
+import logging
 import os
 import re
 from classes import TMIClass as TMIC
@@ -31,23 +32,33 @@ def main():
 
     # Declare Constants and Variables
 
+    # Configure Logging
+    logging.basicConfig(filename='trickmyinstall.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.info('Starting TrickMyInstall Script')
+
     HOME_DIR = os.getenv("HOME")
     UNAME = os.popen('uname -s', 'r').read().strip()
+    logging.info(f'OS: {UNAME}')
+    logging.info(f'Home Directory: {HOME_DIR}')
 
 
     if 'DARWIN' in UNAME.upper():
 
         os_info = SI.MacOSSystemInfo().system
+        logging.info(f'OS Info: {os_info}')
 
     elif "MICROSOFT" in UNAME.upper():
 
         os_info = "WSL"
+        logging.info(f'OS Info: {os_info}')
 
     else:
 
-        os_info = SI.LinuxSystemInfo().system
+        os_info = SI.LinuxSystemInfo().system   
+        logging.info(f'OS Info: {os_info}')
     
     os_desktop = SI.LinuxSystemInfo().desktop
+    logging.info(f'OS Desktop: {os_desktop}')
     
     user_test = tmi.check_for_root()
 
@@ -55,6 +66,7 @@ def main():
 
     if user_test is True:
         print('\n***Script Aborting...  Please execute with a privileged user other than root user.***\n')
+        logging.error('Script executed as root. Aborting.')
         quit()
 
     # Identify Terminal Size
@@ -80,11 +92,13 @@ def main():
     # Create Backup Directory
 
     print('\n' + '*'*columns + '\n\tCreating Backup Directory for config files...\n' + '*'*columns + '\n')
+    logging.info('Creating Backup Directory for config files...')
 
     if args.backup_directory == 'default':
-        backup_directory = HOME_DIR + '/backup/'
+        backup_directory = HOME_DIR + '/backup/'    
     else:
         backup_directory = args.backup_directory
+    logging.info(f'Backup Directory: {backup_directory}')
 
     # Validate Backup Directory
 
@@ -94,6 +108,7 @@ def main():
 
     if not backup_dir_exists:
         print('Backup Directory creation failed.  Exiting script.')
+        logging.error('Backup Directory creation failed. Exiting script.')
         quit()
 
     # Used os_info to decide which YAML file to use
@@ -104,6 +119,7 @@ def main():
 
         # Read user specified file
         yaml_config = tmi.read_config_file(args.yamlfile)
+        logging.info(f'YAML Config File: {args.yamlfile}')
 
     else:
 
@@ -113,53 +129,64 @@ def main():
 
             # Ubuntu/Pop OS setup parameters
             yaml_config = tmi.read_config_file('data/popos.yaml')
+            logging.info(f'YAML Config File: {args.yamlfile}')
         
         elif 'fedora' in os_info:
 
             # Fedora setup parameters
             if 'KDE' in os_desktop:
                 yaml_config = tmi.read_config_file('data/fedora_kde.yaml')
+                logging.info(f'YAML Config File: {args.yamlfile}')
             else:
                 yaml_config = tmi.read_config_file('data/fedora.yaml')
+                logging.info(f'YAML Config File: {args.yamlfile}')
         
         elif 'manjaro' in os_info:
 
             # Manjaro setup parameters
             yaml_config = tmi.read_config_file('data/manjaro.yaml')
+            logging.info(f'YAML Config File: {args.yamlfile}')
 
         elif 'cachyos' in os_info:
             
             # CachyOS setup parameters
             yaml_config = tmi.read_config_file('data/cachyos.yaml')
+            logging.info(f'YAML Config File: {args.yamlfile}')
 
         elif 'nobara' in os_info:
 
             # Nobara setup parameters
             yaml_config = tmi.read_config_file('data/nobara.yaml')
+            logging.info(f'YAML Config File: {args.yamlfile}')
         
         elif 'bazzite' in os_info:
 
             # Bazzite setup parameters
             yaml_config = tmi.read_config_file('data/bazzite.yaml')
+            logging.info(f'YAML Config File: {args.yamlfile}')
         
         elif 'Darwin' in os_info:
 
             # Manjaro setup parameters
             yaml_config = tmi.read_config_file('data/macos.yaml')
+            logging.info(f'YAML Config File: {args.yamlfile}')
 
         elif 'WSL' in os_info:
 
             # WSL (Ubuntu) setup parameters
             yaml_config = tmi.read_config_file('data/wsl.yaml')
+            logging.info(f'YAML Config File: {args.yamlfile}')
 
         elif 'arch' in os_info:
 
             # Arch Linux setup parameters
             yaml_config = tmi.read_config_file('data/arch.yaml')
+            logging.info(f'YAML Config File: {args.yamlfile}')
             
         else:
             print(os_info)
             print('OS type not found!  Exiting the system.')
+            logging.error(f'OS type not found: {os_info}. Exiting.')
             tmi.process_commands(["uname -srv", "neofetch"])
             quit()
 
@@ -174,9 +201,10 @@ def main():
     # Run install and setup commands
 
     if 'all' in args.skip:
-        skip_items = 'install,update,3rdparty'
+        skip_items = 'install,update,3rdparty'  
     else:
         skip_items = ' '.join(args.skip)
+    logging.info(f'Skip Items: {skip_items}')
 
     # Update System
 
@@ -184,8 +212,10 @@ def main():
         print('\n' + '*'*columns + '\n\tSkipping Update Process\n' + '*'*columns + '\n')
     else:
         print('\n' + '*'*columns + '\n\tUpdating System...\n' + '*'*columns + '\n')
+        logging.info('Updating System...')
 
         tmi.process_commands(update_commands_array)
+        logging.info('Update Process Completed.')
 
     # Install Packages
 
@@ -193,8 +223,10 @@ def main():
         print('\n' + '*'*columns + '\n\tSkipping Package Install Process\n' + '*'*columns + '\n')
     else:
         print('\n' + '*'*columns + '\n\tInstalling Additional Packages...\n' + '*'*columns + '\n')
+        logging.info('Installing Additional Packages...')
 
         tmi.process_commands(install_commamds_array)
+        logging.info('Package Install Process Completed.')
 
     # Install 3rd Party Packages
 
@@ -202,6 +234,7 @@ def main():
         print('\n' + '*'*columns + '\n\tSkipping 3rd Party Package Install Process\n' + '*'*columns + '\n')
     else:
         print('\n' + '*'*columns + '\n\tInstalling Additional 3rd Party Packages...\n' + '*'*columns + '\n')
+        logging.info('Installing Additional 3rd Party Packages...')
 
         # Python Foo:  get diretory list and filter for *.deb using Regular Expressions!
         
@@ -213,6 +246,7 @@ def main():
             third_party_apps = [val for val in os.listdir(download_dir) if re.search(r'.xz', val)]
         else:
             third_party_apps = ['None']
+        logging.info(f'3rd Party Apps: {third_party_apps}')
 
         # Print 3rdParty Apps to install
 
@@ -237,6 +271,7 @@ def main():
 
         else:
             pass
+        logging.info('3rd Party App Install Process Completed.')
 
     # Check for new versions
 
@@ -244,30 +279,40 @@ def main():
         print('\n' + '*'*columns + '\n\tSkipping Update Process\n' + '*'*columns + '\n')
     else:
         print('\nUpdating system after 3rdParty App Install...\n')
+        logging.info('Updating system after 3rdParty App Install...')
         
         tmi.process_commands(update_commands_array)
+        logging.info('Update Process Completed.')
    
     # Set Default CLI editor...I like Vim!
 
     print('\n' + '*'*columns + '\n\tSetting the default editor (I like VIM)...\n' + '*'*columns + '\n')
+    logging.info('Setting the default editor...')
     
     tmi.process_commands(vim_commands_array)
+    logging.info('Vim Setup Process Completed.')
 
     # Backup Config Files & Setting up Environment (See YAML files for details on commands)
 
     print('\n' + '*'*columns + '\n\tBacking up configuration files prior to edits...\n' + '*'*columns + '\n')
+    logging.info('Backing up configuration files...')
 
     tmi.process_commands(backup_commands_array)
+    logging.info('Backup Process Completed.')
 
     print('\n' + '*'*columns + '\n\tRunning Configuration Scripts...\n' + '*'*columns + '\n')
+    logging.info('Running Configuration Scripts...')
 
     tmi.process_commands(environment_commands)
+    logging.info('Environment Setup Process Completed.')
     
     # Setup Fingerprint Reader
 
     if args.fingerprint is True:
         print('\n' + '*'*columns + '\n\tSetting Up Fingerprint Reader...\n' + '*'*columns + '\n')
+        logging.info('Setting Up Fingerprint Reader...')
         os.system('./data/scripts/fingerprint.sh')
+        logging.info('Fingerprint Setup Process Completed.')
 
     # Setup Remote Samba File Store
 
@@ -276,6 +321,7 @@ def main():
     else:
 
         print('\n' + '*'*columns + '\n\tSetup Samba Share\n' + '*'*columns + '\n')
+        logging.info('Setting up Samba Share...')
 
         user_response = input('\nSetup Remote Samba Share with /mnt/remote_cifs? (Y/n)')
 
@@ -317,15 +363,18 @@ def main():
             # Mount cifs share
             os.system('sudo systemctl daemon-reload')
             os.system('sudo mount -a')
+            logging.info('Samba Share Setup Process Completed.')
 
         else:
 
             print('\nSamba Share setup aborted.')
+            logging.info('Samba Share setup aborted.')
 
 
     # Performing File System Activities
 
     print('\n' + '*'*columns + '\n\tPerforming Files System Activites\n' + '*'*columns + '\n')
+    logging.info('Performing File System Activities...')
 
     # Store a list of installed packages in HOME/backup (overwrite if file exists ">"; NOT append ">>")
 
@@ -341,6 +390,7 @@ def main():
         os.system(f'sudo pacman -Qe > {backup_directory}Installed_Arch_Packages_$(date +%m_%d_%Y).log')
     else:
         print('No package list created - OS not supported!')
+    logging.info('Package List Created.')
 
     # Backup Dconf (Gnome) settings
     
@@ -348,8 +398,9 @@ def main():
         pass
     else:
         print(f'\nCreating a Gnome Settings (dconf) in {backup_directory}...')
-
-        os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')
+        logging.info(f'Creating a Gnome Settings (dconf) in {backup_directory}.')
+        os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')   
+        logging.info(f'Gnome Settings (dconf) Created in {backup_directory}.')
  
     # Copy Wallpapers to the user's Pictures directory
 
@@ -357,52 +408,68 @@ def main():
         pass
     else:
         print('\nCopying Wallpapers to Pictures directory...')
+        logging.info('Copying Wallpapers to Pictures directory...')
         os.system('cd /home/${USER}/code && test -d wallpapers || git clone https://github.com/linuxg33k76/wallpapers')
         os.system(f'test -d {HOME_DIR}/Pictures/wallpapers || mkdir -p {HOME_DIR}/Pictures/wallpapers')
         os.system(f'rsync -av --exclude=".git" ~/code/wallpapers/ {HOME_DIR}/Pictures/wallpapers/')
+        logging.info(f'Wallpapers Copied to: {HOME_DIR}/Pictures/wallpapers.')
 
     # Setup Git Environment
 
     print('\n' + '*'*columns + '\n\tSetup Global git Config\n' + '*'*columns + '\n')
+    logging.info('Setting up Global git Config...')
 
     user_response = input('\nSetup global git configuration file? (Y/n)')
 
     if 'Y' in user_response or 'y' in user_response:
 
         print('\nSetting Up git configuration...\n')
+        logging.info('Setting Up git configuration...')
         git_name, git_email = tmi.get_git_global_name_email()
         os.system(f'git config --global user.name \"{git_name}\"')
         os.system(f'git config --global user.email \"{git_email}\"')
+        logging.info(f'Global git config set up using: {git_name} and {git_email}')
 
     else:
 
         print('\ngit global config setup aborted.')
+        logging.info('Global git config setup aborted.')
 
     # Set Hostname
     print('\n' + '*'*columns + '\n\tPlease Set Hostname\n' + '*'*columns + '\n')
+    logging.info('Setting Hostname...')
+    
     print('\nCurrent Hostname: ' + os.popen('hostname', 'r').read().strip())
     hostname = input('\nHostname of system? (Press [Enter] to leave as is): ')
     if hostname != '':
         os.system(f'sudo hostnamectl set-hostname {hostname}')
+        logging.info(f'Hostname set to: {hostname}')
     else:
         print('Hostname NOT changed.')
+        logging.info('Hostname NOT changed.')
     
     # Generate SSH Keys if necessary
 
     print('\n' + '*'*columns + '\n\tGenerate SSH Keys\n' + '*'*columns + '\n')
+    logging.info('Generating SSH Keys...')
     os.system('./data/scripts/sshkeygen.sh')
+    logging.info('SSH Keys Generated.')
     
     # Test to see if reboot is needed and final messages
 
     if 'pop' in os_info or 'ubuntu' in os_info:
         if tmi.test_for_file_exists('/var/run/reboot-required'):
             print('\n' + '*'*columns + '\n\tPlease reboot to complete installation\n' + '*'*columns + '\n')
+            logging.info('Please reboot to complete installation.')
     elif 'fedora' in os_info:
         os.system('sudo needs-restarting -r')
+        logging.info('Please reboot to complete installation.')
     elif 'WSL' in os_info:
         print('\n\t***NOTE *** See this link to install Powerline Fonts in WSL: https://logfetch.com/wsl2-install-powerline/ \n')
+        logging.info('Please reboot to complete installation.')
     else:
         print('\n' + '*'*columns + '\n\tInstallation Complete!\n' + '*'*columns + '\n')
+        logging.info('Installation Complete!')
 
 if __name__ == '__main__':
 
