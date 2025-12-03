@@ -12,6 +12,7 @@ Packages:
     - yay -S microsoft-edge-stable-bin
     - yay -S google-chrome
     - yay -S visual-studio-code-bin
+    - yay -S antigravity
 
 Backup:
     - echo "Backing up files for modification during Omarchy setup."
