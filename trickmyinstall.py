@@ -30,14 +30,15 @@ def main():
     Main Program function
     '''
 
-    # Declare Constants and Variables
-
-    # Configure Logging
-    logging.basicConfig(filename='trickmyinstall.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    logging.info('Starting TrickMyInstall Script')
+    # Declare Constants
 
     HOME_DIR = os.getenv("HOME")
     UNAME = os.popen('uname -s', 'r').read().strip()
+
+    # Configure Logging
+    logging.basicConfig(filename=f'{HOME_DIR}/trickmyinstall.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.info('Starting TrickMyInstall Script')
+
     logging.info(f'OS: {UNAME}')
     logging.info(f'Home Directory: {HOME_DIR}')
 
@@ -451,9 +452,9 @@ def main():
     # Generate SSH Keys if necessary
 
     print('\n' + '*'*columns + '\n\tGenerate SSH Keys\n' + '*'*columns + '\n')
-    logging.info('Generating SSH Keys...')
+    logging.info('Checking for SSH Keys and Generating if necessary...')
     os.system('./data/scripts/sshkeygen.sh')
-    logging.info('SSH Keys Generated.')
+    logging.info('SSH Key Generation/Location Completed.')
     
     # Test to see if reboot is needed and final messages
 
