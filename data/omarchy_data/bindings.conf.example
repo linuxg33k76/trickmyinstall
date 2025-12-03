@@ -1,6 +1,6 @@
 # Application bindings
 $terminal = uwsm-app -- $TERMINAL
-$browser = microsoft-edge-stable
+$browser = google-chrome-stable
 
 bindd = SUPER, RETURN, Terminal, exec, $terminal --working-directory="$(omarchy-cmd-terminal-cwd)"
 bindd = SUPER SHIFT, F, File manager, exec, uwsm-app -- nautilus --new-window
