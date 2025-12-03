@@ -32,8 +32,11 @@ VimSetup:
     - echo "set number" > /home/${USER}/.vimrc
     - echo "syntax on" >> /home/${USER}/.vimrc
     - echo "colorscheme ron" >> /home/${USER}/.vimrc
-    - grep "# Added by TrickMyInstall Script" /home/${USER}/.config/fish/config.fish || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.config/fish/config.fish
-    - grep "set -x EDITOR /usr/bin/vim" /home/${USER}/.config/fish/config.fish || echo "set -x EDITOR /usr/bin/vim" >> /home/${USER}/.config/fish/config.fish
+    - > 
+        if test -f /home/${USER}/.config/fish/config.fish; then
+            grep "# Added by TrickMyInstall Script" /home/${USER}/.config/fish/config.fish || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.config/fish/config.fish
+            grep "set -x EDITOR /usr/bin/vim" /home/${USER}/.config/fish/config.fish || echo "set -x EDITOR /usr/bin/vim" >> /home/${USER}/.config/fish/config.fish
+        fi
     
 Environment:
     - echo "Environment setup for Omarchy Linux"

@@ -20,5 +20,4 @@ alias vim='nvim'
 # Manual Entries #
 fastfetch
 /home/samurai/code/bash_scripts/backupservercheck.sh
-
-. "$HOME/.local/share/../bin/env"
+echo

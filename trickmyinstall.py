@@ -453,8 +453,9 @@ def main():
 
     print('\n' + '*'*columns + '\n\tGenerate SSH Keys\n' + '*'*columns + '\n')
     logging.info('Checking for SSH Keys and Generating if necessary...')
-    os.system('./data/scripts/sshkeygen.sh')
-    logging.info('SSH Key Generation/Location Completed.')
+    os.system('test -f ~/.ssh/id*.pub && echo "SSH Key already exists." || ssh-keygen')
+    ssh_key_test = os.popen('cat ~/.ssh/id*.pub').read().strip()
+    logging.info(f'SSH Key Generation Completed: {ssh_key_test}')
     
     # Test to see if reboot is needed and final messages
 
