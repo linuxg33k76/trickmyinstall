@@ -16,6 +16,8 @@ alias git-merge='git checkout main && git pull origin main && git merge main dev
 alias cronjobs='systemctl --user --all list-timers'
 alias update='omarchy-update'
 alias vim='nvim'
+alias convert='/home/samurai/code/bash_scripts/imageconvert.sh'
+alias steamsync='/home/samurai/code/bash_scripts/steampicssync.sh $HOME/Pictures/Steam/ /mnt/remote_cifs/Steam-Photos-Backup/ $HOME/steam-sync.log && tail -n 10 $HOME/steam-sync.log'
 
 # Manual Entries #
 fastfetch
