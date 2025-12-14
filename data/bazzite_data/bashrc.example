@@ -1,59 +1,25 @@
-# .bashrc
+# If not running interactively, don't do anything (leave this at the top of this file)
+[[ $- != *i* ]] && return
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-    . /etc/bashrc
-fi
+# All the default Omarchy aliases and functions
+# (don't mess with these directly, just overwrite them here!)
+source ~/.local/share/omarchy/default/bash/rc
 
-# User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-export PATH
+# Add your own exports, aliases, and functions here.
+#
+# Make an alias for invoking commands you use constantly
+# alias p='python'
 
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
-
-# User specific aliases and functions
-if [ -d ~/.bashrc.d ]; then
-    for rc in ~/.bashrc.d/*; do
-        if [ -f "$rc" ]; then
-            . "$rc"
-        fi
-    done
-fi
-unset rc
-
-# Added by TrickMyInstall Script
-
+# Added By TrickMyInstall
 alias git-update='git checkout main && git pull origin main && git checkout develop && git pull origin develop'
 alias git-merge='git checkout main && git pull origin main && git merge main develop && git push origin main && git checkout develop'
-alias update='flatpak update -y'
-alias wirelesspw='nmcli device wifi show-password'
 alias cronjobs='systemctl --user --all list-timers'
-alias gamebkup='${HOME}/code/bash_scripts/steampicssync.sh'
-alias convert='${HOME}/code/bash_scripts/imageconvert.sh .'
+alias update='omarchy-update'
+alias vim='nvim'
+alias convert='/home/samurai/code/bash_scripts/imageconvert.sh'
+alias steamsync='/home/samurai/code/bash_scripts/steampicssync.sh $HOME/Pictures/Steam/ /mnt/remote_cifs/Steam-Photos-Backup/ $HOME/steam-sync.log && tail -n 10 $HOME/steam-sync.log'
 
-# Setup Default Editor
-
-export VISUAL=/usr/bin/vim
-export EDITOR=$VISUAL
-
-# Prompt Setup
-# Load git-prompt.sh for advanced git status in prompt
-if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
-    source /usr/share/git-core/contrib/completion/git-prompt.sh
-elif [ -f /usr/share/git/completion/git-prompt.sh ]; then
-    source /usr/share/git/completion/git-prompt.sh
-fi
-
-# Custom PS1: username@hostname cwd (left), [git branch|status] HH:MM (right)
-export PS1='\[\e[0;32m\]\u@\h \[\e[0;34m\]\w\[\e[0m\]$(printf "%*s" $((COLUMNS - ${#USER} - ${#HOSTNAME} - ${#PWD} - 4)) " \[\e[0;33m\]$(__git_ps1 "[ %s ]") \[\e[0;36m\]\A\[\e[0m\]")\n\$ '
-
-# Startup items
-
-echo
+# Manual Entries #
 fastfetch
-echo
 /home/samurai/code/bash_scripts/backupservercheck.sh
 echo
