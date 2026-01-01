@@ -10,7 +10,7 @@ bindd = SUPER SHIFT, M, Music, exec, omarchy-launch-or-focus spotify
 bindd = SUPER SHIFT, N, Editor, exec, omarchy-launch-editor
 bindd = SUPER SHIFT, T, Activity, exec, $terminal -e btop
 bindd = SUPER SHIFT, D, Docker, exec, $terminal -e lazydocker
-bindd = SUPER SHIFT, G, Signal, exec, omarchy-launch-or-focus signal "uwsm-app -- signal-desktop"
+bindd = SUPER SHIFT, G, Gemini, exec, omarchy-launch-webapp "https://gemini.google.com"
 bindd = SUPER SHIFT, O, Obsidian, exec, omarchy-launch-or-focus "^obsidian$" "uwsm-app -- obsidian -disable-gpu --enable-wayland-ime"
 bindd = SUPER SHIFT, W, Typora, exec, uwsm-app -- typora
 bindd = SUPER SHIFT, SLASH, Passwords, exec, uwsm-app -- 1password
@@ -26,6 +26,7 @@ bindd = SUPER SHIFT CTRL, G, Google Messages, exec, omarchy-launch-or-focus-weba
 bindd = SUPER SHIFT, P, Google Photos, exec, omarchy-launch-or-focus-webapp "Google Photos" "https://photos.google.com/"
 bindd = SUPER SHIFT, X, X, exec, omarchy-launch-webapp "https://x.com/"
 bindd = SUPER SHIFT ALT, X, X Post, exec, omarchy-launch-webapp "https://x.com/compose/post"
+bindd = SUPER SHIFT, S, Steam, exec, [workspace 5] steam 
 
 # Overwrite existing bindings, like putting Omarchy Menu on Super + Space
 # unbind = SUPER, SPACE
