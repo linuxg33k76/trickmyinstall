@@ -9,7 +9,7 @@ try:
     import yaml
 except ImportError:
     print('Installing required Python packages...')
-    os.system('pip3 install -r requirements.txt')
+    os.system('pip3 install -r requirements.txt || pip install -r requirements.txt || sudo pacman -Su python-yaml')
     import yaml
 class TrickMyInstall():
 
