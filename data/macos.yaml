@@ -8,6 +8,18 @@ Packages:
     - brew install fastfetch
     - brew install python3
     - brew install oh-my-posh
+    - brew install git
+    - brew install tldr
+    - brew install fd
+    - brew install bat
+    - brew install fzf
+    - brew install htop
+    - brew install neovim
+    - brew install ripgrep
+    - brew install coreutils
+    - brew install watch
+    
+    
 
 Backup:
     - echo "Backing up files for modification during macOS setup."
