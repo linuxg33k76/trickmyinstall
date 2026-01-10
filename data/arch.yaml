@@ -13,6 +13,7 @@ Packages:
     - yay -S google-chrome
     - yay -S visual-studio-code-bin
     - yay -S antigravity
+    - yay -S expressvpn-gui
 
 Backup:
     - echo "Backing up files for modification during Omarchy setup."
