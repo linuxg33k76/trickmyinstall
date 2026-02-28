@@ -7,7 +7,7 @@ if test -d "$HOME/.config/hypr/"
    # Note: Fish uses 'read' slightly differently than bash
    read -P "Do you want to install ML4W OS? (y/n) " -l REPLY
    if string match -qr '^[Yy]$' -- "$REPLY"
-      curl -s https://ml4w.com/os/rolling | bash
+      bash -c "bash <(curl -s https://ml4w.com/os/rolling)"
       echo "ML4W OS installation complete."
    else
       echo "Installation aborted by user."
