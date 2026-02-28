@@ -61,7 +61,7 @@ Environment:
             cp /home/${USER}/code/trickmyinstall/data/omarchy_data/input.conf.example /home/${USER}/.config/hypr/input.conf
             cp /home/${USER}/code/trickmyinstall/data/omarchy_data/style.css.example /home/${USER}/.config/waybar/style.css
             echo "Copied configuration files for Omarchy."
-        elif test -d /home/${USER}/.config/hypr/;
+        elif test -d /home/${USER}/.config/hypr/; then
             echo "Hypr config directory exists. Installing ML4W OS?"
             read -p "Do you want to install ML4W OS? (y/n): " -n 1 -r
             echo    # move to a new line
