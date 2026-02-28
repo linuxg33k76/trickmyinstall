@@ -8,11 +8,8 @@ Packages:
     - sudo paru -S fprintd
     - sudo paru -S cachyos-gaming-meta
     - sudo paru -S cachyos-gaming-applications
-    - paru -S visual-studio-code-bin
-    - paru -S microsoft-edge-stable-bin
     - paru -S google-chrome
     - paru -S 1password
-    - paru -S yakuake
     - paru -S solaar
     - sudo paru -S deja-dup
     - sudo paru -S pamac-aur
@@ -38,3 +35,12 @@ Environment:
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
     - cp /home/${USER}/code/trickmyinstall/data/cachyos_data/config.fish /home/${USER}/.config/fish/config.fish
     - sudo cp /home/${USER}/code/trickmyinstall/data/cachyos_data/sudo /etc/pam.d/sudo
+    - if test -d "$HOME/.config/hypr/"
+        echo "Hypr config directory exists. Installing ML4W OS?"
+        read -P "Do you want to install ML4W OS? (y/n): " -n 1 REPLY
+        echo
+        if string match -qr '^[Yy]$' -- "$REPLY"
+            curl -s https://ml4w.com/os/rolling | bash
+            echo "ML4W OS installation complete."
+        end
+    end
