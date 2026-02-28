@@ -37,10 +37,10 @@ Environment:
     - sudo cp /home/${USER}/code/trickmyinstall/data/cachyos_data/sudo /etc/pam.d/sudo
     - if test -d "$HOME/.config/hypr/"
         echo "Hypr config directory exists. Installing ML4W OS?"
-        read -P "Do you want to install ML4W OS? (y/n): " -n 1 REPLY
+        read -P "Do you want to install ML4W OS? (y/n)" -n 1 REPLY
         echo
         if string match -qr '^[Yy]$' -- "$REPLY"
             curl -s https://ml4w.com/os/rolling | bash
             echo "ML4W OS installation complete."
         end
-    end
+     end
