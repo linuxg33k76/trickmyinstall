@@ -62,7 +62,11 @@ Environment:
             cp /home/${USER}/code/trickmyinstall/data/omarchy_data/style.css.example /home/${USER}/.config/waybar/style.css
             echo "Copied configuration files for Omarchy."
         elif test -d /home/${USER}/.config/hypr/;
-            echo "Hypr config directory exists. Installing ML4W OS."
-            bash <(curl -s https://ml4w.com/os/rolling)
-            echo "ML4W OS installation complete."
+            echo "Hypr config directory exists. Installing ML4W OS?"
+            read -p "Do you want to install ML4W OS? (y/n): " -n 1 -r
+            echo    # move to a new line
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                bash <(curl -s https://ml4w.com/os/rolling)
+                echo "ML4W OS installation complete."
+            fi
         fi
