@@ -407,13 +407,16 @@ def main():
 
     if 'Darwin' in os_info or 'WSL' in os_info:
         pass
-    else:
-        print('\nCopying Wallpapers to Pictures directory...')
-        logging.info('Copying Wallpapers to Pictures directory...')
+    elif args.wallpaper != '':
+        print(f'\nCopying Wallpapers to User Specified directory: {args.wallpaper}...')
+        logging.info(f'Copying Wallpapers to User Specified directory: {args.wallpaper}...')
         os.system('cd /home/${USER}/code && test -d wallpapers || git clone https://github.com/linuxg33k76/wallpapers')
-        os.system(f'test -d {HOME_DIR}/Pictures/wallpapers || mkdir -p {HOME_DIR}/Pictures/wallpapers')
-        os.system(f'rsync -av --exclude=".git" ~/code/wallpapers/ {HOME_DIR}/Pictures/wallpapers/')
-        logging.info(f'Wallpapers Copied to: {HOME_DIR}/Pictures/wallpapers.')
+        os.system(f'test -d {args.wallpaper} || mkdir -p {args.wallpaper}')
+        os.system(f'rsync -av --exclude=".git" ~/code/wallpapers/ {args.wallpaper}/')
+        logging.info(f'Wallpapers Copied to: {args.wallpaper}.')
+    else:
+        print('Skipping Wallpaper Copy Process')
+        logging.info('Skipping Wallpaper Copy Process.  No wallpaper argument provided.')
 
     # Setup Git Environment
 
