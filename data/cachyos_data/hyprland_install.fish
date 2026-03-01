@@ -9,8 +9,7 @@ echo ""
 read -P "Do you want to install Hyprland? (y/n) " -l REPLY
 echo ""
 if string match -qr '^[Yy]$' -- "$REPLY"
-   echo "Do you want to install (1) HyDE or (2) ML4W OS?"
-   echo ""
+   read -P "Do you want to install (1) HyDE or (2) ML4W OS? " -l REPLY
    if string match -qr '^[1]$' -- "$REPLY"
       echo "Installing HyDE..."
       sudo pacman -S --needed git base-devel
