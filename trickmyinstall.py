@@ -32,17 +32,31 @@ def main():
 
     # Declare Constants
 
-    HOME_DIR = os.getenv("HOME")
+    HOME_DIR = os.path.expanduser("~")
     UNAME = os.popen('uname -s', 'r').read().strip()
 
     # Configure Logging
     logging.basicConfig(filename=f'{HOME_DIR}/trickmyinstall.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     logging.info('Starting TrickMyInstall Script')
 
-    logging.info(f'OS: {UNAME}')
-    logging.info(f'Home Directory: {HOME_DIR}')
+    # Get System Information
+    if 'DARWIN' in UNAME.upper():
+        workstation_info = SI.MacOSSystemInfo()
+    else:
+        workstation_info = SI.LinuxSystemInfo()
 
-
+    processor = workstation_info.processor
+    memory = workstation_info.memory
+    diskspace = workstation_info.diskspace
+    shell = workstation_info.shell
+    kernel = workstation_info.kernel
+    desktop = workstation_info.desktop
+    
+    # Log System Information
+    logging.info(f'Processor: \n{processor}')
+    logging.info(f'Memory: \n{memory}')
+    logging.info(f'Disk Space: \n{diskspace}')
+    # Log OS Info
     if 'DARWIN' in UNAME.upper():
 
         os_info = SI.MacOSSystemInfo().system
@@ -56,18 +70,20 @@ def main():
     else:
 
         os_info = SI.LinuxSystemInfo().system   
-        logging.info(f'OS Info: {os_info}')
+        logging.info(f'OS Info: {os_info.strip("\n")}')
     
-    os_desktop = SI.LinuxSystemInfo().desktop
-    logging.info(f'OS Desktop: {os_desktop}')
+    logging.info(f'OS: {UNAME}')
+    logging.info(f'Shell: {shell}')
+    logging.info(f'Kernel: {kernel}')
+    logging.info(f'Desktop: {desktop.strip("\n")}')
+    logging.info(f'Home Directory: {HOME_DIR.strip("\n")}')
     
+    # User check - if root exit script and print error message
     user_test = tmi.check_for_root()
 
-    # User check - if root exit script and print error message
-
     if user_test is True:
-        print('\n***Script Aborting...  Please execute with a privileged user other than root user.***\n')
-        logging.error('Script executed as root. Aborting.')
+        print('\n***Script Aborting***\n\tPlease execute with a privileged user other than root user.\n')
+        logging.error('Script was executed as root. No Bueno! Aborting.')
         quit()
 
     # Identify Terminal Size
@@ -86,7 +102,7 @@ def main():
         quit()
 
     if args.directory == 'default':
-        download_dir = os.getenv('HOME') + '/Downloads/'
+        download_dir = os.path.expanduser('~') + '/Downloads/'
     else:
         download_dir = args.directory
 
@@ -135,7 +151,7 @@ def main():
         elif 'fedora' in os_info:
 
             # Fedora setup parameters
-            if 'KDE' in os_desktop:
+            if 'KDE' in desktop:
                 yaml_config = tmi.read_config_file('data/fedora_kde.yaml')
                 logging.info(f'YAML Config File: {args.yamlfile}')
             else:
@@ -368,18 +384,18 @@ def main():
 
         else:
 
-            print('\nSamba Share setup aborted.')
-            logging.info('Samba Share setup aborted.')
+            print('\nSamba Share setup aborted by user.')
+            logging.info('Samba Share setup aborted by user.')
 
 
     # Performing File System Activities
 
-    print('\n' + '*'*columns + '\n\tPerforming Files System Activites\n' + '*'*columns + '\n')
+    print('\n' + '*'*columns + '\n\tPerforming File System Activities\n' + '*'*columns + '\n')
     logging.info('Performing File System Activities...')
 
     # Store a list of installed packages in HOME/backup (overwrite if file exists ">"; NOT append ">>")
 
-    print(f'\nCreating a list of installed packages in {backup_directory}...')
+    print(f'\nCreating a list of installed packages: {backup_directory}')
 
     if 'pop' in os_info:
         os.system(f'dpkg --get-selections > {backup_directory}Installed_Ubuntu_Packages_$(date +%m_%d_%Y).log')
@@ -394,10 +410,10 @@ def main():
     logging.info('Package List Created.')
 
     # Backup Dconf (Gnome) settings
-    
+
     if 'Darwin' in os_info or 'WSL' in os_info:
         pass
-    else:
+    elif 'GNOME' in desktop:
         print(f'\nCreating a Gnome Settings (dconf) in {backup_directory}...')
         logging.info(f'Creating a Gnome Settings (dconf) in {backup_directory}.')
         os.system(f'dconf dump / > {backup_directory}dconf_user_settings_$(date +%m_%d_%Y).bkup')   
@@ -408,12 +424,12 @@ def main():
     if 'Darwin' in os_info or 'WSL' in os_info:
         pass
     elif args.wallpaper != '':
-        print(f'\nCopying Wallpapers to User Specified directory: {args.wallpaper}...')
-        logging.info(f'Copying Wallpapers to User Specified directory: {args.wallpaper}...')
+        print(f'\nCopying Wallpapers to User Specified directory: {args.wallpaper}\n')
+        logging.info(f'Copying Wallpapers to User Specified directory: {args.wallpaper}')
         os.system('cd /home/${USER}/code && test -d wallpapers || git clone https://github.com/linuxg33k76/wallpapers')
         os.system(f'test -d {args.wallpaper} || mkdir -p {args.wallpaper}')
         os.system(f'rsync -av --exclude=".git" ~/code/wallpapers/ {args.wallpaper}/')
-        logging.info(f'Wallpapers Copied to: {args.wallpaper}.')
+        logging.info(f'Wallpapers Copied to: {args.wallpaper}')
     else:
         print('Skipping Wallpaper Copy Process')
         logging.info('Skipping Wallpaper Copy Process.  No wallpaper argument provided.')
@@ -436,8 +452,8 @@ def main():
 
     else:
 
-        print('\ngit global config setup aborted.')
-        logging.info('Global git config setup aborted.')
+        print('\ngit global config setup aborted by user.')
+        logging.info('Global git config setup aborted by user.')
 
     # Set Hostname
     print('\n' + '*'*columns + '\n\tPlease Set Hostname\n' + '*'*columns + '\n')

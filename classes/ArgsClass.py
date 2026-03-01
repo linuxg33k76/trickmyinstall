@@ -19,7 +19,7 @@ class CLIParser(argparse.ArgumentParser):
     def __init__(self):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument('-s', '--skip', type=str, help='Skip specific task: install,update,3rdParty, or all', default='', nargs='+')
-        self.parser.add_argument('-w', '--wallpaper', type=str, help='Copy wallpaper to user specified location.', default='default')
+        self.parser.add_argument('-w', '--wallpaper', type=str, help='Copy wallpaper to user specified location.', default='')
         self.parser.add_argument('-f', '--fingerprint', help='Enable Fingerprint Setup', action='store_true')
         self.parser.add_argument('-b', '--directory', type=str, help='User Specified Download Directory.', default='default')
         self.parser.add_argument('-d', '--backup_directory', type=str, help='User Specified Backup Directory.', default='default')
