@@ -9,3 +9,6 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:descriptions' format '%F{yellow}%d%f'
 zstyle ':completion:*' list-colors ''
+
+# Added for GPG functionality
+export GPG_TTY=$(tty)
