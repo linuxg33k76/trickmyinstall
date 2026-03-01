@@ -49,7 +49,6 @@ Environment:
     - expressvpnctl login /home/${USER}/.expressvpn
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts.git
     # Test for omarchy_data directory and copy example config files
-    # If hyperland exists without Omarchy config files, install ML4W OS
     - >
         if test -d /home/${USER}/.config/omarchy/; then
             echo "Omarchy config directory exists."
@@ -59,12 +58,4 @@ Environment:
             cp /home/${USER}/code/trickmyinstall/data/omarchy_data/input.conf.example /home/${USER}/.config/hypr/input.conf
             cp /home/${USER}/code/trickmyinstall/data/omarchy_data/style.css.example /home/${USER}/.config/waybar/style.css
             echo "Copied configuration files for Omarchy."
-        elif test -d /home/${USER}/.config/hypr/; then
-            echo "Hypr config directory exists. Installing ML4W OS?"
-            read -p "Do you want to install ML4W OS? (y/n): " -n 1 -r
-            echo    # move to a new line
-            if [[ $REPLY =~ ^[Yy]$ ]]; then
-                bash <(curl -s https://ml4w.com/os/rolling)
-                echo "ML4W OS installation complete."
-            fi
         fi
