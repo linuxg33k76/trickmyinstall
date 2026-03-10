@@ -20,7 +20,7 @@ input {
     # natural_scroll = true
 
     # Use two-finger clicks for right-click instead of lower-right corner
-    # clickfinger_behavior = true
+    clickfinger_behavior = true
 
     # Control the speed of your scrolling
     scroll_factor = 0.4
@@ -33,4 +33,4 @@ windowrule = match:class com.mitchellh.ghostty, scroll_touchpad 0.2
 
 # Enable touchpad gestures for changing workspaces
 # See https://wiki.hyprland.org/Configuring/Gestures/
-# gesture = 3, horizontal, workspace
+gesture = 4, horizontal, workspace
