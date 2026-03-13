@@ -20,6 +20,7 @@ Packages:
     - brew install ripgrep
     - brew install coreutils
     - brew install watch
+    - brew install font-jetbrains-mono-nerd-font
     
 Backup:
     - echo "Backing up brew install list..."
@@ -40,10 +41,12 @@ Environment:
     - echo "Checking for existing .dotfiles directory."
     - > 
         if [ ! -d "/Users/${USER}/.dotfiles" ]; then
-            git clone https://github.com/linuxg33k76/.dotfiles.git /Users/${USER}/.dotfiles
+            echo "You need to install .dotfiles first!"
+            echo " syntax:  git clone git@github.com/linuxg33k76/.dotfiles.git /Users/${USER}/.dotfiles"
         else
             echo ".dotfiles directory already exists."
+            cd /Users/${USER}/.dotfiles && stow nvim
+            cd /Users/${USER}/.dotfiles && stow ghostty
+            cd /Users/${USER}/.dotfiles && stow zshrc
+            cd /Users/${USER}/.dotfiles && stow zprofile
         fi
-    - cd /Users/${USER}/.dotfiles && stow nvim
-    - cd /Users/${USER}/.dotfiles && stow zshrc
-    - cd /Users/${USER}/.dotfiles && stow zprofile
