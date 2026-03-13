@@ -22,9 +22,14 @@ Packages:
     - brew install watch
     
 Backup:
-    - echo "Backing up files for modification during macOS setup."
-    - echo "Nothing to backup."
-    - echo "Checking for existing .dotfiles directory."
+    - echo "Backing up brew install list..."
+    - > 
+        if [ ! -d /Users/${USER}/backup ]; then
+            mkdir /Users/${USER}/backup
+        else
+            pass
+        fi
+    - brew list > /Users/${USER}/backup/brew_installed_packages_$(date "+%d-%m-%Y-%H:%M")
 
 VimSetup:
     - echo "Setting up Neovim configuration for macOS."
