@@ -16,8 +16,9 @@ class MacOSSystemInfo():
 
     def __init__(self):
         self.system = os.popen('uname', 'r').read()
-        # self.processor = os.popen(' cat /proc/cpuinfo | grep "model name"', 'r').read()
-        # self.memory = os.popen('free -h', 'r').read()
+        self.processor = os.popen("sysctl -n machdep.cpu.brand_string").read().strip()        
+        self.memory = os.popen('free -h', 'r').read()
         self.diskspace = os.popen('df -h | grep "/dev"', 'r').read()
         self.shell = os.getenv('SHELL')
         self.kernel = os.system('uname -a')
+        self.desktop = os.popen('echo $XDG_CURRENT_DESKTOP', 'r').read()

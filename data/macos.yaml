@@ -8,6 +8,8 @@ Packages:
     - brew install fastfetch
     - brew install python3
     - brew install oh-my-posh
+    - brew install stow
+    - brew install ghostty
     - brew install git
     - brew install tldr
     - brew install fd
@@ -19,18 +21,24 @@ Packages:
     - brew install coreutils
     - brew install watch
     
-    
-
 Backup:
     - echo "Backing up files for modification during macOS setup."
-    - cp /Users/${USER}/.zprofile /Users/${USER}/zprofile.bak.$(date '+%m-%d-%Y-%H_%M_%S')
-    - cp /Users/${USER}/.zshrc /Users/${USER}/zshrc.bak.$(date '+%m-%d-%Y-%H_%M_%S')
+    - echo "Nothing to backup."
+    - echo "Checking for existing .dotfiles directory."
 
 VimSetup:
-    - echo "set number" > /Users/${USER}/.vimrc
-    - echo "syntax on" >> /Users/${USER}/.vimrc
-    - echo "colorscheme ron" >> /Users/${USER}/.vimrc
+    - echo "Setting up Neovim configuration for macOS."
+   
 
 Environment:
-    - cp /Users/${USER}/code/trickmyinstall/data/mac_data/zshrc.example /Users/${USER}/.zshrc
-    - cp /Users/${USER}/code/trickmyinstall/data/mac_data/zprofile.example /Users/${USER}/.zprofile
+    - echo "Setting up environment variables for macOS."
+    - echo "Checking for existing .dotfiles directory."
+    - > 
+        if [ ! -d "/Users/${USER}/.dotfiles" ]; then
+            git clone https://github.com/linuxg33k76/.dotfiles.git /Users/${USER}/.dotfiles
+        else
+            echo ".dotfiles directory already exists."
+        fi
+    - cd /Users/${USER}/.dotfiles && stow nvim
+    - cd /Users/${USER}/.dotfiles && stow zshrc
+    - cd /Users/${USER}/.dotfiles && stow zprofile
