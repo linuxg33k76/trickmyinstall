@@ -29,5 +29,5 @@ Environment:
     - cd /home/${USER} && test -d .dotfiles || git clone https://github.com/linuxg33k76/.dotfiles.git
     - echo "Installing Stowed config files..."
     - cd /home/${USER}/.dotfiles && stow fish
-    - cd /home/${USER}/.dotfiles && stow nvims
+    - cd /home/${USER}/.dotfiles && stow nvim
     - echo "Config File installation is complete!" 
