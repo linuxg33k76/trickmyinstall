@@ -9,6 +9,7 @@ Packages:
     - sudo paru -S cachyos-gaming-meta
     - sudo paru -S cachyos-gaming-applications
     - paru -S google-chrome
+    - paru -S antigravity
     - paru -S 1password
     - paru -S solaar
     - sudo paru -S deja-dup
@@ -18,21 +19,15 @@ Packages:
 Backup:
     - echo "Backing up files for modification during CachyOS setup."
     - sudo cp /etc/fstab /etc/fstab.bak.$(date '+%m-%d-%Y-%H_%M_%S')
-    - cp /home/${USER}/.config/fish/config.fish /home/${USER}/.config/fish/config.fish.bak.$(date '+%m-%d-%Y-%H_%M_%S')
     - sudo cp /etc/pam.d/sudo /etc/pam.d/sudo.bak.$(date '+%m-%d-%Y-%H_%M_%S')
 
 VimSetup:
-    - echo "set number" > /home/${USER}/.vimrc
-    - echo "syntax on" >> /home/${USER}/.vimrc
-    - echo "colorscheme ron" >> /home/${USER}/.vimrc
-    - grep "# Added by TrickMyInstall Script" /home/${USER}/.config/fish/config.fish || echo -e "\n# Added by TrickMyInstall Script\n" >> /home/${USER}/.config/fish/config.fish
-    - grep "set -x EDITOR /usr/bin/vim" /home/${USER}/.config/fish/config.fish || echo "set -x EDITOR /usr/bin/vim" >> /home/${USER}/.config/fish/config.fish
+    - echo "Skipping Vim Setup"
     
 Environment:
     - echo "Environment setup for CachyOS"
-    - echo "Setting fish shell prompt to Astronaut theme"
-    - /usr/bin/fish -c "fish_config prompt choose astronaut && funcsave fish_prompt"
-    - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
-    - cp /home/${USER}/code/trickmyinstall/data/cachyos_data/config.fish /home/${USER}/.config/fish/config.fish
-    - sudo cp /home/${USER}/code/trickmyinstall/data/cachyos_data/sudo /etc/pam.d/sudo
-    # - /usr/bin/fish -c "/home/${USER}/code/trickmyinstall/data/cachyos_data/hyprland_install.fish"
+    - cd /home/${USER} && test -d .dotfiles || git clone https://github.com/linuxg33k76/.dotfiles.git
+    - echo "Installing Stowed config files..."
+    - cd /home/${USER}/.dotfiles && stow fish
+    - cd /home/${USER}/.dotfiles && stow nvims
+    - echo "Config File installation is complete!" 
