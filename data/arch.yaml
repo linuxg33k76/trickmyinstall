@@ -10,6 +10,7 @@ Packages:
     - sudo pacman -S solaar
     - sudo pacman -S deja-dup
     - sudo pacman -S rsync
+    - sudo pacman -S yazi
     - yay -S google-chrome
     - yay -S antigravity
     - yay -S expressvpn

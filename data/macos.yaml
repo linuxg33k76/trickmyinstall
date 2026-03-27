@@ -21,6 +21,7 @@ Packages:
     - brew install coreutils
     - brew install watch
     - brew install font-jetbrains-mono-nerd-font
+    - brew install yazi
     
 Backup:
     - echo "Backing up brew install list..."
