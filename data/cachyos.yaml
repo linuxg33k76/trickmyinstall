@@ -26,8 +26,9 @@ VimSetup:
     
 Environment:
     - echo "Environment setup for CachyOS"
-    - cd /home/${USER} && test -d .dotfiles || git clone https://github.com/linuxg33k76/.dotfiles.git
-    - echo "Installing Stowed config files..."
-    - cd /home/${USER}/.dotfiles && stow fish
-    - cd /home/${USER}/.dotfiles && stow nvim
-    - echo "Config File installation is complete!" 
+    - echo "Setting fish shell prompt to Astronaut theme"
+    - /usr/bin/fish -c "fish_config prompt choose astronaut && funcsave fish_prompt"
+    - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts
+    - cp /home/${USER}/code/trickmyinstall/data/cachyos_data/config.fish /home/${USER}/.config/fish/config.fish
+    - sudo cp /home/${USER}/code/trickmyinstall/data/cachyos_data/sudo /etc/pam.d/sudo
+    # - /usr/bin/fish -c "/home/${USER}/code/trickmyinstall/data/cachyos_data/hyprland_install.fish"
