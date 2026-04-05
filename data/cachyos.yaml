@@ -11,6 +11,7 @@ Packages:
     - paru -S google-chrome
     - paru -S 1password
     - paru -S solaar
+    - paru -S stow
     - sudo paru -S deja-dup
     - sudo paru -S pamac-aur
     - sudo paru -S discover
