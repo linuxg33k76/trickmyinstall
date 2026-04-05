@@ -10,6 +10,7 @@ Packages:
     - sudo pacman -S solaar
     - sudo pacman -S deja-dup
     - sudo pacman -S rsync
+    - sudo pacman -S yazi
     - yay -S google-chrome
     - yay -S antigravity
     - yay -S expressvpn
@@ -24,8 +25,8 @@ VimSetup:
     
 Environment:
     - echo "Environment setup for Omarchy Linux"
-    - cd /home/${USER} && test -d dotfiles || git clone https://github.com/linuxg33k76/dotfiles.git
-    - cd /home/${USER}/dotfiles && stow expressvpn
+    - cd /home/${USER} && test -d .dotfiles || git clone https://github.com/linuxg33k76/.dotfiles.git
+    - cd /home/${USER}/.dotfiles && stow expressvpn
     - echo "Enabling expressvpn-service.service"
     - sudo systemctl enable expressvpn-service.service
     - echo "Starting expressvpn-service.service"
@@ -33,10 +34,10 @@ Environment:
     - echo "Copying ExpressVPN config files & authorizing"
     - expressvpnctl login /home/${USER}/.expressvpn
     - echo "Installing Stowed config files..."
-    - cd /home/${USER}/dotfiles && stow hypr
-    - cd /home/${USER}/dotfiles && stow waybar
-    - cd /home/${USER}/dotfiles && stow bashrc
-    - cd /home/${USER}/dotfiles && stow vimrc
+    - cd /home/${USER}/.dotfiles && stow hypr
+    - cd /home/${USER}/.dotfiles && stow waybar
+    - cd /home/${USER}/.dotfiles && stow bashrc
+    - cd /home/${USER}/.dotfiles && stow vimrc
     - echo "Installation of Stowed config files...complete!"
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts.git
    
