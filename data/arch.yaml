@@ -26,21 +26,5 @@ VimSetup:
     
 Environment:
     - echo "Environment setup for Omarchy Linux"
-    - cd /home/${USER} && test -d .dotfiles || git clone https://github.com/linuxg33k76/.dotfiles.git
-    - cd /home/${USER}/.dotfiles && stow expressvpn
-    - echo "Enabling expressvpn-service.service"
-    - sudo systemctl enable expressvpn-service.service
-    - echo "Starting expressvpn-service.service"
-    - sudo systemctl start expressvpn-service.service
-    - echo "Copying ExpressVPN config files & authorizing"
-    - expressvpnctl login /home/${USER}/.expressvpn
-    - echo "Installing Stowed config files..."
-    - mv /home/${USER}/.config/hypr /home/${USER}/.config/hypr.bkup
-    - cd /home/${USER}/.dotfiles && stow hypr
-    - mv /home/${USER}/.config/waybar /home/${USER}/.config/waybar.bkup
-    - cd /home/${USER}/.dotfiles && stow waybar
-    - mv /home/${USER}/.bashrc /home/${USER}/.bashrc.bkup
-    - cd /home/${USER}/.dotfiles && stow bashrc
-    - echo "Installation of Stowed config files...complete!"
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts.git
    
