@@ -4,18 +4,18 @@ Update:
     - sudo paru -Syyu
 
 Packages: 
-    - sudo paru -S sysfsutils
-    - sudo paru -S fprintd
-    - sudo paru -S cachyos-gaming-meta
-    - sudo paru -S cachyos-gaming-applications
-    - paru -S google-chrome
-    - paru -S antigravity
-    - paru -S 1password
-    - paru -S solaar
-    - paru -S stow
-    - sudo paru -S deja-dup
-    - sudo paru -S pamac-aur
-    - sudo paru -S discover
+    - sudo paru -S --noconfim sysfsutils
+    - sudo paru -S --noconfim fprintd
+    - sudo paru -S --noconfim cachyos-gaming-meta
+    - sudo paru -S --noconfim cachyos-gaming-applications
+    - paru -S --noconfim google-chrome
+    - paru -S --noconfim antigravity
+    - paru -S --noconfim 1password
+    - paru -S --noconfim solaar
+    - paru -S --noconfim stow
+    - sudo paru -S --noconfim deja-dup
+    - sudo paru -S --noconfim pamac-aur
+    - sudo paru -S --noconfim discover
 
 Backup:
     - echo "Backing up files for modification during CachyOS setup."

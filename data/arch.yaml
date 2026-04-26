@@ -4,17 +4,18 @@ Update:
     - sudo pacman -Syyu
 
 Packages: 
-    - sudo pacman -S sysfsutils
-    - sudo pacman -S stow
-    - sudo pacman -S fprintd
-    - sudo pacman -S solaar
-    - sudo pacman -S deja-dup
-    - sudo pacman -S rsync
-    - sudo pacman -S yazi
-    - yay -S google-chrome
-    - yay -S antigravity
-    - yay -S expressvpn
-    - yay -S standardnotes-bin
+    - sudo pacman -S --noconfirm sysfsutils
+    - sudo pacman -S --noconfirm stow
+    - sudo pacman -S --noconfirm fprintd
+    - sudo pacman -S --noconfirm solaar
+    - sudo pacman -S --noconfirm deja-dup
+    - sudo pacman -S --noconfirm rsync
+    - sudo pacman -S --noconfirm rclone
+    - sudo pacman -S --noconfirm yazi
+    - yay -S --noconfirm google-chrome
+    - yay -S --noconfirm antigravity
+    - yay -S --noconfirm expressvpn
+    - yay -S --noconfirm standardnotes-bin
 
 Backup:
     - echo "Backing up files for modification during Omarchy setup."
