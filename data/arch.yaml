@@ -16,6 +16,7 @@ Packages:
     - yay -S --noconfirm antigravity
     - yay -S --noconfirm expressvpn
     - yay -S --noconfirm biblequote
+    - yay -S --noconfirm insync
 
 Backup:
     - echo "Backing up files for modification during Omarchy setup."
