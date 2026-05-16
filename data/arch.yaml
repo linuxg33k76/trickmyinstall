@@ -15,7 +15,7 @@ Packages:
     - yay -S --noconfirm google-chrome
     - yay -S --noconfirm antigravity
     - yay -S --noconfirm expressvpn
-    - yay -S --noconfirm standardnotes-bin
+    - yay -S --noconfirm biblequote
 
 Backup:
     - echo "Backing up files for modification during Omarchy setup."
