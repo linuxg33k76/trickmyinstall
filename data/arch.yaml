@@ -15,9 +15,7 @@ Packages:
     - yay -S --noconfirm google-chrome
     - yay -S --noconfirm antigravity
     - yay -S --noconfirm expressvpn
-    - yay -S --noconfirm biblequote
-    - yay -S --noconfirm biblesay
-    - yay -S --noconfirm bible-kjv
+    - yay -S --noconfirm visual-studio-code-bin
     - yay -S --noconfirm insync
 
 Backup:
