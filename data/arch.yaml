@@ -6,15 +6,13 @@ Update:
 Packages: 
     - sudo pacman -S --noconfirm sysfsutils
     - sudo pacman -S --noconfirm stow
-    - sudo pacman -S --noconfirm fprintd
     - sudo pacman -S --noconfirm solaar
     - sudo pacman -S --noconfirm deja-dup
     - sudo pacman -S --noconfirm rsync
     - sudo pacman -S --noconfirm rclone
     - sudo pacman -S --noconfirm yazi
     - yay -S --noconfirm google-chrome
-    - yay -S --noconfirm antigravity
-    - yay -S --noconfirm expressvpn
+    - yay -S --noconfirm proton-pass-bin
     - yay -S --noconfirm visual-studio-code-bin
     - yay -S --noconfirm insync
 
