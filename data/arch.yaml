@@ -31,4 +31,11 @@ VimSetup:
 Environment:
     - echo "Environment setup for Omarchy Linux"
     - cd /home/${USER}/code && test -d bash_scripts || git clone https://github.com/linuxg33k76/bash_scripts.git
+    - omarchy plugin add https://github.com/HoneySpoons/omarchy-localsend.git --enable
+    - omarchy plugin add https://github.com/rmacy/omarchy-system-monitor.git --enable
+    - omarchy plugin add https://github.com/r-witz/omarchy-nothing-ear.git --enable
+    - omarchy plugin add https://github.com/SteveHNH/omarchy-bible-verse-plugin.git --enable
+    - omarchy plugin add https://github.com/linuxg33k76/omanetmonitor.git --enable
+    - omarchy plugin add https://github.com/linuxg33k76/hey-im-gaming-here.git --enable
+    - omarchy plugin add https://github.com/fross100/omaplug.git --enable
    
