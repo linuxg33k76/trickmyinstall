@@ -14,6 +14,7 @@ Packages:
     - sudo pacman -S --noconfirm stow
     - sudo pacman -S --noconfirm proton-vpn-gtk-gui
     - sudo pacman -S --noconfirm proton-vpn-cli
+    - yay -S --noconfirm tether-bin
     - yay -S --noconfirm google-chrome
     - yay -S --noconfirm microsoft-edge-dev-bin
     - yay -S --noconfirm proton-pass-bin
