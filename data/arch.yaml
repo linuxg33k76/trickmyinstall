@@ -39,4 +39,5 @@ Environment:
     - omarchy plugin add https://github.com/linuxg33k76/omanetmonitor.git --enable
     - omarchy plugin add https://github.com/linuxg33k76/hey-im-gaming-here.git --enable
     - omarchy plugin add https://github.com/fross100/omaplug.git --enable
+    - omarchy plugin add https://github.com/ejuro/blow-off-some-steam.git --enable
    
