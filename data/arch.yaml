@@ -4,6 +4,7 @@ Update:
     - sudo pacman -Syyu
 
 Packages: 
+    - sudo pacman -S --noconfirm geoclue
     - sudo pacman -S --noconfirm sysfsutils
     - sudo pacman -S --noconfirm stow
     - sudo pacman -S --noconfirm solaar
